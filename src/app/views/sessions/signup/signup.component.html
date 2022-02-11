@@ -1,0 +1,95 @@
+<div class="card o-hidden" style="opacity: 0.8;"
+  [@animate]="{value:'*',params:{y:'120px',opacity:'0',delay:'100ms', duration: '400ms'}}">
+  <div class="row">
+    <div class="col-md-6" style="background-size: cover;background-color:#000;">
+      <div style="padding-left: 10%;padding-right:10%;">
+        <div class="auth-logo text-center" style="margin-top: 10%;">
+          <img src="assets/images/logo-web.png" alt="logo" style="max-height: 235px;">
+        </div>
+        <p style="text-align: justify; color:#FFF; font-style: italic;font-size: 11px;">"Qualunque decisione tu abbia
+          preso per il tuo futuro, sei autorizzato,
+          e direi incoraggiato, a sottoporla ad un continuo esame, pronto a cambiarla,
+          se non risponde più ai tuoi desideri." <span style="color: #ABF2E0; font-style: italic;">Cit. Rita
+            Levi-Montalcini</span>
+        </p>
+      </div>
+      <!--<div class="pl-3 auth-right">
+        <div class="auth-logo text-center mt-4">
+          <img src="assets/images/logo.png" alt="">
+        </div>
+        <div class="flex-grow-1"></div>-->
+      <!-- <div class="w-100 mb-4">
+          <button class="btn btn-outline-primary btn-outline-email btn-block btn-icon-text btn-rounded" routerLink="/sessions/signin">
+            <i class="i-Mail-with-At-Sign"></i>
+            Registrati con l'e-mail
+          </button>
+          <button class="btn btn-outline-primary btn-outline-google btn-block btn-icon-text btn-rounded">
+            <i class="i-Google-Plus"></i>
+            Registrati con Google
+          </button>
+          <button class="btn btn-outline-primary btn-outline-facebook btn-block btn-icon-text btn-rounded">
+            <i class="i-Facebook-2"></i>
+            Registrati con Facebook
+          </button>
+        </div> -->
+      <!--<div class="flex-grow-1"></div>
+      </div>-->
+    </div>
+
+    <div class="col-md-6" style="background-size: cover; background-color: #000; ">
+      <div class="p-2" style="opacity: 1; padding-top: 5px;">
+
+        <h1 class="mb-2 text-24 text-left" style="width: 100%; color:#FFF; background-color: #000; margin-top: 19px;">
+          Registrati a Divisione HSE</h1>
+        <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <label for="Username" class="labelsignup">Username</label>
+            <input id="Username" class="form-control form-control-rounded inputsignup" formControlName="username"
+              [ngClass]="{ 'is-invalid': submitted && f.username.errors }" type="username">
+            <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+              <div *ngIf="f.username.errors.required">Username è richiesto</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="email" class="labelsignup">E-mail</label>
+            <input id="email" class="form-control form-control-rounded inputsignup" formControlName="email" type="email"
+              [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+            <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+              <div *ngIf="f.email.errors.required">Email è richiesta</div>
+              <div *ngIf="f.email.errors.email"> Indirizzo email non valido</div>
+              <div *ngIf="f.email.errors.pattern">Indirizzo email non valido</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="password" class="labelsignup">Password</label>
+            <input id="password" class="form-control form-control-rounded inputsignup" formControlName="password"
+              type="password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
+            <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+              <div *ngIf="f.password.errors.required">Password è richiesta</div>
+              <div *ngIf="f.password.errors.minlength">Password deve avere una lunghezza minima di 6 caratteri</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="confirmPassword" class="labelsignup">Conferma password</label>
+            <input id="confirmPassword" class="form-control form-control-rounded inputsignup"
+              formControlName="confirmPassword" [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }"
+              type="password">
+            <div *ngIf="submitted && f.confirmPassword.errors" class="invalid-feedback">
+              <div *ngIf="f.confirmPassword.errors.required">La conferma password è richiesta</div>
+              <div *ngIf="f.confirmPassword.errors.mustMatch">Le password non corrispondono</div>
+            </div>
+          </div>
+
+          <!-- <button class="btn btn-rounded btn-primary btn-block mt-2">Sign In</button> -->
+          <btn-loading btnClass="btn-primary btn-rounded btn-block mt-1 mb-3" [loadingText]="loadingText"
+            [loading]="loading">
+            Registrati
+          </btn-loading>
+          <div class="col-12 text-center">
+            <a href="" class="text-muted" routerLink="/sessions/signin"><u style="color: #FFF;">oppure effettua l'accesso</u></a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

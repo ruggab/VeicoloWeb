@@ -1,0 +1,98 @@
+<div class="breadcrumb">
+    <h1>Gift da attivare</h1>
+</div>
+
+<div class="separator-breadcrumb border-top"></div>
+
+<div class="row mb-4">
+    <div class="col-md-12">
+        <div class="card mb-4 noround">
+            <div class="card-body">
+                <div class="card-title mb-3">Cerca Gift da attivare per negozio</div>
+                <form [formGroup]="statoGiftForm" (ngSubmit)="cerca()">
+                    <div class="row">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-6 form-group mb-3">
+                            <label for="picker1">Negozio</label>
+                            <select class="form-control" formControlName="negozio">
+                                <option [ngValue]="n.id_client" *ngFor="let n of listaNegozi">{{n.description}}</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3"></div>
+
+                        <div class="col-md-12 text-center">
+                            <btn-loading type="submit" btnClass="btn-primary btn-lg" [loading]="loading">Cerca</btn-loading>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid" *ngIf="listaGift.length > 0">
+    <div class="row">
+        <div class="col-md-9"></div>
+        <div class="col-md-3">
+            <btn-loading type="button" style="float: right;" btnClass="btn-info btn-lg" (click)="downloadFile()">Esporta CSV</btn-loading>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">Gift Number</th>
+                <th scope="col">ID client</th>
+                <th scope="col">Status</th>
+                <th scope="col">ID status</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let g of listaGift">
+                <th scope="row">{{g.gift_number}}</th>
+                <td>{{g.id_client}}</td>
+                <td>{{g.description}}</td>
+                <td>{{g.status}}</td>
+                <!--<td style="text-align: center;"><button class="btn btn-info" (click)="openLg(modalDettaglioGift, g.gift_number)" type="button"><i class="icon-regular i-Magnifi-Glass1"></i></button></td>-->
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<ng-template #modalDettaglioGift let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Dettaglio movimenti gift</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-bordered">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">ID client</th>
+                        <th scope="col">Negozio</th>
+                        <th scope="col">Data operazione</th>
+                        <th scope="col">Valore operazione</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let g of listaMovimentiGift">
+                        <td>{{g.id_client}}</td>
+                        <td>{{g.description}}</td>
+                        <td>{{g.lastop_date | date: 'dd/MM/yyyy'}}</td>
+                        <td>{{g.current_amount | currency:'EUR'}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark btn-rounded" (click)="modal.close('ok')">Ok</button>
+    </div>
+</ng-template>

@@ -1,0 +1,54 @@
+<div class="card o-hidden" style="opacity: 0.8;"
+  [@animate]="{value:'*',params:{y:'120px',opacity:'0',delay:'100ms', duration: '400ms'}}">
+  <div class="row">
+    <div class="col-md-6" style="background-size: cover; background-color: #fff;">
+      <div class="img-responsive center-block" style="padding-left: 10%;padding-right:10%;">
+        <div class="auth-logo text-center" style="margin-top: 10%;">
+          <img  src="assets/images/acamir1.png" alt="logo">
+        </div>
+        
+      </div>
+    </div>
+    <div class="col-md-6 text-center" style="background-size: cover; background-color: #4c6d96;">
+      <!--<div class="pr-3 auth-right" style="opacity: 1;">-->
+      <div class="p-2" style="opacity: 1;">
+        <h1 class="mb-2 text-24 text-center"
+          style="margin-bottom: 0.1rem; margin-top: 1.2rem; width: 100%; color:#FFF; background-color: #4c6d96;">Accedi</h1>
+        <form [formGroup]="signinForm" (ngSubmit)="onSubmit()" style="width: 100%;">
+          <div class="form-group" style="text-align: left;">
+            <label for="username" class="labelsignin">Username</label>
+            <input id="username" class="form-control form-control-rounded" formControlName="username"
+              style="width: 100%; height:20%;" type="username" [ngClass]="{ 'is-invalid': submitted && f.username.errors }">
+            <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+              <div *ngIf="f.username.errors.required">Username è richiesto</div>
+            </div>
+          </div>
+          <div class="form-group" style="text-align: left;">
+            <label for="password" class="labelsignin">Password</label>
+            <input id="password" class="form-control form-control-rounded inputsignin" formControlName="password"
+              type="password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
+            <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+              <div *ngIf="f.password.errors.required">Password è richiesta</div>
+              <div *ngIf="f.password.errors.minlength">Password deve avere una lunghezza minima di 6 caratteri</div>
+            </div>
+          </div>
+          <!--<div class="mt-3 text-center mb-2">
+            <a href="" class="text-muted" routerLink="/sessions/forgot"><u style="color: #FFF;">Password
+                dimenticata?</u></a>
+          </div>-->
+          <!-- <button class="btn btn-rounded btn-primary btn-block mt-2">Sign In</button> -->
+          <btn-loading btnClass="btn-light btn-rounded btn-block mb-3 mt-3" style="background-color: #5a5252 !important;" [loadingText]="loadingText"
+            [loading]="loading">
+            Log-in
+          </btn-loading>
+        </form>
+<!--
+  
+        <button class="btn btn-rounded btn-primary btn-block btn-icon-text mb-3" routerLink="/sessions/signup">
+          Registrati
+        </button>
+      -->
+      </div>
+    </div>
+  </div>
+</div>

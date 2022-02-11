@@ -1,0 +1,47 @@
+.ml-18{
+    margin-left: 0px;
+    width: 100%;
+    height: 100%;
+}
+.card{
+    height: 100% !important;
+}
+.btn-18{
+    margin-left: -18px;
+}
+.ml-6{
+    margin-left: -6px;
+}
+.carica-preset{
+    background-color:#3CBABD;
+    color:#FFFFFF;
+}
+
+.noround{
+    border-radius: 0%;
+}
+
+.input-group.hidden {
+    width: 0 !important;
+    margin: 0;
+    border: none;
+    padding: 0;
+}
+
+.custom-day {
+    text-align: center;
+    padding: 0.185rem 0.25rem;
+    display: inline-block;
+    height: 2rem;
+    width: 2rem;
+}
+.custom-day.focused {
+    background-color: #e6e6e6;
+}
+.custom-day.range, .custom-day:hover {
+    background-color: rgb(2, 117, 216);
+    color: white;
+}
+.custom-day.faded {
+    background-color: rgba(2, 117, 216, 0.5);
+}

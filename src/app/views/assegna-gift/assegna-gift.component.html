@@ -1,0 +1,70 @@
+<div class="breadcrumb">
+    <h1>Assegna Gift</h1>
+</div>
+
+<div class="separator-breadcrumb border-top"></div>
+
+<div class="row">
+  <div class="col-md-4">
+    <input class="form-control" type="text" id="filtro" (keyup)="filtra()" placeholder="Filtra per package n° ...">
+  </div>
+</div>
+<br>
+
+<div class="container-fluid">
+  <div class="row">
+      <table id="tabellaDaFiltrare" class="table table-bordered">
+          <thead class="thead-dark">
+          <tr>
+              <th scope="col">ID Documento</th>
+              <th scope="col">Data</th>
+              <th scope="col">Package N.</th>
+              <th scope="col">Pezzi gift</th>                       
+          </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let g of listaGiftDaAssegnare">
+              <th scope="row">{{g.id}}</th>
+              <td>{{g.date}}</td>
+              <td>{{g.package_no}}</td>
+              <td>{{g.pieces}}</td>                       
+              <td style="text-align: center;"><button class="btn btn-info" (click)="openLg(modalDettaglioGift, g.package_no)" type="button">Assegna</button></td>
+          </tr>
+          </tbody>
+      </table>
+  </div>
+</div>
+
+
+<ng-template #modalDettaglioGift let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Assegna gift a store</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="statoGiftForm" (ngSubmit)="cerca()">
+      <div class="row">
+          <div class="col-md-12 form-group mb-3">
+              <label for="picker1">Negozio</label>
+              <select class="form-control" formControlName="negozio">
+                  <option [ngValue]="n.id_client" *ngFor="let n of listaNegozi">{{n.description}}</option>
+              </select>
+          </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="modal-footer">
+    <btn-loading type="button" btnClass="btn-primary btn-lg" [loading]="loadingS" (click)="modal.close('ok')">Conferma</btn-loading>
+    <!-- <button type="button" class="btn btn-outline-dark btn-rounded" (click)="modal.close('ok')">Ok</button> -->
+  </div>
+</ng-template>
+
+<div class="module-loader" *ngIf="moduleLoading">
+  <div class="spinner spinner-bubble spinner-bubble-primary mr-3"></div>
+</div>
+
+
+

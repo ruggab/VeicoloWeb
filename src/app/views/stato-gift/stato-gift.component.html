@@ -1,0 +1,236 @@
+<div class="breadcrumb">
+    <h1>Stato Gift</h1>
+    <ul>
+        <li><a href="#">Gift emesse</a></li>
+    </ul>
+</div>
+
+<div class="separator-breadcrumb border-top"></div>
+
+<div class="row mb-4" *ngIf="!filtroAvanzato">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <div class="card mb-4 noround">
+            <div class="card-body">
+                <div class="card-title mb-3">Filtra per gift number</div>
+                <form [formGroup]="statoGiftForm" (ngSubmit)="submit()">
+                    <div class="row">
+
+                        <div class="col-md-12 form-group mb-3">
+                            <label for="phone">GIFT n° (min. 7 caratteri)</label>
+                            <input class="form-control" id="phone" formControlName="gnumber"
+                                placeholder="Inserisci il numero della giftcard..." type="gnumber" />
+                            <!-- <div *ngIf="submitted && f.gnumber.errors" class="invalid-feedback">
+                            <div *ngIf="f.gnumber.errors.minlength">La giftcard deve avere una lunghezza minima di 6 caratteri!</div>
+                            </div> -->
+
+                        </div>
+                        <br>
+
+                        <div class="col-md-6 text-center">
+                            <button type="submit" class="btn btn-primary btn-lg"
+                                [disabled]="f.gnumber.value.length < 7">Cerca</button>
+                        </div>
+
+                        <div class="col-md-6 text-center">
+                            <btn-loading type="button" btnClass="btn-light btn-lg" (click)="attivaFiltroAvanzato()">
+                                Filtro avanzato</btn-loading>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3"></div>
+</div>
+
+<div class="row mb-4" *ngIf="filtroAvanzato">
+    <div class="col-md-12">
+        <div class="card mb-4 noround">
+            <div class="card-body">
+                <div class="card-title mb-3">Filtro avanzato</div>
+                <form [formGroup]="statoGiftForm" (ngSubmit)="cerca()">
+                    <div class="row">
+
+                        <div class="col-md-4 form-group mb-3">
+                            <label for="negozio">Negozio</label>
+                            <select class="form-control" formControlName="negozio">
+                                <option value="">ALL</option>
+                                <option [ngValue]="n.id_client" *ngFor="let n of listaNegozi">{{n.description}}</option>
+                            </select>
+                        </div>
+
+
+
+                        <div class="col-md-4 form-group mb-3">
+                            <label for="picker1">Status</label>
+                            <select class="form-control" formControlName="status">
+                                <option value="">ALL</option>
+                                <option *ngFor="let s of listaStatus" [ngValue]="s">{{s}}</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-4 form-group mb-3">
+                            <label for="picker1">Tipo</label>
+                            <select class="form-control" formControlName="type">
+                                <option value="">ALL</option>
+                                <option [ngValue]="t" *ngFor="let t of listaTipi">{{t}}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-md-2"></div>
+
+                        <div class="col-md-4 form-group mb-3 text-center">
+                            <div class="col-md-12">
+                                <label for="filtraPerData">Filtra per data?</label>
+                            </div>
+                            <div class="col-md-12 text-center">
+                                <label class="switch switch-primary mt-2">
+                                    <input [(ngModel)]="filtraPerData" [ngModelOptions]="{standalone: true}" name="filtraPerData" type="checkbox" [checked]="filtraPerData">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 form-group" *ngIf="filtraPerData">
+                            <div class="input-group hidden">
+                                <input name="datepicker" class="form-control" style="display: none;" ngbDatepicker
+                                    #datepicker="ngbDatepicker" [autoClose]="'outside'"
+                                    (dateSelect)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="t"
+                                    outsideDays="hidden" [startDate]="fromDate!" tabindex="-1">
+                                <ng-template #t let-date let-focused="focused">
+                                    <span class="custom-day" [class.focused]="focused" [class.range]="isRange(date)"
+                                        [class.faded]="isHovered(date) || isInside(date)"
+                                        (mouseenter)="hoveredDate = date" (mouseleave)="hoveredDate = null">
+                                        {{ date.day }}
+                                    </span>
+                                </ng-template>
+                            </div>
+
+                            <label for="datePicker">Data di emissione tra</label>
+                            <div class="input-group">
+                                <input #dpFromDate class="form-control" name="dpFromDate"
+                                    [value]="changeDatePlaceholder(fromDate, toDate)" [disabled]="true"
+                                    (input)="fromDate = validateInput(fromDate, dpFromDate.value)">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary calendar" (click)="datepicker.toggle()"
+                                        type="button"><i class="icon-regular i-Calendar-4"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2"></div>
+                    </div>
+
+                    <br>
+
+                    <div class="row">
+                        <div class="col-md-6 text-center">
+                            <btn-loading type="submit" btnClass="btn-primary btn-lg" [loading]="loadingS">Cerca
+                            </btn-loading>
+                        </div>
+
+                        <div class="col-md-6 text-center">
+                            <btn-loading type="button" btnClass="btn-light btn-lg" (click)="attivaFiltroAvanzato()">
+                                Filtra per Gift Number</btn-loading>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid" *ngIf="listaGift.length > 0">
+    <div class="row">
+        <div class="col-md-9"></div>
+        <div class="col-md-3">
+            <btn-loading type="button" style="float: right;" btnClass="btn-info btn-lg" (click)="downloadFile()">Esporta
+                CSV</btn-loading>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Gift Number</th>
+                    <th scope="col">ID client</th>
+                    <th scope="col">Negozio</th>
+                    <th scope="col">Data di attivazione</th>
+                    <th scope="col">Data di scadenza</th>
+                    <th scope="col">Valore iniziale</th>
+                    <th scope="col">Saldo</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Tipo</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let g of listaGift">
+                    <th scope="row">{{g.gift_number}}</th>
+                    <td>{{g.id_client}}</td>
+                    <td>{{g.description}}</td>
+                    <td>{{g.issue_date | date: 'dd/MM/yyyy'}}</td>
+                    <td>{{g.expiration_date | date: 'dd/MM/yyyy'}}</td>
+                    <td>{{g.initial_amount | currency:'EUR'}}</td>
+                    <td>{{g.current_amount | currency:'EUR'}}</td>
+                    <td>{{g.status_description}}</td>
+                    <td>{{g.type}}</td>
+                    <td style="text-align: center;"><button class="btn btn-info"
+                            (click)="openLg(modalDettaglioGift, g.gift_number)" type="button"><i
+                                class="icon-regular i-Magnifi-Glass1"></i></button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<ng-template #modalDettaglioGift let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Dettaglio movimenti gift</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-12 pull-right">
+                <button class="btn btn-info noPrint pull-right" (click)="stampa();" type="button">Stampa</button>
+            </div>
+        </div>
+        <br>
+        <div class="row" id="tabellaDaStampare">
+
+            <div class="col-md-12">
+                <table class="table table-bordered">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">ID client</th>
+                            <th scope="col">Negozio</th>
+                            <th scope="col">Data operazione</th>
+                            <th scope="col">Valore operazione</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let g of listaMovimentiGift">
+                            <td>{{g.id_client}}</td>
+                            <td>{{g.description}}</td>
+                            <td>{{g.lastop_date | date: 'dd/MM/yyyy'}}</td>
+                            <td>{{g.current_amount | currency:'EUR'}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark btn-rounded" (click)="modal.close('ok')">Ok</button>
+    </div>
+</ng-template>
+
+<div class="module-loader" *ngIf="loading">
+    <div class="spinner spinner-bubble spinner-bubble-primary mr-3"></div>
+</div>

@@ -1,0 +1,28 @@
+<div class="row text-center">
+
+    <div class="col-md-12 text-center mx-auto">
+
+        <div *ngIf="success; else elseBlock">
+            <div class="alert alert-success" role="alert">
+                <h3 style="color: #3CBABD;">Il team di Divisione HSE ha il piacere di informarti che la tua email è stata correttamente
+                    verificata.
+                    Tra pochi istanti sarai automaticamente reindirizzato alla schermata d’accesso…</h3>
+                <br>
+                <h6 style="color: #3CBABD;">Tra pochi istanti sarai automaticamente reindirizzato alla schermata d’accesso… </h6>
+            </div>
+        </div>
+        <ng-template #elseBlock>
+            <div class="alert alert-danger" role="alert">
+                <h3 style="color: #3CBABD;">Non è stato possibile verificare la tua email.</h3>
+                <h4 style="color: #3CBABD;"> Normalmente questo non succede, riprova tra qualche minuto.</h4>
+                <br>
+                <h6 style="color: #3CBABD;">Se il problema persiste, contatta <a
+                        style="color: rgb(56, 74, 164); text-decoration: underline;"
+                        href="mailto:supporto@divisionehse.it">supporto@divisionehse.it</a></h6>
+            </div>
+        </ng-template>
+
+
+
+    </div>
+</div>

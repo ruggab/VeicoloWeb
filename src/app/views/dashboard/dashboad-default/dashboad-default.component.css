@@ -1,0 +1,17 @@
+.table{
+    margin-bottom: 0 !important;
+}
+
+.headerColor{
+    background-color: #3CBABD;
+    color:#FFF;
+    text-align: center;    
+}
+.headerColor th{
+    vertical-align: middle;
+}
+
+.card{
+    border-radius: 0% !important;
+
+}

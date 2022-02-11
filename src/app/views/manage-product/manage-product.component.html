@@ -1,0 +1,128 @@
+<div class="breadcrumb">
+  <h1>Manage Product</h1>
+</div>
+
+<div class="separator-breadcrumb border-top"></div>
+<div class="row mb-4">
+  <div class="col-md-3"></div>
+  <div class="col-md-6">
+    <div class="card mb-4 noround">
+      <div class="card-body">
+        <div class="card-title mb-3">Filtro ricerca Prodotti</div>
+        <form [formGroup]="ricercaProdForm" (ngSubmit)="searchProduct()">
+          <div class="row">
+            <div class="col-md-6 form-group mb-3">
+              <label for="id_woo_commerce">Id Woo Commerce</label>
+              <input class="form-control" id="id_woo_commerce" formControlName="id_woo_commerce" placeholder="Id Woo Commerce"
+                type="id_woo_commerce" [ngClass]="{'is-invalid': submitted && f.id_woo_commerce.errors }" />
+              <div *ngIf="submitted && f.id_woo_commerce.errors" class="invalid-feedback">
+                <div *ngIf="f.id_woo_commerce.errors.required">id woo commerce</div>
+              </div>
+            </div>
+            <div class="col-md-6 form-group mb-3">
+              <label for="codart">Codice Articolo</label>
+              <input class="form-control" id="codart" formControlName="codart" placeholder="Cod Articolo"
+                type="codart" [ngClass]="{'is-invalid': submitted && f.codart.errors }" />
+              <div *ngIf="submitted && f.codart.errors" class="invalid-feedback">
+                <div *ngIf="f.codart.errors.required">Cod Art obbligatario!</div>
+              </div>
+            </div>
+            <div class="col-md-6 form-group mb-3">
+              <label for="stagione">Stagione</label>
+              <select class="form-control" formControlName="stagione">
+                <option [ngValue]="l" *ngFor="let l of listStagione">{{l}}</option>
+              </select>
+            </div>
+            <div class="col-md-6 form-group mb-3">
+              <label for="brand">Brand</label>
+              <select class="form-control" formControlName="brand">
+                <option [ngValue]="l" *ngFor="let l of listBrand">{{l}}</option>
+              </select>
+            </div>
+            <br>
+            <div class="col-md-12 text-center">
+              <!--<btn-loading type="submit" btnClass="btn-primary btn-lg" [loading]="loading">Attiva</btn-loading>-->
+              <btn-loading type="submit" btnClass="btn-primary btn-lg" [loading]="loading">Ricerca</btn-loading>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3"></div>
+</div>
+<br>
+<div class="row">
+  <div class="col-md-2 pl-0">
+    <btn-loading type="button" btnClass="btn btn-info btn-lg pull-right" [loading]="loadingDel" (click)="cancellaSelezionati()">
+      Cancella
+    </btn-loading>
+  </div>
+  <div class="col-md-2 pl-0">
+    <btn-loading type="button" btnClass="btn btn-info btn-lg pull-right" [loading]="loadingMod" (click)="aggiornaSelezionati()">
+      Aggiorna
+    </btn-loading>
+  </div>
+  <div class="col-md-2 pl-0">
+    <btn-loading type="button" btnClass="btn btn-info btn-lg pull-right" [loading]="loadingcsv" (click)="exportCSV()">
+      Esporta CSV
+    </btn-loading>
+  </div>
+</div>
+<br>
+<div class="row">
+  <table class="table table-bordered">
+    <thead class="thead-dark">
+      <tr>
+        <th class="text-center">
+            <input type="checkbox" name="all"  [checked]="isAllChecked()" (change)="checkAll($event)"/>
+        </th>
+        <th scope="col">id_woo_commerce</th>
+        <th scope="col">titolo</th>
+        <th scope="col">category_name</th>
+        <th scope="col">codart</th>
+        <th scope="col">progressivo</th>
+        <th scope="col">codcol</th>
+        <th scope="col">stagione</th>
+        <th scope="col">target</th>
+        <th scope="col">brand</th>
+        <th scope="col">prezzo</th>
+        <th scope="col">percentuale</th>
+        <th scope="col">listinoweb1</th>
+        <th scope="col">qtaweb</th>
+   
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let l of listProdParent; let i=index;">
+        <td class="text-center">
+          <input type="checkbox"  value="{{l.id_woo_commerce}}" [(ngModel)]="listProdParent[i].checked"/>
+        </td>
+        <th scope="row">{{l.id_woo_commerce}}</th>
+        <td>{{l.titolo}}</td>
+        <td>{{l.category_name}}</td>
+        <td>{{l.codart}}</td>
+        <td>{{l.progressivo}}</td>
+        <td>{{l.codcol}}</td>
+        <td>{{l.stagione}}</td>
+        <td>{{l.targetVal}}</td>
+        <td>{{l.brand}}</td>
+        <td>{{l.prezzo}}</td>
+        <td>{{l.percentuale}}</td>
+        <td>{{l.listinoweb1}}</td>
+        <td>{{l.qtaweb}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+
+
+<div class="module-loader" *ngIf="moduleLoading">
+  <div class="spinner spinner-bubble spinner-bubble-primary mr-3"></div>
+</div>
+
+<div class="module-loader" *ngIf="loadingcsv">
+  <div class="spinner spinner-bubble spinner-bubble-primary mr-3"></div>
+</div>

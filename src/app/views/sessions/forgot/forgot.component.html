@@ -1,0 +1,60 @@
+<div class="card o-hidden" style="opacity: 0.8;"
+  [@animate]="{value:'*',params:{y:'120px',opacity:'0',delay:'100ms', duration: '400ms'}}">
+  <div class="row">
+    <div class="col-sm-6" style="background-color: #000;">
+
+      <div class="auth-logo text-center mb-4" style="width: 25%;">
+        <img class="card-img-top" src="assets/images/logo-web.png" alt="logo">
+      </div>
+    </div>
+    <div class="col-sm-6 text-left" style="background-size: cover; background-color: #000;">
+
+      <h1 class="pr-3 text-12 text-left"
+        style="margin-bottom: 0.1rem; margin-top: 1.2rem; width: 100%; color:#FFF; background-color: #000;">Per
+        recuperare la tua password inserisci l'email che hai utilizzato in fase di registrazione.</h1>
+      <br>
+
+      <h1 class="pl-3 text-14" style="color:#FFF; background-color: #000;">Recupera password</h1>
+      <div class="pr-3 pl-3">
+      <form [formGroup]="forgotForm" (ngSubmit)="onSubmit()">
+        <div class="form-group" style="text-align:left;">
+          <label for="email" class="labelforgot">La tua email</label>
+          <input class="form-control form-control-rounded inputforgot mb-3" formControlName="email" type="email"          
+          [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+          <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+            <div *ngIf="f.email.errors.required">Email è richiesta</div>
+            <div *ngIf="f.email.errors.email"> Indirizzo email non valido</div>
+            <div *ngIf="f.email.errors.pattern">Indirizzo email non valido</div>
+          </div>
+
+        </div>
+        <!--<button class="btn btn-primary btn-block btn-rounded pr-3 pl-3 inputforgot">Invia</button>-->
+        <btn-loading btnClass=" btn btn-primary btn-rounded btn-block" [loadingText]="loadingText" [loading]="loading">
+          Invia
+        </btn-loading>
+      </form>
+      <br>
+      <div class="text-center">
+        <a href="" class="text-muted" routerLink="/sessions/signin"><u>oppure torna all'accesso</u></a>
+        
+      </div>
+      <br>
+      </div>
+
+      <!--<div class="pr-3 auth-right">-->
+      <!--<button class="btn btn-outline-primary btn-outline-email btn-block btn-icon-text btn-rounded" routerLink="/sessions/signup">
+            <i class="i-Mail-with-At-Sign"></i>
+            Sign up with Email
+          </button>
+          <button class="btn btn-outline-primary btn-outline-google btn-block btn-icon-text btn-rounded">
+            <i class="i-Google-Plus"></i>
+            Sign in with Google
+          </button>
+          <button class="btn btn-outline-primary btn-outline-facebook btn-block btn-icon-text btn-rounded">
+            <i class="i-Facebook-2"></i>
+            Sign in with Facebook
+          </button>-->
+      <!--</div>-->
+
+    </div>
+  </div>
