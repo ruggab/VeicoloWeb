@@ -1,5 +1,5 @@
 <div class="breadcrumb">
-  <h1>Creazione Azienda</h1>
+  <h1>Gestione Azienda</h1>
 </div>
 
 <div class="separator-breadcrumb border-top"></div>
@@ -8,37 +8,47 @@
   <div class="col-md-6">
     <div class="card mb-4 noround">
       <div class="card-body">
-        <div class="card-title mb-3">Creazione Azienda</div>
-        <form [formGroup]="creaGiftForm" (ngSubmit)="creaGift()">
+        <div class="card-title mb-3">Filtro Ricerca Azienda</div>
+        <form [formGroup]="cercaAziendaForm" (ngSubmit)="cercaAzienda()">
           <div class="row">
             <div class="col-md-6 form-group mb-3">
-              <label for="phone">Quantità GIFT da generare</label>
-              <input class="form-control" id="qtagift" formControlName="qtagift" placeholder="Quantità GIFT"
-                type="qtagift" [ngClass]="{'is-invalid': submitted && f.qtagift.errors }" />
-              <div *ngIf="submitted && f.qtagift.errors" class="invalid-feedback">
-                <div *ngIf="f.qtagift.errors.required">Quantità GIFTCARD è obbligatario!</div>
+              <label for="matricola">Matricola Azienda</label>
+              <input class="form-control" id="matricola" formControlName="matricola" placeholder="Matricola"
+                type="matricola" [ngClass]="{'is-invalid': submitted && f.matricola.errors }" />
+              <div *ngIf="submitted && f.matricola.errors" class="invalid-feedback">
+                <div *ngIf="f.matricola.errors.required">La Matricola è obbligataria!</div>
               </div>
             </div>
             <div class="col-md-6 form-group mb-3">
-              <label for="language">Lingua</label>
-              <select class="form-control" formControlName="language">
-                <option [ngValue]="l" *ngFor="let l of listLanguage">{{l}}</option>
-              </select>
-              <div class="invalid-feedback" *ngIf="f.language.errors">
-                La lingua è obbligatoria
+              <label for="nominativoRef">Nominativo Referente</label>
+              <input class="form-control" id="nominativoRef" formControlName="nominativoRef" placeholder="Nominativo"
+                type="nominativoRef" [ngClass]="{'is-invalid': submitted && f.nominativoRef.errors }" />
+              <div *ngIf="submitted && f.nominativoRef.errors" class="invalid-feedback">
+                <div *ngIf="f.nominativoRef.errors.required">Il nominativo è obbligataria!</div>
               </div>
-              <!--div *ngIf="submitted && f.gnumber.errors" class="invalid-feedback">
-                             <div *ngIf="f.gnumber.errors.required">Numero GIFTCARD è obbligatario!</div>
-                            </div>-->
             </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 form-group mb-3">
+              <label for="mailRef">E-Mail Referente</label>
+              <input class="form-control" id="mailRef" formControlName="mailRef" placeholder="E-Mail"
+                type="mailRef" [ngClass]="{'is-invalid': submitted && f.mailRef.errors }" />
+              <div *ngIf="submitted && f.mailRef.errors" class="invalid-feedback">
+                <div *ngIf="f.mailRef.errors.required">L'E-Mail è obbligataria!</div>
+              </div>
+            </div>
+            <div class="col-md-6 form-group mb-3">
+              <label for="telRef">Telefono Referente</label>
+              <input class="form-control" id="telRef" formControlName="telRef" placeholder="Telefono" />
+            </div>
+          </div>
 
             <br>
 
             <div class="col-md-12 text-center">
-              <!--<btn-loading type="submit" btnClass="btn-primary btn-lg" [loading]="loading">Attiva</btn-loading>-->
-              <btn-loading type="submit" btnClass="btn-primary btn-lg" [loading]="loading">Genera</btn-loading>
+              <btn-loading type="submit" btnClass="btn-primary btn-lg" [loading]="loading">Cerca</btn-loading>
             </div>
-          </div>
+         
         </form>
       </div>
     </div>
@@ -47,80 +57,36 @@
 </div>
 <br>
 <div class="row">
-  <div class="col-md-12 pl-0">
-    <button class="btn btn-info btn-lg pull-right" (click)="open(modalSettings)" type="button">Impostazioni <i
-        class="icon-regular i-Gear" style="vertical-align: middle;"></i></button>
-  </div>
-</div>
-<br>
-<div class="row">
   <table class="table table-bordered">
-    <thead class="thead-dark">
+    <thead class="thead-blue">
       <tr>
-        <th scope="col">ID Documento</th>
-        <th scope="col">Data</th>
-        <th scope="col">Lingua</th>
-        <th scope="col">Quantità Gift</th>
+        <th scope="col">Matricola</th>
+        <th scope="col">Nominativo Referente</th>
+        <th scope="col">E-Mail Referente</th>
+        <th scope="col">Telefono Referente</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let l of listDocument">
-        <th scope="row">{{l.doc_number}}</th>
-        <td>{{l.date}}</td>
-        <td>{{l.language}}</td>
-        <td>{{l.qta}}</td>
-        <!--<td style="text-align: center;"><button class="btn btn-info" (click)="openLg(modalDettaglioGift, g.gift_number)" type="button"><i class="icon-regular i-Magnifi-Glass1"></i></button></td>-->
-        <td style="text-align: center;"><button class="btn btn-info btn-lg" (click)="openLg(modalDettaglioGift, l.doc_number)"
-            type="button"><i class="icon-regular i-Magnifi-Glass1"></i></button></td>
+      <tr *ngFor="let l of listAzienda">
+        <th scope="row">{{l.matricola}}</th>
+        <td>{{l.nominativoRef}}</td>
+        <td>{{l.mailRef}}</td>
+        <td>{{l.telRef}}</td>
+          <td style="text-align: center;">
+            <button class="btn btn-info btn-lg" (click)="openLg(modalSettings, l.id)" type="button">
+              <i class="icon-regular i-Magnifi-Glass1"></i>
+            </button>
+          </td>
         <td style="text-align: center;">
-          <btn-loading type="button" btnClass="btn btn-info btn-lg" (click)="exportCSV(l.doc_number)">Esporta CSV</btn-loading></td>
+          <btn-loading type="button" btnClass="btn btn-info btn-lg" (click)="exportCSV()">Esporta CSV</btn-loading>
+        </td>
       </tr>
     </tbody>
   </table>
 </div>
-<ng-template #modalDettaglioGift let-modal>
-  <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Dettaglio documento</h4>
-    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="card o-hidden">
-          <ngx-datatable style="height: calc(100vh - 270px); box-shadow: none;" class="material"
-            [columnMode]="'standard'" [headerHeight]="50" [footerHeight]="50" [rowHeight]="60" [scrollbarV]="true"
-            [limit]="10" [rows]="listDocumentsDetailGift$">
-            <ngx-datatable-column prop="n_riga" name="n_riga" [width]="100">
-              <ng-template ngx-datatable-header-template>
-                N. Riga
-              </ng-template>
-            </ngx-datatable-column>
-            <ngx-datatable-column prop="id_document" name="id_document" [width]="150">
-              <ng-template ngx-datatable-header-template>
-                ID Documento
-              </ng-template>
-            </ngx-datatable-column>
-            <ngx-datatable-column prop="package_no" name="package_no" [width]="200">
-              <ng-template ngx-datatable-header-template>
-                N. Package
-              </ng-template>
-            </ngx-datatable-column>
-            <ngx-datatable-column name="epc" [width]="200">
-              <ng-template ngx-datatable-header-template>
-                EPC
-              </ng-template>
-            </ngx-datatable-column>
-          </ngx-datatable>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark btn-rounded" (click)="modal.close('ok')">Ok</button>
-  </div>
-</ng-template>
+
+
+
 
 <ng-template #modalSettings let-modal>
   <div class="modal-header">
@@ -131,34 +97,25 @@
     </button>
   </div>
   <div class="modal-body">
-
-
     <div class="row">
       <div class="col-md-12 text-center">
-        <h5>Quantità Gift per package: <span>{{qta}}</span></h5>
+        <h5>matricola: <span>{{matricola}}</span></h5>
       </div>
     </div>
     <br>
-
     <div class="row text-center">
-
-      <form [formGroup]="updateQtaForm" class="mx-auto">
+      <form [formGroup]="updateAziendaForm" class="mx-auto">
         <div class="col-md-12 form-group mb-3 text-center">
-          <label for="qta">Nuova quantità GIFT per package</label>
-          <input class="form-control" id="qta" formControlName="qta" placeholder="Quantità GIFT">        
-          <btn-loading type="submit" btnClass="btn btn-primary mt-2" [loading]="loading2" (click)="updateQuantity()">Modifica</btn-loading>
+          <label for="matricola">Matricola</label>
+          <input class="form-control" id="matricola" formControlName="matricola" placeholder="Matricola">        
+          <btn-loading type="submit" btnClass="btn btn-primary mt-2" [loading]="loading2" (click)="updateAzienda()">Modifica</btn-loading>
         </div>
       </form>
-
     </div>
-
-
   </div>
-
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-dark btn-rounded" (click)="modal.close('ok')">Chiudi</button>
   </div>
-
 </ng-template>
 
 

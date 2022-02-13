@@ -4,14 +4,10 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
-import { GiftDocument } from 'src/app/model/GiftDocument';
 import { ToastrService } from 'ngx-toastr';
-import { GiftDocumentDetails } from 'src/app/model/GiftDocumentDetails';
-import { GenerateGiftRequest } from 'src/app/model/GenerateGiftRequest';
-import { GenerateGiftResponse } from 'src/app/model/GenerateGiftResponse';
-import { GiftToExport } from 'src/app/model/GiftToExport';
 import { saveAs } from 'file-saver';
-import { UpdateQuantityRequest } from 'src/app/model/UpdateQuantityRequest';
+import { Azienda } from 'src/app/model/Azienda';
+import { GenerateAziendaResponse } from 'src/app/model/GenerateAziendaResponse';
 
 @Component({
   selector: 'app-creazione-azienda',
@@ -24,15 +20,13 @@ export class CreazioneAziendaComponent implements OnInit {
   loading2;
   loadingcsv;
   moduleLoading;
-  creaGiftForm : FormGroup;
-  updateQtaForm: FormGroup;
-  listLanguage : string[] = [];
-  listDocument : GiftDocument[] =[];
-  listDocumentsDetailGift$ : GiftDocumentDetails[] = [];
-  listaGiftToExport : GiftToExport[] = [];
+  cercaAziendaForm : FormGroup;
+  creaAziendaForm : FormGroup;
+  updateAziendaForm: FormGroup;
+  
+  listAzienda : Azienda[] =[];
   esitoGenerazione;
-  documentoGenerato;
-  qta : number;
+  aziendaGenerata;
   submitted = false;
   
   constructor(
@@ -43,50 +37,46 @@ export class CreazioneAziendaComponent implements OnInit {
     private toastr : ToastrService
   ) {
 
-    this.creaGiftForm = this.fb.group({
-      qtagift : ['',Validators.required],
-      language : ['',Validators.required]
+    this.creaAziendaForm = this.fb.group({
+      matricola : ['',Validators.required],
+      nominativoRef : ['',Validators.required],
+      mailRef : ['',Validators.required],
+      telRef : ['']
     });
     //this.creaGiftForm.controls['language'].setValue(this.listLanguage[0], {onlySelf: true});
-    this.updateQtaForm= this.fb.group({
-      qta :['',Validators.required]
-    })
+    this.updateAziendaForm= this.fb.group({
+      matricola : ['',Validators.required],
+      nominativoRef : ['',Validators.required],
+      mailRef : ['',Validators.required],
+      telRef : ['']
+    });
+
+    this.cercaAziendaForm = this.fb.group({
+      matricola : ['',],
+      nominativoRef : [''],
+      mailRef : [''],
+      telRef : ['']
+    });
     
   }
 
   ngOnInit() {
-    this.getDocuments();
-    this.getLanguage();
-    this.getQuantity();
-
+    this.getListaAziende();
   }
 
-  get f() { return this.creaGiftForm.controls; }
+  get f() { return this.creaAziendaForm.controls; }
 
-  getLanguage(){
-    this.http.get<any[]>(`${environment.apiUrl}giftcard/getlanguages`)
-    .subscribe(
-      res =>{
-        console.log(res);
-        this.listLanguage=res;
-
-      },
-      err =>{
-        console.log(err);
-      }
-    )
-  }
-
-  getDocuments(){
+ 
+  getListaAziende(){
     this.moduleLoading = true;
-    this.http.get<GiftDocument[]>(`${environment.apiUrl}giftcard/getdocuments`)
+    this.http.get<Azienda[]>(`${environment.apiUrl}getListAzienda`)
     .subscribe(
       res =>{
         console.log(res);
         if (res.length!==0) {
-          this.listDocument= res;
+          this.listAzienda= res;
         } else {
-          this.toastr.error('Nessun documento trovato!','GIFT Document',{progressBar: false});
+          this.toastr.error('Nessun Azienda trovata!','Azienda',{progressBar: false});
         }
         this.moduleLoading = false;
       },
@@ -100,13 +90,13 @@ export class CreazioneAziendaComponent implements OnInit {
 
   exportCSV(doc_number){
     this.loadingcsv = true;
-    this.http.get<GiftToExport[]>(`${environment.apiUrl}giftcard/getgifttoexport/` + doc_number)
+    this.http.get<Azienda[]>(`${environment.apiUrl}getListAzienda`)
     .subscribe(
       res =>{
         console.log(res);
         if(res.length!==0) {
-          this.listaGiftToExport= res;
-          this.downloadCSV(this.listaGiftToExport);
+          this.listAzienda = res;
+          this.downloadCSV(this.listAzienda);
           this.loadingcsv = false;
         } else{
           this.toastr.error('Nessun documento trovato!','GIFT Document',{progressBar: false});
@@ -132,65 +122,79 @@ export class CreazioneAziendaComponent implements OnInit {
     
   }
 
-  creaGift(){
+
+  cercaAzienda(){
     this.submitted = true;
-    let generateGiftRequest : GenerateGiftRequest = new GenerateGiftRequest();
-
-    generateGiftRequest.gift_qta = this.creaGiftForm.controls.qtagift.value;
-    generateGiftRequest.gift_language = this.creaGiftForm.controls.language.value;
-
-    if (this.creaGiftForm.invalid) {
+    let azienda : Azienda = new Azienda();
+    azienda.matricola = this.cercaAziendaForm.controls.matricola.value;
+    azienda.nominativoRef = this.cercaAziendaForm.controls.nominativoRef.value;
+    azienda.mailRef = this.cercaAziendaForm.controls.mailRef.value;
+    azienda.telRef = this.cercaAziendaForm.controls.telRef.value;
+    if (this.cercaAziendaForm.invalid) {
       return;
     }
-    console.log(generateGiftRequest);
+    console.log(azienda);
     this.loading=true;
-    this.http.post<GenerateGiftResponse>(`${environment.apiUrl}giftcard/generategift`, generateGiftRequest).subscribe(res => {
-      console.log(res);
-      if(res.esito === "OK"){
-          this.documentoGenerato = res.n_documento;
+    
+    this.http.post<Azienda[]>(`${environment.apiUrl}getListAziendaByFilter`, azienda).subscribe(
+        res =>{
+          console.log(res);
+          if (res.length!==0) {
+            this.listAzienda= res;
+          } else {
+            this.toastr.error('Nessun Azienda trovata!','Azienda',{progressBar: false});
+          }
           this.loading=false;
-          this.getDocuments();
-          this.toastr.success('Gift generate con successo!','Info',{progressBar: false});          
+        },
+        err =>{
+          console.log(err);        
+          this.loading=false;
+        }
+      )
+  }
+
+  creaAzienda(){
+    this.submitted = true;
+    let azienda : Azienda = new Azienda();
+    azienda.matricola = this.creaAziendaForm.controls.matricola.value;
+    azienda.nominativoRef = this.creaAziendaForm.controls.nominativoRef.value;
+    azienda.mailRef = this.creaAziendaForm.controls.mailRef.value;
+    azienda.telRef = this.creaAziendaForm.controls.telRef.value;
+    if (this.creaAziendaForm.invalid) {
+      return;
+    }
+    console.log(azienda);
+    this.loading=true;
+    this.http.post<GenerateAziendaResponse>(`${environment.apiUrl}generateAzienda`, azienda).subscribe(res => {
+      if(res){
+          this.aziendaGenerata = res.id;
+          this.loading=false;
+          this.getListaAziende();
+          this.toastr.success('Azienda generata con successo!','Info',{progressBar: false});          
         } else {
           this.loading=false;
-          this.getDocuments();
-          this.toastr.error('Errore nella generazione delle GIFT!','Errore',{progressBar: false});
+          this.getListaAziende();
+          this.toastr.error('Errore nella generazione dell\' Azienda!','Errore',{progressBar: false});
         }
-     
     }, err => {
       console.log(err);
-      this.toastr.error('Errore nella generazione delle GIFT!','Errore',{progressBar: false});
+      this.toastr.error('Errore nella generazione dell\' Azienda!','Errore',{progressBar: false});
     })
-
-
   }
 
-  getQuantity(){
-    this.http.get<number>(`${environment.apiUrl}giftcard/getlotsize`)
-    .subscribe(
-      res =>{
-        console.log(res);
-        this.qta=res;
   
-      },
-      err =>{
-        console.log(err);
-      }
-    )
-  }
 
-  updateQuantity(){
+  updateAzienda(){
    
-    let qta : number = this.updateQtaForm.controls.qta.value;
-    let u : UpdateQuantityRequest = new UpdateQuantityRequest();
-    u.qta = qta;
+    let aziendaUp : Azienda = new Azienda();
+    aziendaUp.matricola = this.updateAziendaForm.controls.matricola.value;
 
     this.loading2=true;
-    this.http.post<any>(`${environment.apiUrl}giftcard/updatelotsize`, u)
+    this.http.post<any>(`${environment.apiUrl}updateAzienda`, aziendaUp)
     .subscribe(
       res =>{
         this.loading2=false;
-        this.qta = qta;
+        //this.qta = qta;
         this.toastr.success('Quantità aggiornata con successo!','Quantità aggiornata',{progressBar: false});
       },
       err =>{
@@ -203,19 +207,6 @@ export class CreazioneAziendaComponent implements OnInit {
   }
 
   openLg(content, id_document) {
-
-    this.listDocumentsDetailGift$ = [];
-    this.moduleLoading = true;
-    console.log("id_document"+id_document)
-    this.http.get<GiftDocumentDetails[]>(`${environment.apiUrl}giftcard/getdocumentsdetails/`+id_document).subscribe(res => {
-      console.log(res);
-      this.listDocumentsDetailGift$ = res;
-      this.moduleLoading = false;
-    }, err => {
-      console.log(err);
-      this.moduleLoading = false;
-
-    });
 
     this.modalService.open(content, { ariaLabelledBy: 'modalsos', size: 'lg' })
       .result.then((result) => {

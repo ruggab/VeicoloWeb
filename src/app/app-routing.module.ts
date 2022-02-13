@@ -6,10 +6,7 @@ import { BlankLayoutComponent } from './shared/components/layouts/blank-layout/b
 import { AdminLayoutSidebarLargeComponent } from './shared/components/layouts/admin-layout-sidebar-large/admin-layout-sidebar-large.component';
 
 const adminRoutes: Routes = [
-    {
-      path: 'dashboard',
-      loadChildren: () => import('./views/dashboard/dashboard.module').then(a => a.DashboardModule)
-    },
+   
     {
       path: 'uikits',
       loadChildren: () => import('./views/ui-kits/ui-kits.module').then(m => m.UiKitsModule)
@@ -50,22 +47,7 @@ const adminRoutes: Routes = [
       path: 'icons',
       loadChildren: () => import('./views/icons/icons.module').then(m => m.IconsModule)
     },
-    {
-      path:'statogift',
-      loadChildren: () => import('./views/stato-gift/stato-gift.module').then(m => m.StatoGiftModule)
-    },
-    {
-      path:'assegnagift',
-      loadChildren: () => import('./views/assegna-gift/assegna-gift.module').then(m => m.AssegnaGiftModule)
-    },
-    {
-      path:'giftdaattivare',
-      loadChildren: () => import('./views/gift-da-attivare/gift-da-attivare.module').then(m => m.GiftDaAttivareModule)
-    },
-    {
-      path:'creazionegift',
-      loadChildren: () => import('./views/creazione-gift/creazione-gift.module').then(m => m.CreazioneGiftModule)
-    },
+    
     {
       path:'creazioneazienda',
       loadChildren: () => import('./views/creazione-azienda/creazione-azienda.module').then(m => m.CreazioneAziendaModule)
