@@ -88,7 +88,7 @@ export class CreazioneAziendaComponent implements OnInit {
     )
   }
 
-  exportCSV(doc_number){
+  exportCSV(){
     this.loadingcsv = true;
     this.http.get<Azienda[]>(`${environment.apiUrl}getListAzienda`)
     .subscribe(
@@ -207,6 +207,13 @@ export class CreazioneAziendaComponent implements OnInit {
   }
 
   openLg(content, id_document) {
+
+    this.creaAziendaForm = this.fb.group({
+      matricola : ['',Validators.required],
+      nominativoRef : ['',Validators.required],
+      mailRef : ['',Validators.required],
+      telRef : ['']
+    });
 
     this.modalService.open(content, { ariaLabelledBy: 'modalsos', size: 'lg' })
       .result.then((result) => {

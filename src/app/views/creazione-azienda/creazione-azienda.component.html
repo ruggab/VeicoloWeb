@@ -14,28 +14,19 @@
             <div class="col-md-6 form-group mb-3">
               <label for="matricola">Matricola Azienda</label>
               <input class="form-control" id="matricola" formControlName="matricola" placeholder="Matricola"
-                type="matricola" [ngClass]="{'is-invalid': submitted && f.matricola.errors }" />
-              <div *ngIf="submitted && f.matricola.errors" class="invalid-feedback">
-                <div *ngIf="f.matricola.errors.required">La Matricola è obbligataria!</div>
-              </div>
+                type="matricola"  />
             </div>
             <div class="col-md-6 form-group mb-3">
               <label for="nominativoRef">Nominativo Referente</label>
               <input class="form-control" id="nominativoRef" formControlName="nominativoRef" placeholder="Nominativo"
-                type="nominativoRef" [ngClass]="{'is-invalid': submitted && f.nominativoRef.errors }" />
-              <div *ngIf="submitted && f.nominativoRef.errors" class="invalid-feedback">
-                <div *ngIf="f.nominativoRef.errors.required">Il nominativo è obbligataria!</div>
-              </div>
+                type="nominativoRef"  />
             </div>
           </div>
           <div class="row">
             <div class="col-md-6 form-group mb-3">
               <label for="mailRef">E-Mail Referente</label>
               <input class="form-control" id="mailRef" formControlName="mailRef" placeholder="E-Mail"
-                type="mailRef" [ngClass]="{'is-invalid': submitted && f.mailRef.errors }" />
-              <div *ngIf="submitted && f.mailRef.errors" class="invalid-feedback">
-                <div *ngIf="f.mailRef.errors.required">L'E-Mail è obbligataria!</div>
-              </div>
+                type="mailRef" />
             </div>
             <div class="col-md-6 form-group mb-3">
               <label for="telRef">Telefono Referente</label>
@@ -56,8 +47,15 @@
   <div class="col-md-3"></div>
 </div>
 <br>
+
+
 <div class="row">
-  <table class="table table-bordered">
+  
+  <btn-loading type="button" btnClass="btn btn-info btn-lg" (click)="openLg(modalAzienda,0)">Aggiungi</btn-loading>
+  &nbsp;&nbsp;
+  <btn-loading type="button" btnClass="btn btn-info btn-lg" (click)="exportCSV()">Esporta CSV</btn-loading>
+  
+  <table class="table table-bordered" style="margin-top: 5px;">
     <thead class="thead-blue">
       <tr>
         <th scope="col">Matricola</th>
@@ -77,9 +75,7 @@
               <i class="icon-regular i-Magnifi-Glass1"></i>
             </button>
           </td>
-        <td style="text-align: center;">
-          <btn-loading type="button" btnClass="btn btn-info btn-lg" (click)="exportCSV()">Esporta CSV</btn-loading>
-        </td>
+       
       </tr>
     </tbody>
   </table>
@@ -88,29 +84,61 @@
 
 
 
-<ng-template #modalSettings let-modal>
+<ng-template #modalAzienda let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Impostazioni</h4>
+    <h4 class="modal-title" id="modal-basic-title">Azienda</h4>
 
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body">
-    <div class="row">
-      <div class="col-md-12 text-center">
-        <h5>matricola: <span>{{matricola}}</span></h5>
-      </div>
-    </div>
-    <br>
     <div class="row text-center">
-      <form [formGroup]="updateAziendaForm" class="mx-auto">
-        <div class="col-md-12 form-group mb-3 text-center">
-          <label for="matricola">Matricola</label>
-          <input class="form-control" id="matricola" formControlName="matricola" placeholder="Matricola">        
-          <btn-loading type="submit" btnClass="btn btn-primary mt-2" [loading]="loading2" (click)="updateAzienda()">Modifica</btn-loading>
-        </div>
-      </form>
+          <form [formGroup]="creaAziendaForm" (ngSubmit)="creaAzienda()"   class="mx-auto">
+            <div class="row text-center">
+              <div class="col-md-6 form-group mb-3 text-center">
+                <label for="matricola">Matricola Azienda</label>
+                <input class="form-control" id="matricola" formControlName="matricola" placeholder="Matricola"
+                  type="matricola" [ngClass]="{'is-invalid': submitted && f.matricola.errors }" />
+                <div *ngIf="submitted && f.matricola.errors" class="invalid-feedback">
+                  <div *ngIf="f.matricola.errors.required">La Matricola è obbligataria!</div>
+                </div>
+              </div>
+              <div class="col-md-6 form-group mb-3 text-center">
+                <label for="nominativoRef">Nominativo Referente</label>
+                <input class="form-control" id="nominativoRef" formControlName="nominativoRef" placeholder="Nominativo"
+                  type="nominativoRef" [ngClass]="{'is-invalid': submitted && f.nominativoRef.errors }" />
+                <div *ngIf="submitted && f.nominativoRef.errors" class="invalid-feedback">
+                  <div *ngIf="f.nominativoRef.errors.required">Il nominativo è obbligataria!</div>
+                </div>
+              </div>
+            </div>
+            <div class="row text-center">
+              <div class="col-md-6 form-group mb-3 text-center">
+                <label for="mailRef">E-Mail Referente</label>
+                <input class="form-control" id="mailRef" formControlName="mailRef" placeholder="E-Mail"
+                  type="mailRef" [ngClass]="{'is-invalid': submitted && f.mailRef.errors }" />
+                <div *ngIf="submitted && f.mailRef.errors" class="invalid-feedback">
+                  <div *ngIf="f.mailRef.errors.required">L'E-Mail è obbligataria!</div>
+                </div>
+              </div>
+              <div class="col-md-6 form-group mb-3 text-center">
+                <label for="telRef">Telefono Referente</label>
+                <input class="form-control" id="telRef" formControlName="telRef" placeholder="Telefono" />
+              </div>
+            </div>
+
+              <br>
+
+              <div class="col-md-12 text-center">
+                <btn-loading type="submit" btnClass="btn btn-primary mt-2" [loading]="loading2" (click)="creaAzienda();modal.close('ok')">Crea</btn-loading>
+              </div>
+          
+          </form>
+
+         
+
+
     </div>
   </div>
   <div class="modal-footer">
