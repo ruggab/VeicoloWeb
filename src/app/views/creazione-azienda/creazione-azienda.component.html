@@ -51,7 +51,7 @@
 
 <div class="row">
   
-  <btn-loading type="button" btnClass="btn btn-info btn-lg" (click)="openLg(modalAzienda,0)">Aggiungi</btn-loading>
+  <btn-loading type="button" btnClass="btn btn-info btn-lg" (click)="openLg(modalAzienda,null)">Aggiungi</btn-loading>
   &nbsp;&nbsp;
   <btn-loading type="button" btnClass="btn btn-info btn-lg" (click)="exportCSV()">Esporta CSV</btn-loading>
   
@@ -70,12 +70,16 @@
         <td>{{l.nominativoRef}}</td>
         <td>{{l.mailRef}}</td>
         <td>{{l.telRef}}</td>
-          <td style="text-align: center;">
-            <button class="btn btn-info btn-lg" (click)="openLg(modalSettings, l.id)" type="button">
-              <i class="icon-regular i-Magnifi-Glass1"></i>
-            </button>
-          </td>
-       
+        <td style="text-align: center;">
+          <button class="btn btn-info btn-lg" (click)="openLg(modalAzienda, l)" type="button">
+            <i class="icon-regular i-Magnifi-Glass1"></i>
+          </button>
+        </td>
+        <td style="text-align: center;">
+          <button class="btn btn-info btn-lg" (click)="deleteAzienda(l.id)" type="button">
+            <i class="icon-regular i-Close"></i>
+          </button>
+        </td>
       </tr>
     </tbody>
   </table>
@@ -94,7 +98,10 @@
   </div>
   <div class="modal-body">
     <div class="row text-center">
-          <form [formGroup]="creaAziendaForm" (ngSubmit)="creaAzienda()"   class="mx-auto">
+          <form [formGroup]="aziendaForm" (ngSubmit)="salvaAzienda()"   class="mx-auto">
+
+            <input class="form-control" id="id" formControlName="id" type="hidden"  />
+
             <div class="row text-center">
               <div class="col-md-6 form-group mb-3 text-center">
                 <label for="matricola">Matricola Azienda</label>
@@ -131,13 +138,9 @@
               <br>
 
               <div class="col-md-12 text-center">
-                <btn-loading type="submit" btnClass="btn btn-primary mt-2" [loading]="loading2" (click)="creaAzienda();modal.close('ok')">Crea</btn-loading>
+                <btn-loading type="submit" btnClass="btn btn-primary mt-2" [loading]="loading2" >Salva</btn-loading>
               </div>
-          
           </form>
-
-         
-
 
     </div>
   </div>

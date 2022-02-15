@@ -1,5 +1,6 @@
 export class Azienda {
-    matricola : String
+    id:number;
+    matricola : string
     nominativoRef : string
     mailRef : string
     telRef : string

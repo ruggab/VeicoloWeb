@@ -21,8 +21,8 @@ export class CreazioneAziendaComponent implements OnInit {
   loadingcsv;
   moduleLoading;
   cercaAziendaForm : FormGroup;
-  creaAziendaForm : FormGroup;
-  updateAziendaForm: FormGroup;
+  aziendaForm : FormGroup;
+ 
   
   listAzienda : Azienda[] =[];
   esitoGenerazione;
@@ -37,26 +37,23 @@ export class CreazioneAziendaComponent implements OnInit {
     private toastr : ToastrService
   ) {
 
-    this.creaAziendaForm = this.fb.group({
-      matricola : ['',Validators.required],
-      nominativoRef : ['',Validators.required],
-      mailRef : ['',Validators.required],
-      telRef : ['']
-    });
-    //this.creaGiftForm.controls['language'].setValue(this.listLanguage[0], {onlySelf: true});
-    this.updateAziendaForm= this.fb.group({
-      matricola : ['',Validators.required],
-      nominativoRef : ['',Validators.required],
-      mailRef : ['',Validators.required],
-      telRef : ['']
-    });
-
+    
     this.cercaAziendaForm = this.fb.group({
       matricola : ['',],
       nominativoRef : [''],
       mailRef : [''],
       telRef : ['']
     });
+
+    this.aziendaForm = this.fb.group({
+      id : [''],
+      matricola : ['',Validators.required],
+      nominativoRef : ['',Validators.required],
+      mailRef : ['',Validators.required],
+      telRef : ['']
+    });
+    
+
     
   }
 
@@ -64,7 +61,7 @@ export class CreazioneAziendaComponent implements OnInit {
     this.getListaAziende();
   }
 
-  get f() { return this.creaAziendaForm.controls; }
+  get f() { return this.aziendaForm.controls; }
 
  
   getListaAziende(){
@@ -153,68 +150,72 @@ export class CreazioneAziendaComponent implements OnInit {
       )
   }
 
-  creaAzienda(){
-    this.submitted = true;
-    let azienda : Azienda = new Azienda();
-    azienda.matricola = this.creaAziendaForm.controls.matricola.value;
-    azienda.nominativoRef = this.creaAziendaForm.controls.nominativoRef.value;
-    azienda.mailRef = this.creaAziendaForm.controls.mailRef.value;
-    azienda.telRef = this.creaAziendaForm.controls.telRef.value;
-    if (this.creaAziendaForm.invalid) {
-      return;
-    }
-    console.log(azienda);
-    this.loading=true;
-    this.http.post<GenerateAziendaResponse>(`${environment.apiUrl}generateAzienda`, azienda).subscribe(res => {
-      if(res){
-          this.aziendaGenerata = res.id;
-          this.loading=false;
-          this.getListaAziende();
-          this.toastr.success('Azienda generata con successo!','Info',{progressBar: false});          
-        } else {
-          this.loading=false;
-          this.getListaAziende();
-          this.toastr.error('Errore nella generazione dell\' Azienda!','Errore',{progressBar: false});
-        }
-    }, err => {
-      console.log(err);
-      this.toastr.error('Errore nella generazione dell\' Azienda!','Errore',{progressBar: false});
-    })
+  salvaAzienda(){
+      this.submitted = true;
+      let azienda : Azienda = new Azienda();
+      azienda.id = this.aziendaForm.controls.id.value;
+      azienda.matricola = this.aziendaForm.controls.matricola.value;
+      azienda.nominativoRef = this.aziendaForm.controls.nominativoRef.value;
+      azienda.mailRef = this.aziendaForm.controls.mailRef.value;
+      azienda.telRef = this.aziendaForm.controls.telRef.value;
+      if (this.aziendaForm.invalid) {
+        return;
+      }
+      console.log(azienda);
+      this.loading2=true;
+      this.http.post<GenerateAziendaResponse>(`${environment.apiUrl}generateAzienda`, azienda).subscribe(res => {
+        if(res){
+            this.aziendaGenerata = res.id;
+            this.loading2=false;
+            this.getListaAziende();
+            this.toastr.success('Azienda generata con successo!','Info',{progressBar: false});          
+          } else {
+            this.loading2=false;
+            this.getListaAziende();
+            this.toastr.error('Errore nella generazione dell\' Azienda!','Errore',{progressBar: false});
+          }
+      }, err => {
+        console.log(err);
+        this.toastr.error('Errore nella generazione dell\' Azienda!','Errore',{progressBar: false});
+      })
+       this.aziendaForm.reset();
+       this.modalService.dismissAll();
   }
 
   
 
-  updateAzienda(){
-   
-    let aziendaUp : Azienda = new Azienda();
-    aziendaUp.matricola = this.updateAziendaForm.controls.matricola.value;
 
-    this.loading2=true;
-    this.http.post<any>(`${environment.apiUrl}updateAzienda`, aziendaUp)
+  deleteAzienda(idAzienda){
+    this.loading=true;
+    this.http.get<Azienda[]>(`${environment.apiUrl}deleteAzienda/${idAzienda}`)
     .subscribe(
       res =>{
-        this.loading2=false;
-        //this.qta = qta;
-        this.toastr.success('Quantità aggiornata con successo!','Quantità aggiornata',{progressBar: false});
+        console.log(res);
+        if (res.length!==0) {
+          this.listAzienda= res;
+          this.toastr.success('Azienda eliminata con successo!','Lista Aziende aggiornata',{progressBar: false});
+        } else {
+          this.toastr.error('Nessun Azienda trovata!','Azienda',{progressBar: false});
+        }
+        this.loading=false;
       },
       err =>{
-        console.log(err);
-        this.loading2=false;
-        this.toastr.error('Errore nell aggiornamento della quantità','Errore',{progressBar: false})
+        console.log(err);        
+        this.loading=false;
       }
     )
     
   }
 
-  openLg(content, id_document) {
-
-    this.creaAziendaForm = this.fb.group({
-      matricola : ['',Validators.required],
-      nominativoRef : ['',Validators.required],
-      mailRef : ['',Validators.required],
-      telRef : ['']
-    });
-
+  openLg(content, azienda) {
+    if (azienda != null) {
+      this.aziendaForm.controls['id'].setValue(azienda.id);
+      this.aziendaForm.controls['matricola'].setValue(azienda.matricola);
+      this.aziendaForm.controls['nominativoRef'].setValue(azienda.nominativoRef);
+      this.aziendaForm.controls['mailRef'].setValue(azienda.mailRef);
+      this.aziendaForm.controls['telRef'].setValue(azienda.telRef);
+    }
+   
     this.modalService.open(content, { ariaLabelledBy: 'modalsos', size: 'lg' })
       .result.then((result) => {
         console.log(result);
