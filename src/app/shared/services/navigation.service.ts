@@ -58,43 +58,17 @@ export class NavigationService {
             type: 'link',
             icon: 'i-Building',
             state: '/creazioneazienda'
-           
-            // sub: [
-            //     { icon: 'i-Clock-3', name: 'Version 1', state: '/dashboard/v1', type: 'link' },
-            //     { icon: 'i-Clock-4', name: 'Version 2', state: '/dashboard/v2', type: 'link' },
-            //     { icon: 'i-Over-Time', name: 'Version 3', state: '/dashboard/v3', type: 'link' },
-            //     { icon: 'i-Clock', name: 'Version 4', state: '/dashboard/v4', type: 'link' },
-            // ]
-            
         },
-        {
-            name: 'Stato Gift',
+        {   
+            name: 'Gara',
+            description: 'Gara',
             type: 'link',
-            tooltip: 'Stato Gift',
             icon: 'i-Coins',
-            state: '/statogift'
+            state: '/creazionegara'
         },
-        {
-            name: 'Gift da attivare',
-            type: 'link',
-            tooltip: 'Gift da attivare',
-            icon: 'i-Bar-Code',
-            state: '/giftdaattivare'
-        },
-        {
-            name: 'Creazione Gift',
-            type: 'link',
-            tooltip: 'Creazione Gift',
-            icon: 'i-Credit-Card',
-            state: '/creazionegift'
-        },
-        {
-            name: 'Gift da assegnare',
-            type: 'link',
-            tooltip: 'Assegna Gift',
-            icon: 'i-Wallet',
-            state: '/assegnagift'
-        }
+       
+       
+       
       
         
         

@@ -115,7 +115,7 @@ export class CreazioneAziendaComponent implements OnInit {
       let csvArray = csv.join('\r\n');
   
       var blob = new Blob([csvArray], {type: 'text/csv' })
-      saveAs(blob, "lista-gift.csv");
+      saveAs(blob, "lista-aziende.csv");
     
   }
 
@@ -224,14 +224,14 @@ export class CreazioneAziendaComponent implements OnInit {
       });
   }
 
-  open(content) {
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' })
-    .result.then((result) => {
-      console.log(result);
-    }, (reason) => {
-      console.log('Err!', reason);
-    });
-  }
+  // open(content) {
+  //   this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' })
+  //   .result.then((result) => {
+  //     console.log(result);
+  //   }, (reason) => {
+  //     console.log('Err!', reason);
+  //   });
+  // }
 
 }
 

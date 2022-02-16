@@ -53,6 +53,10 @@ const adminRoutes: Routes = [
       loadChildren: () => import('./views/creazione-azienda/creazione-azienda.module').then(m => m.CreazioneAziendaModule)
     },
     {
+      path:'creazionegara',
+      loadChildren: () => import('./views/creazione-gara/creazione-gara.module').then(m => m.CreazioneGaraModule)
+    },
+    {
       path:'manageProduct',
       loadChildren: () => import('./views/manage-product/manage-product.module').then(m => m.ManageProductModule)
     }
