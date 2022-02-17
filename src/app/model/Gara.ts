@@ -7,7 +7,7 @@ export class Gara {
     drec : string;
     cig : string;
     rup : string;
-    idFinAcq : Dizionario;
+    finAcq : Dizionario;
    
 
 

@@ -33,7 +33,6 @@ export class CreazioneGaraComponent implements OnInit {
     private modalService: NgbModal,
     private fb: FormBuilder,
     private http: HttpClient,
-    private router: Router,
     private toastr : ToastrService
   ) {
 
@@ -56,7 +55,7 @@ export class CreazioneGaraComponent implements OnInit {
       cup : ['',Validators.required],
       dec : ['',Validators.required],
       rup : ['',Validators.required],
-      idFinAcq : [null]
+      finAcq : new FormControl(null)
     });
     
 
@@ -184,7 +183,7 @@ export class CreazioneGaraComponent implements OnInit {
       gara.cig = this.garaForm.controls.cig.value;
       gara.rup = this.garaForm.controls.rup.value;
       gara.drec = this.garaForm.controls.dec.value;
-      gara.idFinAcq = this.garaForm.controls.idFinAcq.value;
+      gara.finAcq = this.garaForm.controls.finAcq.value;
 
       if (this.garaForm.invalid) {
         return;
@@ -235,7 +234,11 @@ export class CreazioneGaraComponent implements OnInit {
     
   }
 
-  openLg(content, gara) {
+  compareFn(a: Dizionario, b: Dizionario) {
+    return a && b && a.id === b.id;
+  }
+
+  openLg(content:any, gara:Gara) {
     this.getListaFinAcq('FIN_ACQ');
     //
     this.garaForm.controls['id'].setValue('');
@@ -244,7 +247,7 @@ export class CreazioneGaraComponent implements OnInit {
     this.garaForm.controls['cig'].setValue('');
     this.garaForm.controls['rup'].setValue('');
     this.garaForm.controls['dec'].setValue('');
-    this.garaForm.controls['idFinAcq'].setValue(null);
+    this.garaForm.controls['finAcq'].setValue(null);
     if (gara != null) {
       this.garaForm.controls['id'].setValue(gara.id);
       this.garaForm.controls['codGara'].setValue(gara.codGara);
@@ -252,7 +255,8 @@ export class CreazioneGaraComponent implements OnInit {
       this.garaForm.controls['cig'].setValue(gara.cig);
       this.garaForm.controls['rup'].setValue(gara.rup);
       this.garaForm.controls['dec'].setValue(gara.drec);
-      this.garaForm.controls['idFinAcq'].setValue(gara.idFinAcq);
+      this.garaForm.controls['finAcq'].setValue(gara.finAcq);
+     
     }
    
     this.modalService.open(content, { ariaLabelledBy: 'modalsos', size: 'lg' })

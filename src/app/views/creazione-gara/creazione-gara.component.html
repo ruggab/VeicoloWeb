@@ -64,6 +64,7 @@
         <th scope="col">CIG</th>
         <th scope="col">RUP</th>
         <th scope="col">DEC</th>
+        <th scope="col">Finanziamento</th>
       </tr>
     </thead>
     <tbody>
@@ -73,6 +74,7 @@
         <td>{{l.cig}}</td>
         <td>{{l.rup}}</td>
         <td>{{l.drec}}</td>
+        <td>{{l.finAcq.descrizione}}</td>
         <td style="text-align: center;">
           <button class="btn btn-info btn-lg" (click)="openLg(modalGara, l)" type="button">
             <i class="icon-regular i-Pen-2"></i>
@@ -128,8 +130,9 @@
                   </div>
                 </div>
                 <div class="col-md-6 form-group mb-3 text-center">
-                    <label for="idfinAcq">Finanziamento Acquisto</label>
-                    <select class="form-control" formControlName="idFinAcq">
+                    <label for="finAcq">Finanziamento Acquisto</label>
+                    <select class="form-control" id="finAcq" formControlName="finAcq"   [compareWith]="compareFn">
+                      <option [ngValue]="null" ></option>
                       <option [ngValue]="l" *ngFor="let l of listFinAcq">{{l.descrizione}}</option>
                     </select>
                 </div>
