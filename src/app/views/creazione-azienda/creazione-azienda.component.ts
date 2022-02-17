@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
 import { ToastrService } from 'ngx-toastr';
 import { saveAs } from 'file-saver';
 import { Azienda } from 'src/app/model/Azienda';
-import { GenerateAziendaResponse } from 'src/app/model/GenerateAziendaResponse';
+import { GenerateResponse } from 'src/app/model/GenerateResponse';
 
 @Component({
   selector: 'app-creazione-azienda',
@@ -163,7 +163,7 @@ export class CreazioneAziendaComponent implements OnInit {
       }
       console.log(azienda);
       this.loading2=true;
-      this.http.post<GenerateAziendaResponse>(`${environment.apiUrl}generateAzienda`, azienda).subscribe(res => {
+      this.http.post<GenerateResponse>(`${environment.apiUrl}generateAzienda`, azienda).subscribe(res => {
         if(res){
             this.aziendaGenerata = res.id;
             this.loading2=false;
@@ -224,14 +224,7 @@ export class CreazioneAziendaComponent implements OnInit {
       });
   }
 
-  // open(content) {
-  //   this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' })
-  //   .result.then((result) => {
-  //     console.log(result);
-  //   }, (reason) => {
-  //     console.log('Err!', reason);
-  //   });
-  // }
+  
 
 }
 

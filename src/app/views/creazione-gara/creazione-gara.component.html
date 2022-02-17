@@ -72,7 +72,7 @@
         <td>{{l.cup}}</td>
         <td>{{l.cig}}</td>
         <td>{{l.rup}}</td>
-        <td>{{l.dec}}</td>
+        <td>{{l.drec}}</td>
         <td style="text-align: center;">
           <button class="btn btn-info btn-lg" (click)="openLg(modalGara, l)" type="button">
             <i class="icon-regular i-Pen-2"></i>
@@ -126,6 +126,12 @@
                   <div *ngIf="submitted && f.cig.errors" class="invalid-feedback">
                     <div *ngIf="f.cig.errors.required">CIG obbligatario!</div>
                   </div>
+                </div>
+                <div class="col-md-6 form-group mb-3 text-center">
+                    <label for="idfinAcq">Finanziamento Acquisto</label>
+                    <select class="form-control" formControlName="idFinAcq">
+                      <option [ngValue]="l" *ngFor="let l of listFinAcq">{{l.descrizione}}</option>
+                    </select>
                 </div>
             </div>
             <div class="row text-center">

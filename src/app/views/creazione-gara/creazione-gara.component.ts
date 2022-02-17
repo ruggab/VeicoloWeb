@@ -7,6 +7,8 @@ import { environment } from 'src/environments/environment';
 import { ToastrService } from 'ngx-toastr';
 import { saveAs } from 'file-saver';
 import { Gara } from 'src/app/model/Gara';
+import { GenerateResponse } from 'src/app/model/GenerateResponse';
+import { Dizionario } from 'src/app/model/Dizionario';
 
 @Component({
   selector: 'app-creazione-gara',
@@ -21,6 +23,7 @@ export class CreazioneGaraComponent implements OnInit {
   moduleLoading;
   cercaGaraForm : FormGroup;
   garaForm : FormGroup;
+  listFinAcq : Dizionario[] = [];
  
   
   listGara : Gara[] =[];
@@ -48,12 +51,12 @@ export class CreazioneGaraComponent implements OnInit {
 
     this.garaForm = this.fb.group({
       id : [''],
-      matricola : ['',Validators.required],
+      codGara : ['',Validators.required],
       cig : ['',Validators.required],
       cup : ['',Validators.required],
       dec : ['',Validators.required],
       rup : ['',Validators.required],
-      idAcFin : ['',Validators.required],
+      idFinAcq : [null]
     });
     
 
@@ -62,6 +65,7 @@ export class CreazioneGaraComponent implements OnInit {
 
   ngOnInit() {
     this.getListaGara();
+   
   }
 
   get f() { return this.garaForm.controls; }
@@ -84,6 +88,23 @@ export class CreazioneGaraComponent implements OnInit {
         console.log(err);        
         this.moduleLoading = false;
 
+      }
+    )
+  }
+
+  getListaFinAcq(contesto: string){
+    this.http.get<Dizionario[]>(`${environment.apiUrl}getListDizionario/${contesto}`)
+    .subscribe(
+      res =>{
+        console.log(res);
+        if (res.length!==0) {
+          this.listFinAcq= res;
+        } else {
+          this.toastr.error('Nessuna Finanziamento trovato!','Finanziamento',{progressBar: false});
+        }
+      },
+      err =>{
+        console.log(err);   
       }
     )
   }
@@ -129,7 +150,7 @@ export class CreazioneGaraComponent implements OnInit {
     gara.codGara = this.cercaGaraForm.controls.codGara.value;
     gara.cig = this.cercaGaraForm.controls.cig.value;
     gara.cup = this.cercaGaraForm.controls.cup.value;
-    gara.dec = this.cercaGaraForm.controls.dec.value;
+    gara.drec = this.cercaGaraForm.controls.dec.value;
     gara.rup = this.cercaGaraForm.controls.rup.value;
     if (this.cercaGaraForm.invalid) {
       return;
@@ -154,71 +175,84 @@ export class CreazioneGaraComponent implements OnInit {
       )
   }
 
-  // salvaGara(){
-  //     this.submitted = true;
-  //     let Gara : Gara = new Gara();
-  //     Gara.id = this.GaraForm.controls.id.value;
-  //     Gara.matricola = this.GaraForm.controls.matricola.value;
-  //     Gara.nominativoRef = this.GaraForm.controls.nominativoRef.value;
-  //     Gara.mailRef = this.GaraForm.controls.mailRef.value;
-  //     Gara.telRef = this.GaraForm.controls.telRef.value;
-  //     if (this.GaraForm.invalid) {
-  //       return;
-  //     }
-  //     console.log(Gara);
-  //     this.loading2=true;
-  //     this.http.post<GenerateGaraResponse>(`${environment.apiUrl}generateGara`, Gara).subscribe(res => {
-  //       if(res){
-  //           this.GaraGenerata = res.id;
-  //           this.loading2=false;
-  //           this.getListaAziende();
-  //           this.toastr.success('Gara generata con successo!','Info',{progressBar: false});          
-  //         } else {
-  //           this.loading2=false;
-  //           this.getListaAziende();
-  //           this.toastr.error('Errore nella generazione dell\' Gara!','Errore',{progressBar: false});
-  //         }
-  //     }, err => {
-  //       console.log(err);
-  //       this.toastr.error('Errore nella generazione dell\' Gara!','Errore',{progressBar: false});
-  //     })
-  //      this.GaraForm.reset();
-  //      this.modalService.dismissAll();
-  // }
+  salvaGara(){
+      this.submitted = true;
+      let gara : Gara = new Gara();
+      gara.id = this.garaForm.controls.id.value;
+      gara.codGara = this.garaForm.controls.codGara.value;
+      gara.cup = this.garaForm.controls.cup.value;
+      gara.cig = this.garaForm.controls.cig.value;
+      gara.rup = this.garaForm.controls.rup.value;
+      gara.drec = this.garaForm.controls.dec.value;
+      gara.idFinAcq = this.garaForm.controls.idFinAcq.value;
+
+      if (this.garaForm.invalid) {
+        return;
+      }
+      console.log(gara);
+      this.loading2=true;
+      this.http.post<GenerateResponse>(`${environment.apiUrl}generateGara`, gara).subscribe(res => {
+        if(res){
+            //this.garaGenerata = res.id;
+            this.loading2=false;
+            this.getListaGara();
+            this.toastr.success('Gara generata con successo!','Info',{progressBar: false});          
+          } else {
+            this.loading2=false;
+            this.getListaGara();
+            this.toastr.error('Errore nella generazione della Gara!','Errore',{progressBar: false});
+          }
+      }, err => {
+        console.log(err);
+        this.toastr.error('Errore nella generazione della Gara!','Errore',{progressBar: false});
+      })
+       this.garaForm.reset();
+       this.modalService.dismissAll();
+  }
 
   
 
 
-  // deleteGara(idGara){
-  //   this.loading=true;
-  //   this.http.get<Gara[]>(`${environment.apiUrl}deleteGara/${idGara}`)
-  //   .subscribe(
-  //     res =>{
-  //       console.log(res);
-  //       if (res.length!==0) {
-  //         this.listGara= res;
-  //         this.toastr.success('Gara eliminata con successo!','Lista Aziende aggiornata',{progressBar: false});
-  //       } else {
-  //         this.toastr.error('Nessun Gara trovata!','Gara',{progressBar: false});
-  //       }
-  //       this.loading=false;
-  //     },
-  //     err =>{
-  //       console.log(err);        
-  //       this.loading=false;
-  //     }
-  //   )
+  deleteGara(idGara){
+    this.loading=true;
+    this.http.get<Gara[]>(`${environment.apiUrl}deleteGara/${idGara}`)
+    .subscribe(
+      res =>{
+        console.log(res);
+        if (res.length!==0) {
+          this.listGara= res;
+          this.toastr.success('Gara eliminata con successo!','Lista Gare aggiornata',{progressBar: false});
+        } else {
+          this.toastr.error('Nessun Gara trovata!','Gara',{progressBar: false});
+        }
+        this.loading=false;
+      },
+      err =>{
+        console.log(err);        
+        this.loading=false;
+      }
+    )
     
-  // }
+  }
 
   openLg(content, gara) {
+    this.getListaFinAcq('FIN_ACQ');
+    //
+    this.garaForm.controls['id'].setValue('');
+    this.garaForm.controls['codGara'].setValue('');
+    this.garaForm.controls['cup'].setValue('');
+    this.garaForm.controls['cig'].setValue('');
+    this.garaForm.controls['rup'].setValue('');
+    this.garaForm.controls['dec'].setValue('');
+    this.garaForm.controls['idFinAcq'].setValue(null);
     if (gara != null) {
       this.garaForm.controls['id'].setValue(gara.id);
       this.garaForm.controls['codGara'].setValue(gara.codGara);
       this.garaForm.controls['cup'].setValue(gara.cup);
       this.garaForm.controls['cig'].setValue(gara.cig);
       this.garaForm.controls['rup'].setValue(gara.rup);
-      this.garaForm.controls['dec'].setValue(gara.dec);
+      this.garaForm.controls['dec'].setValue(gara.drec);
+      this.garaForm.controls['idFinAcq'].setValue(gara.idFinAcq);
     }
    
     this.modalService.open(content, { ariaLabelledBy: 'modalsos', size: 'lg' })
@@ -229,14 +263,7 @@ export class CreazioneGaraComponent implements OnInit {
       });
   }
 
-  // open(content) {
-  //   this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' })
-  //   .result.then((result) => {
-  //     console.log(result);
-  //   }, (reason) => {
-  //     console.log('Err!', reason);
-  //   });
-  // }
+ 
 
 }
 

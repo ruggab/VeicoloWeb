@@ -1,4 +1,4 @@
-export class GenerateAziendaResponse{
+export class GenerateResponse{
     
     esito : string
     id : string
