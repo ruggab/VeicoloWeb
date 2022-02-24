@@ -13,24 +13,23 @@
           <div class="row">
             <div class="col-md-6 form-group mb-3">
               <label for="matricola">Matricola Azienda</label>
-              <input class="form-control" id="matricola" formControlName="matricola" placeholder="Matricola"
-                type="matricola"  />
+              <input class="form-control" id="matricola" formControlName="matricola" placeholder="Matricola" type="matricola"  />
             </div>
+            <div class="col-md-6 form-group mb-3">
+              <label for="nome">nome</label>
+              <input class="form-control" id="nome" formControlName="nome" placeholder="Nome" />
+            </div>
+          </div>
+          <div class="row">
             <div class="col-md-6 form-group mb-3">
               <label for="nominativoRef">Nominativo Referente</label>
               <input class="form-control" id="nominativoRef" formControlName="nominativoRef" placeholder="Nominativo"
                 type="nominativoRef"  />
             </div>
-          </div>
-          <div class="row">
             <div class="col-md-6 form-group mb-3">
               <label for="mailRef">E-Mail Referente</label>
               <input class="form-control" id="mailRef" formControlName="mailRef" placeholder="E-Mail"
                 type="mailRef" />
-            </div>
-            <div class="col-md-6 form-group mb-3">
-              <label for="telRef">Telefono Referente</label>
-              <input class="form-control" id="telRef" formControlName="telRef" placeholder="Telefono" />
             </div>
           </div>
 
@@ -59,6 +58,7 @@
     <thead class="thead-blue">
       <tr>
         <th scope="col">Matricola</th>
+        <th scope="col">nome</th>
         <th scope="col">Nominativo Referente</th>
         <th scope="col">E-Mail Referente</th>
         <th scope="col">Telefono Referente</th>
@@ -67,6 +67,7 @@
     <tbody>
       <tr *ngFor="let l of listAzienda">
         <th scope="row">{{l.matricola}}</th>
+        <td>{{l.nome}}</td>
         <td>{{l.nominativoRef}}</td>
         <td>{{l.mailRef}}</td>
         <td>{{l.telRef}}</td>
@@ -112,6 +113,15 @@
                 </div>
               </div>
               <div class="col-md-6 form-group mb-3 text-center">
+                <label for="nome">Nome</label>
+                <input class="form-control" id="nome" formControlName="nome" placeholder="Nome"  type="nome" [ngClass]="{'is-invalid': submitted && f.nome.errors }" />
+                <div *ngIf="submitted && f.nome.errors" class="invalid-feedback">
+                  <div *ngIf="f.nome.errors.required">Il nome Azienda è obbligatorio</div>
+                </div>
+              </div>
+            </div>
+            <div class="row text-center">
+              <div class="col-md-6 form-group mb-3 text-center">
                 <label for="nominativoRef">Nominativo Referente</label>
                 <input class="form-control" id="nominativoRef" formControlName="nominativoRef" placeholder="Nominativo"
                   type="nominativoRef" [ngClass]="{'is-invalid': submitted && f.nominativoRef.errors }" />
@@ -119,8 +129,6 @@
                   <div *ngIf="f.nominativoRef.errors.required">Il nominativo è obbligataria!</div>
                 </div>
               </div>
-            </div>
-            <div class="row text-center">
               <div class="col-md-6 form-group mb-3 text-center">
                 <label for="mailRef">E-Mail Referente</label>
                 <input class="form-control" id="mailRef" formControlName="mailRef" placeholder="E-Mail"

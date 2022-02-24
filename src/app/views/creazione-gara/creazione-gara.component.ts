@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { ToastrService } from 'ngx-toastr';
 import { saveAs } from 'file-saver';
@@ -241,13 +240,15 @@ export class CreazioneGaraComponent implements OnInit {
   openLg(content:any, gara:Gara) {
     this.getListaFinAcq('FIN_ACQ');
     //
-    this.garaForm.controls['id'].setValue('');
-    this.garaForm.controls['codGara'].setValue('');
-    this.garaForm.controls['cup'].setValue('');
-    this.garaForm.controls['cig'].setValue('');
-    this.garaForm.controls['rup'].setValue('');
-    this.garaForm.controls['dec'].setValue('');
-    this.garaForm.controls['finAcq'].setValue(null);
+    if (gara == null) {
+      this.garaForm.controls['id'].setValue('');
+      this.garaForm.controls['codGara'].setValue('');
+      this.garaForm.controls['cup'].setValue('');
+      this.garaForm.controls['cig'].setValue('');
+      this.garaForm.controls['rup'].setValue('');
+      this.garaForm.controls['dec'].setValue('');
+      this.garaForm.controls['finAcq'].setValue(null);
+    }
     if (gara != null) {
       this.garaForm.controls['id'].setValue(gara.id);
       this.garaForm.controls['codGara'].setValue(gara.codGara);

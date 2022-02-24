@@ -39,7 +39,8 @@ export class CreazioneAziendaComponent implements OnInit {
 
     
     this.cercaAziendaForm = this.fb.group({
-      matricola : ['',],
+      matricola : [''],
+      nome : [''],
       nominativoRef : [''],
       mailRef : [''],
       telRef : ['']
@@ -48,6 +49,7 @@ export class CreazioneAziendaComponent implements OnInit {
     this.aziendaForm = this.fb.group({
       id : [''],
       matricola : ['',Validators.required],
+      nome : ['',Validators.required],
       nominativoRef : ['',Validators.required],
       mailRef : ['',Validators.required],
       telRef : ['']
@@ -124,9 +126,10 @@ export class CreazioneAziendaComponent implements OnInit {
     this.submitted = true;
     let azienda : Azienda = new Azienda();
     azienda.matricola = this.cercaAziendaForm.controls.matricola.value;
+    azienda.nome = this.cercaAziendaForm.controls.nome.value;
     azienda.nominativoRef = this.cercaAziendaForm.controls.nominativoRef.value;
     azienda.mailRef = this.cercaAziendaForm.controls.mailRef.value;
-    azienda.telRef = this.cercaAziendaForm.controls.telRef.value;
+    
     if (this.cercaAziendaForm.invalid) {
       return;
     }
@@ -155,6 +158,7 @@ export class CreazioneAziendaComponent implements OnInit {
       let azienda : Azienda = new Azienda();
       azienda.id = this.aziendaForm.controls.id.value;
       azienda.matricola = this.aziendaForm.controls.matricola.value;
+      azienda.nome = this.aziendaForm.controls.nome.value;
       azienda.nominativoRef = this.aziendaForm.controls.nominativoRef.value;
       azienda.mailRef = this.aziendaForm.controls.mailRef.value;
       azienda.telRef = this.aziendaForm.controls.telRef.value;
@@ -187,8 +191,7 @@ export class CreazioneAziendaComponent implements OnInit {
 
   deleteAzienda(idAzienda){
     this.loading=true;
-    this.http.get<Azienda[]>(`${environment.apiUrl}deleteAzienda/${idAzienda}`)
-    .subscribe(
+    this.http.get<Azienda[]>(`${environment.apiUrl}deleteAzienda/${idAzienda}`).subscribe(
       res =>{
         console.log(res);
         if (res.length!==0) {
@@ -208,9 +211,18 @@ export class CreazioneAziendaComponent implements OnInit {
   }
 
   openLg(content, azienda) {
+    if (azienda == null) {
+      this.aziendaForm.controls['id'].setValue(azienda.id);
+      this.aziendaForm.controls['matricola'].setValue(azienda.matricola);
+      this.aziendaForm.controls['nome'].setValue(azienda.nome);
+      this.aziendaForm.controls['nominativoRef'].setValue(azienda.nominativoRef);
+      this.aziendaForm.controls['mailRef'].setValue(azienda.mailRef);
+      this.aziendaForm.controls['telRef'].setValue(azienda.telRef);
+    }
     if (azienda != null) {
       this.aziendaForm.controls['id'].setValue(azienda.id);
       this.aziendaForm.controls['matricola'].setValue(azienda.matricola);
+      this.aziendaForm.controls['nome'].setValue(azienda.nome);
       this.aziendaForm.controls['nominativoRef'].setValue(azienda.nominativoRef);
       this.aziendaForm.controls['mailRef'].setValue(azienda.mailRef);
       this.aziendaForm.controls['telRef'].setValue(azienda.telRef);

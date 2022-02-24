@@ -8,35 +8,26 @@
   <div class="col-md-6">
     <div class="card mb-4 noround">
       <div class="card-body">
-        <div class="card-title mb-3">Filtro Ricerca Gara</div>
-        <form [formGroup]="cercaGaraForm" (ngSubmit)="cercaGara()">
+        <div class="card-title mb-3">Filtro Ricerca Veicolo</div>
+        <form [formGroup]="cercaVeicoloForm" (ngSubmit)="cercaVeicolo()">
           <div class="row">
               <div class="col-md-6 form-group mb-3">
-                <label for="codGara">Codice Gara</label>
-                <input class="form-control" id="codGara" formControlName="codGara" placeholder="Codice Gara" type="codGara"/>
+                <label for="matricola">Matricola</label>
+                <input class="form-control" id="matricola" formControlName="matricola" placeholder="Matricola" type="matricola"/>
               </div>
               <div class="col-md-6 form-group mb-3">
-                <label for="cup">CUP</label>
-                <input class="form-control" id="cup" formControlName="cup" placeholder="CUP" type="cup"  />
+                <label for="telaio">Telaio</label>
+                <input class="form-control" id="telaio" formControlName="telaio" placeholder="Telaio" type="cup"  />
               </div>
-              <div class="col-md-6 form-group mb-3">
-                <label for="cig">CIG</label>
-                <input class="form-control" id="cig" formControlName="cig" placeholder="CIG"  type="cig" />
+              <div class="col-md-6 form-group mb-3 text-center">
+                <label for="aziedna">Azienda Ass</label>
+                <select class="form-control" id="aziedna" formControlName="aziedna"   [compareWith]="compareAzienda">
+                  <option [ngValue]="null" ></option>
+                  <option [ngValue]="l" *ngFor="let l of listAzienda">{{l.nome}}</option>
+                </select>
               </div>
           </div>
-          <div class="row">
-              <div class="col-md-6 form-group mb-3">
-                <label for="rup">RUP</label>
-                <input class="form-control" id="rup" formControlName="rup" placeholder="RUP"  type="rup" />
-              </div>
-              <div class="col-md-6 form-group mb-3">
-                <label for="dec">DEC</label>
-                <input class="form-control" id="dec" formControlName="dec" placeholder="DEC" />
-              </div>
-          </div>
-
             <br>
-
             <div class="col-md-12 text-center">
               <btn-loading type="submit" btnClass="btn-primary btn-lg" [loading]="loading">Cerca</btn-loading>
             </div>
@@ -59,29 +50,30 @@
   <table class="table table-bordered" style="margin-top: 5px;">
     <thead class="thead-blue">
       <tr>
-        <th scope="col">Cod Gara</th>
-        <th scope="col">CUP</th>
-        <th scope="col">CIG</th>
-        <th scope="col">RUP</th>
-        <th scope="col">DEC</th>
+        <th scope="col">Matricola</th>
+        <th scope="col">Telaio</th>
+        <th scope="col">Azienda</th>
+        <th scope="col">Assegnatario</th>
+        <th scope="col">Targa 1 Imm</th>
+        <th scope="col">Data 1 Imm</th>
         <th scope="col">Finanziamento</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let l of listGara">
-        <th scope="row">{{l.codGara}}</th>
-        <td>{{l.cup}}</td>
-        <td>{{l.cig}}</td>
-        <td>{{l.rup}}</td>
-        <td>{{l.drec}}</td>
-        <td>{{l.finAcq.descrizione}}</td>
+      <tr *ngFor="let l of listVeicolo">
+        <th scope="row">{{l.matricola}}</th>
+        <td>{{l.telaio}}</td>
+        <td>{{l.azienda}}</td>
+        <td>{{l.assegnatario}}</td>
+        <td>{{l.targa1Imm}}</td>
+        <td>{{l.data1Imm}}</td>
         <td style="text-align: center;">
-          <button class="btn btn-info btn-lg" (click)="openLg(modalGara, l)" type="button">
+          <button class="btn btn-info btn-lg" (click)="openLg(modalVeicolo, l)" type="button">
             <i class="icon-regular i-Pen-2"></i>
           </button>
         </td>
         <td style="text-align: center;">
-          <button class="btn btn-info btn-lg" (click)="deleteGara(l.id)" type="button">
+          <button class="btn btn-info btn-lg" (click)="deleteVeicolo(l.id)" type="button">
             <i class="icon-regular i-Close"></i>
           </button>
         </td>
