@@ -20,8 +20,8 @@
                 <input class="form-control" id="telaio" formControlName="telaio" placeholder="Telaio" type="cup"  />
               </div>
               <div class="col-md-6 form-group mb-3 text-center">
-                <label for="aziedna">Azienda Ass</label>
-                <select class="form-control" id="aziedna" formControlName="aziedna"   [compareWith]="compareAzienda">
+                <label for="assegnatario">Azienda Ass</label>
+                <select class="form-control" id="assegnatario" formControlName="assegnatario"   [compareWith]="compareAzienda">
                   <option [ngValue]="null" ></option>
                   <option [ngValue]="l" *ngFor="let l of listAzienda">{{l.nome}}</option>
                 </select>
@@ -85,7 +85,7 @@
 
 
 
-<ng-template #modalGara let-modal>
+<ng-template #modalVeicolo let-modal>
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title">Gara</h4>
 
@@ -95,63 +95,116 @@
   </div>
   <div class="modal-body">
     <div class="row text-center">
-          <form [formGroup]="garaForm" (ngSubmit)="salvaGara()"   class="mx-auto">
+        <form [formGroup]="veicoloForm" (ngSubmit)="salvaVeicolo()"   class="mx-auto">
 
             <input class="form-control" id="id" formControlName="id" type="hidden"  />
 
             <div class="row text-center">
                 <div class="col-md-6 form-group mb-3 text-center">
-                  <label for="codGara">Codice Gara</label>
-                  <input class="form-control" id="codGara" formControlName="codGara" placeholder="Codice Gara" type="codGara" [ngClass]="{'is-invalid': submitted && f.codGara.errors }" />
-                  <div *ngIf="submitted && f.codGara.errors" class="invalid-feedback">
-                    <div *ngIf="f.codGara.errors.required">Codoce Gara Obbligatorio</div>
+                  <label for="matricola">Matricolaa</label>
+                  <input class="form-control" id="matricola" formControlName="matricola" placeholder="Matricola" type="matricola" [ngClass]="{'is-invalid': submitted && f.matricola.errors }" />
+                  <div *ngIf="submitted && f.matricola.errors" class="invalid-feedback">
+                    <div *ngIf="f.matricola.errors.required">Matricola obbligataria</div>
                   </div>
                 </div>
                 <div class="col-md-6 form-group mb-3 text-center">
-                  <label for="cup">CUP</label>
-                  <input class="form-control" id="cup" formControlName="cup" placeholder="CUP" type="cup" [ngClass]="{'is-invalid': submitted && f.cup.errors }" />
-                  <div *ngIf="submitted && f.cup.errors" class="invalid-feedback">
-                    <div *ngIf="f.cup.errors.required">CUP obbligatario!</div>
+                  <label for="telaio">Telaio</label>
+                  <input class="form-control" id="telaio" formControlName="telaio" placeholder="Telaio" type="telaio" [ngClass]="{'is-invalid': submitted && f.telaio.errors }" />
+                  <div *ngIf="submitted && f.telaio.errors" class="invalid-feedback">
+                    <div *ngIf="f.telaio.errors.required">Telaio obbligatario!</div>
                   </div>
                 </div>
                 <div class="col-md-6 form-group mb-3 text-center">
-                  <label for="cig">CIG</label>
-                  <input class="form-control" id="cig" formControlName="cig" placeholder="CIG" type="cig" [ngClass]="{'is-invalid': submitted && f.cig.errors }" />
-                  <div *ngIf="submitted && f.cig.errors" class="invalid-feedback">
-                    <div *ngIf="f.cig.errors.required">CIG obbligatario!</div>
-                  </div>
+                  <label for="assegnatario">Azienda Assegnataria</label>
+                  <select class="form-control" id="assegnatario" formControlName="assegnatario"   [compareWith]="compareAzienda">
+                    <option [ngValue]="null" ></option>
+                    <option [ngValue]="l" *ngFor="let l of listAzienda">{{l.nome}}</option>
+                  </select>
                 </div>
                 <div class="col-md-6 form-group mb-3 text-center">
-                    <label for="finAcq">Finanziamento Acquisto</label>
-                    <select class="form-control" id="finAcq" formControlName="finAcq"   [compareWith]="compareFn">
+                    <label for="fornitore">Fornitore</label>
+                    <select class="form-control" id="fornitore" formControlName="fornitore"   [compareWith]="compareFn">
                       <option [ngValue]="null" ></option>
-                      <option [ngValue]="l" *ngFor="let l of listFinAcq">{{l.descrizione}}</option>
+                      <option [ngValue]="l" *ngFor="let l of listFornitore">{{l.descrizione}}</option>
                     </select>
                 </div>
             </div>
             <div class="row text-center">
                 <div class="col-md-6 form-group mb-3 text-center">
-                  <label for="rup">RUP</label>
-                  <input class="form-control" id="rup" formControlName="rup" placeholder="RUP" type="rup" [ngClass]="{'is-invalid': submitted && f.rup.errors }" />
-                  <div *ngIf="submitted && f.rup.errors" class="invalid-feedback">
-                    <div *ngIf="f.rup.errors.required">RUP obbligatario!</div>
-                  </div>
+                  <label for="categoria">Categoria</label>
+                  <select class="form-control" id="categoria" formControlName="categoria"   [compareWith]="compareFn">
+                    <option [ngValue]="null" ></option>
+                    <option [ngValue]="l" *ngFor="let l of listCategoria">{{l.descrizione}}</option>
+                  </select>
                 </div>
                 <div class="col-md-6 form-group mb-3 text-center">
-                  <label for="dec">DEC</label>
-                  <input class="form-control" id="dec" formControlName="dec" placeholder="DEC" type="dec" [ngClass]="{'is-invalid': submitted && f.dec.errors }" />
-                  <div *ngIf="submitted && f.dec.errors" class="invalid-feedback">
-                    <div *ngIf="f.dec.errors.required">DEC obbligatario!</div>
-                  </div>
+                  <label for="classe">Classe</label>
+                  <select class="form-control" id="classe" formControlName="classe"   [compareWith]="compareFn">
+                    <option [ngValue]="null" ></option>
+                    <option [ngValue]="l" *ngFor="let l of listClasse">{{l.descrizione}}</option>
+                  </select>
+                </div>
+                <div class="col-md-6 form-group mb-3 text-center">
+                  <label for="dispCopiaCartaCirc">Copia Carta Circolazione Disponibile</label>
+                  <select class="form-control" id="dispCopiaCartaCirc" formControlName="dispCopiaCartaCirc"   [compareWith]="compareFn">
+                    <option [ngValue]="null" ></option>
+                    <option [ngValue]="l" *ngFor="let l of listDispCopiaCC">{{l.descrizione}}</option>
+                  </select>
+                </div>
+                <div class="col-md-6 form-group mb-3 text-center">
+                  <label for="modello">Modello</label>
+                  <select class="form-control" id="modello" formControlName="modello"   [compareWith]="compareFn">
+                    <option [ngValue]="null" ></option>
+                    <option [ngValue]="l" *ngFor="let l of listModello">{{l.descrizione}}</option>
+                  </select>
                 </div>
             </div>
-
-              <br>
-
-              <div class="col-md-12 text-center">
-                <btn-loading type="submit" btnClass="btn btn-primary mt-2" [loading]="loading2" >Salva</btn-loading>
+            <div class="row text-center">
+              
+              <div class="col-md-6 form-group mb-3 text-center">
+                <label for="regimeProprieta">Regime Proprieta</label>
+                <select class="form-control" id="regimeProprieta" formControlName="regimeProprieta"   [compareWith]="compareFn">
+                  <option [ngValue]="null" ></option>
+                  <option [ngValue]="l" *ngFor="let l of listModello">{{l.descrizione}}</option>
+                </select>
               </div>
-          </form>
+              <div class="col-md-6 form-group mb-3 text-center">
+                <label for="tipoAlimentazione">Tipo Alimentazione</label>
+                <select class="form-control" id="tipoAlimentazione" formControlName="tipoAlimentazione"   [compareWith]="compareFn">
+                  <option [ngValue]="null" ></option>
+                  <option [ngValue]="l" *ngFor="let l of listAlimentazione">{{l.descrizione}}</option>
+                </select>
+              </div>
+              <div class="col-md-6 form-group mb-3 text-center">
+                <label for="tipoAllestimento">Tipo Allestimento</label>
+                <select class="form-control" id="tipoAllestimento" formControlName="tipoAllestimento"   [compareWith]="compareFn">
+                  <option [ngValue]="null" ></option>
+                  <option [ngValue]="l" *ngFor="let l of listAllestimento">{{l.descrizione}}</option>
+                </select>
+              </div>
+              <div class="col-md-6 form-group mb-3 text-center">
+                <label for="targa1imm">Targa 1 Immatricolazione</label>
+                <input class="form-control" id="targa1imm" formControlName="targa1imm" placeholder="Targa" type="targa1imm" [ngClass]="{'is-invalid': submitted && f.targa1imm.errors }" />
+                <div *ngIf="submitted && f.targa1imm.errors" class="invalid-feedback">
+                  <div *ngIf="f.targa1imm.errors.required">Targa obbligatoria!</div>
+                </div>
+              </div>
+          </div>
+          <div class="row text-center">
+            <div class="col-md-6 form-group mb-3 text-center">
+              <label for="numPorte">Numero Porte</label>
+              <input class="form-control" id="numPorte" formControlName="numPorte" placeholder="Numero Porte" type="numPorte" [ngClass]="{'is-invalid': submitted && f.numPorte.errors }" />
+              <div *ngIf="submitted && f.numPorte.errors" class="invalid-feedback">
+                <div *ngIf="f.numPorte.errors.required">Telaio obbligatario!</div>
+              </div>
+            </div>
+          </div>
+          <br>
+
+          <div class="col-md-12 text-center">
+            <btn-loading type="submit" btnClass="btn btn-primary mt-2" [loading]="loading2" >Salva</btn-loading>
+          </div>
+       </form>
 
     </div>
   </div>

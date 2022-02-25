@@ -221,6 +221,7 @@ export class CreazioneVeicoloComponent implements OnInit {
     let  veicolo: Veicolo = new Veicolo();
     veicolo.matricola = this.cercaVeicoloForm.controls.matricola.value;
     veicolo.telaio = this.cercaVeicoloForm.controls.telaio.value;
+    veicolo.assegnatario = this.veicoloForm.controls.assegnatario.value;
     // veicolo.tipoAlimentazione = this.cercaVeicoloForm.controls.tipoAlimentazione.value;
     // veicolo.classe = this.cercaVeicoloForm.controls.classe.value;
     if (this.cercaVeicoloForm.invalid) {
@@ -253,8 +254,20 @@ export class CreazioneVeicoloComponent implements OnInit {
       veicolo.matricola = this.veicoloForm.controls.matricola.value;
       veicolo.telaio = this.veicoloForm.controls.telaio.value;
       veicolo.assegnatario = this.veicoloForm.controls.assegnatario.value;
+      veicolo.fornitore = this.veicoloForm.controls.fornitore.value;
+      
+      veicolo.categoria = this.veicoloForm.controls.categoria.value;
+      veicolo.classe = this.veicoloForm.controls.classe.value;
+      veicolo.dispCopiaCartaCirc = this.veicoloForm.controls.dispCopiaCartaCirc.value;
+      veicolo.modello = this.veicoloForm.controls.modello.value;
+
+      veicolo.regimeProprieta = this.veicoloForm.controls.regimeProprieta.value;
+      veicolo.tipoAlimentazione = this.veicoloForm.controls.tipoAlimentazione.value;
+      veicolo.tipoAllestimento = this.veicoloForm.controls.tipoAllestimento.value;
       veicolo.targa1imm = this.veicoloForm.controls.targa1imm.value;
+      
       veicolo.dataPrimaImm = this.veicoloForm.controls.dataPrimaImm.value;
+
       veicolo.numSimSerialNumber = this.veicoloForm.controls.numSimSerialNumber.value;
       veicolo.numSimTelefonico = this.veicoloForm.controls.numSimTelefonico.value;
       veicolo.costoAcquistoNettoIva = this.veicoloForm.controls.costoAcquistoNettoIva.value;
@@ -273,14 +286,7 @@ export class CreazioneVeicoloComponent implements OnInit {
       veicolo.note = this.veicoloForm.controls.note.value;
       veicolo.numPorte = this.veicoloForm.controls.numPorte.value;
       veicolo.utimaVerIspettiva = this.veicoloForm.controls.utimaVerIspettiva.value;
-      veicolo.categoria = this.veicoloForm.controls.categoria.value;
-      veicolo.classe = this.veicoloForm.controls.classe.value;
-      veicolo.dispCopiaCartaCirc = this.veicoloForm.controls.dispCopiaCartaCirc.value;
-      veicolo.fornitore = this.veicoloForm.controls.fornitore.value;
-      veicolo.modello = this.veicoloForm.controls.modello.value;
-      veicolo.regimeProprieta = this.veicoloForm.controls.regimeProprieta.value;
-      veicolo.tipoAlimentazione = this.veicoloForm.controls.tipoAlimentazione.value;
-      veicolo.tipoAllestimento = this.veicoloForm.controls.tipoAllestimento.value;
+     
      
       if (this.veicoloForm.invalid) {
         return;
@@ -350,39 +356,64 @@ export class CreazioneVeicoloComponent implements OnInit {
     this.getListaDiz('TIPO_ALLESTIMENTO');
     this.getListaAziende();
     //
-    this.veicoloForm.controls['id'].setValue('');
-    this.veicoloForm.controls['matricola'].setValue('');
-    this.veicoloForm.controls['telaio'].setValue('');
-    this.veicoloForm.controls['numSimSerialNumber'].setValue('');
-    this.veicoloForm.controls['numSimTelefonico'].setValue('');
-    this.veicoloForm.controls['costoAcquistoNettoIva'].setValue('');
-    this.veicoloForm.controls['dataAttivazioneavm'].setValue('');
-    this.veicoloForm.controls['dataConsegnaAdAziendaTpl'].setValue('');
-    this.veicoloForm.controls['dataContrattoAziendaTpl'].setValue('');
-    this.veicoloForm.controls['dataScadGaranziaBase'].setValue('');
-    this.veicoloForm.controls['dataScadGaranziaEstesa'].setValue('');
-    this.veicoloForm.controls['dataUltimaRevisione'].setValue('');
-    this.veicoloForm.controls['depositoRicoveroProtComunicazione'].setValue('');
-    this.veicoloForm.controls['kmDataRevisione'].setValue('');
-    this.veicoloForm.controls['lunghezza'].setValue('');
-    this.veicoloForm.controls['note'].setValue('');
-    this.veicoloForm.controls['numPorte'].setValue('');
-    this.veicoloForm.controls['targa1imm'].setValue(null);
-    this.veicoloForm.controls['assegnatario'].setValue('');
-    this.veicoloForm.controls['categoria'].setValue(null);
-    this.veicoloForm.controls['categoria'].setValue(null);
-    this.veicoloForm.controls['classe'].setValue(null);
-    this.veicoloForm.controls['dispCopiaCartaCirc'].setValue(null);
-    this.veicoloForm.controls['fornitore'].setValue(null);
-    this.veicoloForm.controls['modello'].setValue(null);
-    this.veicoloForm.controls['regimeProprieta'].setValue(null);
-    this.veicoloForm.controls['tipoAlimentazione'].setValue(null);
-    this.veicoloForm.controls['tipoAllestimento'].setValue(null);
+    if (veicolo == null) { 
+        this.veicoloForm.controls['id'].setValue('');
+        this.veicoloForm.controls['matricola'].setValue('');
+        this.veicoloForm.controls['telaio'].setValue('');
+        this.veicoloForm.controls['assegnatario'].setValue(null);
+        this.veicoloForm.controls['fornitore'].setValue(null);
+
+        this.veicoloForm.controls['categoria'].setValue(null);
+        this.veicoloForm.controls['classe'].setValue(null);
+        this.veicoloForm.controls['dispCopiaCartaCirc'].setValue(null);
+        this.veicoloForm.controls['modello'].setValue(null);
+
+        this.veicoloForm.controls['regimeProprieta'].setValue(null);
+        this.veicoloForm.controls['tipoAlimentazione'].setValue(null);
+        this.veicoloForm.controls['tipoAllestimento'].setValue(null);
+
+        this.veicoloForm.controls['targa1imm'].setValue('');
+        this.veicoloForm.controls['dataPrimaImm'].setValue('');
+
+        this.veicoloForm.controls['numPorte'].setValue('');
+        this.veicoloForm.controls['lunghezza'].setValue('');
+        this.veicoloForm.controls['kmDataRevisione'].setValue('');
+        this.veicoloForm.controls['numSimSerialNumber'].setValue('');
+        this.veicoloForm.controls['numSimTelefonico'].setValue('');
+        this.veicoloForm.controls['costoAcquistoNettoIva'].setValue('');
+
+        this.veicoloForm.controls['dataAttivazioneavm'].setValue('');
+        this.veicoloForm.controls['dataConsegnaAdAziendaTpl'].setValue('');
+        this.veicoloForm.controls['dataContrattoAziendaTpl'].setValue('');
+        this.veicoloForm.controls['dataScadGaranziaBase'].setValue('');
+        this.veicoloForm.controls['dataScadGaranziaEstesa'].setValue('');
+        this.veicoloForm.controls['dataUltimaRevisione'].setValue('');
+        this.veicoloForm.controls['depositoRicoveroProtComunicazione'].setValue('');
+        this.veicoloForm.controls['note'].setValue('');
+        
+      
+       
+    }
     if (veicolo != null) { 
       this.veicoloForm.controls['id'].setValue(veicolo.id);
+
       this.veicoloForm.controls['matricola'].setValue(veicolo.matricola);
       this.veicoloForm.controls['telaio'].setValue(veicolo.telaio);
       this.veicoloForm.controls['assegnatario'].setValue(veicolo.assegnatario);
+      this.veicoloForm.controls['fornitore'].setValue(veicolo.fornitore);
+
+      this.veicoloForm.controls['categoria'].setValue(veicolo.categoria);
+      this.veicoloForm.controls['classe'].setValue(veicolo.classe);
+      this.veicoloForm.controls['dispCopiaCartaCirc'].setValue(veicolo.dispCopiaCartaCirc);
+      this.veicoloForm.controls['modello'].setValue(veicolo.modello);
+
+      this.veicoloForm.controls['regimeProprieta'].setValue(veicolo.regimeProprieta);
+      this.veicoloForm.controls['tipoAlimentazione'].setValue(veicolo.tipoAlimentazione);
+      this.veicoloForm.controls['tipoAllestimento'].setValue(veicolo.tipoAllestimento);
+
+      this.veicoloForm.controls['targa1imm'].setValue(veicolo.targa1imm);
+      this.veicoloForm.controls['dataPrimaImm'].setValue(veicolo.dataPrimaImm);
+     
       this.veicoloForm.controls['numSimSerialNumber'].setValue(veicolo.numSimSerialNumber);
       this.veicoloForm.controls['numSimTelefonico'].setValue(veicolo.numSimTelefonico);
       this.veicoloForm.controls['costoAcquistoNettoIva'].setValue(veicolo.costoAcquistoNettoIva);
@@ -397,16 +428,9 @@ export class CreazioneVeicoloComponent implements OnInit {
       this.veicoloForm.controls['lunghezza'].setValue(veicolo.lunghezza);
       this.veicoloForm.controls['note'].setValue(veicolo.note);
       this.veicoloForm.controls['numPorte'].setValue(veicolo.note);
-      this.veicoloForm.controls['targa1imm'].setValue(veicolo.targa1imm);
+      
       this.veicoloForm.controls['utimaVerIspettiva'].setValue(veicolo.utimaVerIspettiva);
-      this.veicoloForm.controls['categoria'].setValue(veicolo.categoria);
-      this.veicoloForm.controls['classe'].setValue(veicolo.classe);
-      this.veicoloForm.controls['dispCopiaCartaCirc'].setValue(veicolo.dispCopiaCartaCirc);
-      this.veicoloForm.controls['fornitore'].setValue(veicolo.fornitore);
-      this.veicoloForm.controls['modello'].setValue(veicolo.modello);
-      this.veicoloForm.controls['regimeProprieta'].setValue(veicolo.regimeProprieta);
-      this.veicoloForm.controls['tipoAlimentazione'].setValue(veicolo.tipoAlimentazione);
-      this.veicoloForm.controls['tipoAllestimento'].setValue(veicolo.tipoAllestimento);
+      
     }
     this.modalService.open(content, { ariaLabelledBy: 'modalsos', size: 'lg' })
       .result.then((result) => {
