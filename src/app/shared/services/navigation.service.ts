@@ -66,7 +66,13 @@ export class NavigationService {
             icon: 'i-Coins',
             state: '/creazionegara'
         },
-       
+        {   
+            name: 'Veicolo',
+            description: 'Veicolo',
+            type: 'link',
+            icon: 'i-Jeep-2',
+            state: '/creazioneveicolo'
+        },
        
        
       

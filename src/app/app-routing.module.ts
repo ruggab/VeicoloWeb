@@ -57,8 +57,8 @@ const adminRoutes: Routes = [
       loadChildren: () => import('./views/creazione-gara/creazione-gara.module').then(m => m.CreazioneGaraModule)
     },
     {
-      path:'manageProduct',
-      loadChildren: () => import('./views/manage-product/manage-product.module').then(m => m.ManageProductModule)
+      path:'creazioneveicolo',
+      loadChildren: () => import('./views/creazione-veicolo/creazione-veicolo.module').then(m => m.CreazioneVeicoloModule)
     }
   ];
 

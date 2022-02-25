@@ -212,12 +212,12 @@ export class CreazioneAziendaComponent implements OnInit {
 
   openLg(content, azienda) {
     if (azienda == null) {
-      this.aziendaForm.controls['id'].setValue(azienda.id);
-      this.aziendaForm.controls['matricola'].setValue(azienda.matricola);
-      this.aziendaForm.controls['nome'].setValue(azienda.nome);
-      this.aziendaForm.controls['nominativoRef'].setValue(azienda.nominativoRef);
-      this.aziendaForm.controls['mailRef'].setValue(azienda.mailRef);
-      this.aziendaForm.controls['telRef'].setValue(azienda.telRef);
+      this.aziendaForm.controls['id'].setValue('');
+      this.aziendaForm.controls['matricola'].setValue('');
+      this.aziendaForm.controls['nome'].setValue('');
+      this.aziendaForm.controls['nominativoRef'].setValue('');
+      this.aziendaForm.controls['mailRef'].setValue('');
+      this.aziendaForm.controls['telRef'].setValue('');
     }
     if (azienda != null) {
       this.aziendaForm.controls['id'].setValue(azienda.id);

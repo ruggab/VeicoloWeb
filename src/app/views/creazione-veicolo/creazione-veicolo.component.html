@@ -1,5 +1,5 @@
 <div class="breadcrumb">
-  <h1>Gestione Gara</h1>
+  <h1>Gestione Veicolo</h1>
 </div>
 
 <div class="separator-breadcrumb border-top"></div>
@@ -43,7 +43,7 @@
 
 <div class="row">
   
-  <btn-loading type="button" btnClass="btn btn-info btn-lg" (click)="openLg(modalGara,null)">Aggiungi</btn-loading>
+  <btn-loading type="button" btnClass="btn btn-info btn-lg" (click)="openLg(modalVeicolo,null)">Aggiungi</btn-loading>
   &nbsp;&nbsp;
   <btn-loading type="button" btnClass="btn btn-info btn-lg" (click)="exportCSV()">Esporta CSV</btn-loading>
   
@@ -87,7 +87,7 @@
 
 <ng-template #modalVeicolo let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Gara</h4>
+    <h4 class="modal-title" id="modal-basic-title">Veicolo</h4>
 
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
