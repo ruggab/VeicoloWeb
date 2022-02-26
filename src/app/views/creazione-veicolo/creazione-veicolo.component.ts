@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { NgbCalendar, NgbDate, NgbDateParserFormatter, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbCalendar, NgbDate, NgbDateParserFormatter, NgbDatepicker, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from 'src/environments/environment';
 import { ToastrService } from 'ngx-toastr';
 import { saveAs } from 'file-saver';
@@ -9,6 +9,7 @@ import { GenerateResponse } from 'src/app/model/GenerateResponse';
 import { Dizionario } from 'src/app/model/Dizionario';
 import { Veicolo } from 'src/app/model/Veicolo';
 import { Azienda } from 'src/app/model/Azienda';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-creazione-veicolo',
@@ -273,15 +274,15 @@ export class CreazioneVeicoloComponent implements OnInit {
 
       veicolo.numPorte = this.veicoloForm.controls.numPorte.value;
       veicolo.targa1Imm = this.veicoloForm.controls.targa1imm.value;
-      veicolo.dataPrimaImm = this.veicoloForm.controls.dataPrimaImm.value;
+      veicolo.dataPrimaImm = this.fromNgbDatePickerToDate(this.veicoloForm.controls.dataPrimaImm.value);
 
       veicolo.kmDataRevisione = this.veicoloForm.controls.kmDataRevisione.value;
-      veicolo.dataUltimaRevisione = this.veicoloForm.controls.dataUltimaRevisione.value;
-      veicolo.dataScadUsufrutto = this.veicoloForm.controls.dataScadUsufrutto.value;
+      veicolo.dataUltimaRevisione = this.fromNgbDatePickerToDate(this.veicoloForm.controls.dataUltimaRevisione.value);
+      veicolo.dataScadUsufrutto = this.fromNgbDatePickerToDate(this.veicoloForm.controls.dataScadUsufrutto.value);
 
-      veicolo.dataAttivazioneavm = this.veicoloForm.controls.dataAttivazioneavm.value;
-      veicolo.dataContrattoAziendaTpl = this.veicoloForm.controls.dataContrattoAziendaTpl.value;
-      veicolo.dataConsegnaAdAziendaTpl = this.veicoloForm.controls.dataConsegnaAdAziendaTpl.value;
+      veicolo.dataAttivazioneavm = this.fromNgbDatePickerToDate(this.veicoloForm.controls.dataAttivazioneavm.value);
+      veicolo.dataContrattoAziendaTpl = this.fromNgbDatePickerToDate(this.veicoloForm.controls.dataContrattoAziendaTpl.value);
+      veicolo.dataConsegnaAdAziendaTpl = this.fromNgbDatePickerToDate(this.veicoloForm.controls.dataConsegnaAdAziendaTpl.value);
      
 
       veicolo.numSimSerialNumber = this.veicoloForm.controls.numSimSerialNumber.value;
@@ -363,36 +364,28 @@ export class CreazioneVeicoloComponent implements OnInit {
   }
   
 
-  onDataPrimaImm(ngbDate: NgbDate) {
-    var data = new Date(ngbDate.year, ngbDate.month - 1, ngbDate.day)
-    this.veicoloForm.controls['dataPrimaImm'].setValue(data);
-  }
-  onDataAttivazioneavm(ngbDate: NgbDate) {
-    var data = new Date(ngbDate.year, ngbDate.month - 1, ngbDate.day)
-    this.veicoloForm.controls['dataAttivazioneavm'].setValue(data);
-  }
-  onDataConsegnaAdAziendaTpl(ngbDate: NgbDate) {
-    var data = new Date(ngbDate.year, ngbDate.month - 1, ngbDate.day)
-    this.veicoloForm.controls['dataConsegnaAdAziendaTpl'].setValue(data);
-  }
-  onDataContrattoAziendaTpl(ngbDate: NgbDate) {
-    var data = new Date(ngbDate.year, ngbDate.month - 1, ngbDate.day)
-    this.veicoloForm.controls['dataContrattoAziendaTpl'].setValue(data);
-  }
-  onDataUltimaRevisione(ngbDate: NgbDate) {
-    var data = new Date(ngbDate.year, ngbDate.month - 1, ngbDate.day)
-    this.veicoloForm.controls['dataUltimaRevisione'].setValue(data);
-  }
-  onDataScadUsufrutto(ngbDate: NgbDate) {
-    var data = new Date(ngbDate.year, ngbDate.month - 1, ngbDate.day)
-    this.veicoloForm.controls['dataScadUsufrutto'].setValue(data);
+   fromStringToDate(dateString: any){
+      if (dateString != null){
+        let parts=dateString.split('-');
+        let initialStartDate = {
+          year: parseInt(parts[0]), 
+          month: parseInt(parts[1]), 
+          day: parseInt(parts[2])
+        };
+        return initialStartDate;
+      } else {
+        return new Date (null);
+      }
   }
 
-  // validateInput(currentValue: NgbDate | null, input: string): NgbDate | null {
-  //   const parsed = this.formatter.parse(input);
-  //   return parsed && this.calendar.isValid(NgbDate.from(parsed)) ? NgbDate.from(parsed) : currentValue;
-  // }
-
+  fromNgbDatePickerToDate(date: NgbDatepicker){
+    if (date != null){
+      return new Date(date['year'],date['month'],date['day']);
+    } else {
+      return new Date (null);
+    }
+}
+  
   openLg(content:any, veicolo:Veicolo) {
     this.getListaDiz('CATEGORIA');
     this.getListaDiz('CLASSE');
@@ -421,8 +414,6 @@ export class CreazioneVeicoloComponent implements OnInit {
         this.veicoloForm.controls['tipoAllestimento'].setValue(null);
 
         this.veicoloForm.controls['targa1imm'].setValue('');
-        this.veicoloForm.controls['dataPrimaImm'].setValue('');
-
         this.veicoloForm.controls['numPorte'].setValue('');
         this.veicoloForm.controls['lunghezza'].setValue('');
         this.veicoloForm.controls['kmDataRevisione'].setValue('');
@@ -430,11 +421,13 @@ export class CreazioneVeicoloComponent implements OnInit {
         this.veicoloForm.controls['numSimTelefonico'].setValue('');
         this.veicoloForm.controls['costoAcquistoNettoIva'].setValue('');
 
+        this.veicoloForm.controls['dataPrimaImm'].setValue('');
         this.veicoloForm.controls['dataAttivazioneavm'].setValue('');
         this.veicoloForm.controls['dataConsegnaAdAziendaTpl'].setValue('');
         this.veicoloForm.controls['dataContrattoAziendaTpl'].setValue('');
-       
+        this.veicoloForm.controls['dataScadUsufrutto'].setValue('');
         this.veicoloForm.controls['dataUltimaRevisione'].setValue('');
+
         this.veicoloForm.controls['depositoRicoveroProtComunicazione'].setValue('');
         this.veicoloForm.controls['note'].setValue('');
         this.veicoloForm.controls['indirizzoDepositoRicovero'].setValue('');
@@ -446,7 +439,11 @@ export class CreazioneVeicoloComponent implements OnInit {
         // this.veicoloForm.controls['dataScadVincolo'].setValue('');
        
     }
+
     if (veicolo != null) { 
+
+      
+
       this.veicoloForm.controls['id'].setValue(veicolo.id);
 
       this.veicoloForm.controls['matricola'].setValue(veicolo.matricola);
@@ -462,23 +459,24 @@ export class CreazioneVeicoloComponent implements OnInit {
       this.veicoloForm.controls['regimeProprieta'].setValue(veicolo.regimeProprieta);
       this.veicoloForm.controls['tipoAlimentazione'].setValue(veicolo.tipoAlimentazione);
       this.veicoloForm.controls['tipoAllestimento'].setValue(veicolo.tipoAllestimento);
-
       this.veicoloForm.controls['targa1imm'].setValue(veicolo.targa1Imm);
-      this.veicoloForm.controls['dataPrimaImm'].setValue(veicolo.dataPrimaImm);
-     
+
+      this.veicoloForm.controls['dataPrimaImm'].setValue(this.fromStringToDate(veicolo.dataPrimaImm));
+      this.veicoloForm.controls['dataScadUsufrutto'].setValue(this.fromStringToDate(veicolo.dataScadUsufrutto));
+      this.veicoloForm.controls['dataAttivazioneavm'].setValue(this.fromStringToDate(veicolo.dataAttivazioneavm));
+      this.veicoloForm.controls['dataConsegnaAdAziendaTpl'].setValue(this.fromStringToDate(veicolo.dataConsegnaAdAziendaTpl));
+      this.veicoloForm.controls['dataContrattoAziendaTpl'].setValue(this.fromStringToDate(veicolo.dataContrattoAziendaTpl));
+      this.veicoloForm.controls['dataUltimaRevisione'].setValue(this.fromStringToDate(veicolo.dataUltimaRevisione));
+      
       this.veicoloForm.controls['numSimSerialNumber'].setValue(veicolo.numSimSerialNumber);
       this.veicoloForm.controls['numSimTelefonico'].setValue(veicolo.numSimTelefonico);
       this.veicoloForm.controls['costoAcquistoNettoIva'].setValue(veicolo.costoAcquistoNettoIva);
-      this.veicoloForm.controls['dataAttivazioneavm'].setValue(veicolo.dataAttivazioneavm);
-      this.veicoloForm.controls['dataConsegnaAdAziendaTpl'].setValue(veicolo.dataConsegnaAdAziendaTpl);
-      this.veicoloForm.controls['dataContrattoAziendaTpl'].setValue(veicolo.dataContrattoAziendaTpl);
-      
       // this.veicoloForm.controls['dataScadGaranziaBase'].setValue(veicolo.dataScadGaranziaBase);
       // this.veicoloForm.controls['dataScadGaranziaEstesa'].setValue(veicolo.dataScadGaranziaEstesa);
       // this.veicoloForm.controls['dataScadVincolo'].setValue(veicolo.dataScadVincolo);
 
 
-      this.veicoloForm.controls['dataUltimaRevisione'].setValue(veicolo.dataUltimaRevisione);
+
       this.veicoloForm.controls['depositoRicoveroProtComunicazione'].setValue(veicolo.depositoRicoveroProtComunicazione);
       this.veicoloForm.controls['indirizzoDepositoRicovero'].setValue(veicolo.indirizzoDepositoRicovero);
        
@@ -497,6 +495,11 @@ export class CreazioneVeicoloComponent implements OnInit {
         console.log('Err!', reason);
       });
   }
+
+
+ 
+
+
 
 }
 

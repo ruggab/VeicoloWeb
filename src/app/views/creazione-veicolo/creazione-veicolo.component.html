@@ -214,8 +214,7 @@
                 <div class="col-md-4 form-group mb-3 text-center">
                   <label for="dataPrimaImm">Data I Immatricolazione</label>
                   <div class="input-group">
-                      <input class="form-control" id="dataPrimaImm" name="dataPrimaImm" (dateSelect)="onDataPrimaImm($event)" 
-                        ngbDatepicker #d="ngbDatepicker"  tabindex="-1">
+                      <input class="form-control" id="dataPrimaImm"  formControlName="dataPrimaImm"  ngbDatepicker #d="ngbDatepicker"  tabindex="-1">
                       <div class="input-group-append">
                           <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"><i class="icon-regular i-Calendar-4"></i></button>
                       </div>
@@ -230,8 +229,7 @@
               <div class="col-md-4 form-group mb-3 text-center">
                 <label for="dataUltimaRevisione">Data Ultima Revisione</label>
                 <div class="input-group">
-                    <input class="form-control" id="dataUltimaRevisione" name="dataUltimaRevisione"   (dateSelect)="onDataUltimaRevisione($event)" 
-                      ngbDatepicker #d1="ngbDatepicker"  tabindex="-1">
+                    <input class="form-control" id="dataUltimaRevisione" formControlName="dataUltimaRevisione"  ngbDatepicker #d1="ngbDatepicker"  tabindex="-1">
                     <div class="input-group-append">
                         <button class="btn btn-outline-secondary calendar" (click)="d1.toggle()" type="button"><i class="icon-regular i-Calendar-4"></i></button>
                     </div>
@@ -240,8 +238,7 @@
               <div class="col-md-4 form-group mb-3 text-center">
                 <label for="dataScadUsufrutto">Data Scadenza Usufrutto</label>
                 <div class="input-group">
-                    <input class="form-control" id="dataScadUsufrutto" name="dataScadUsufrutto"   (dateSelect)="onDataScadUsufrutto($event)" 
-                      ngbDatepicker #d3="ngbDatepicker"  tabindex="-1">
+                    <input class="form-control" id="dataScadUsufrutto" formControlName="dataScadUsufrutto" ngbDatepicker #d3="ngbDatepicker"  tabindex="-1">
                     <div class="input-group-append">
                         <button class="btn btn-outline-secondary calendar" (click)="d3.toggle()" type="button"><i class="icon-regular i-Calendar-4"></i></button>
                     </div>
@@ -252,8 +249,7 @@
             <div class="col-md-4 form-group mb-3 text-center">
               <label for="dataAttivazioneavm">Data Attivazione AVM</label>
               <div class="input-group">
-                  <input class="form-control" id="dataAttivazioneavm" name="dataAttivazioneavm"   (dateSelect)="onDataAttivazioneavm($event)" 
-                    ngbDatepicker #d4="ngbDatepicker"  tabindex="-1">
+                  <input class="form-control" id="dataAttivazioneavm" formControlName="dataAttivazioneavm" ngbDatepicker #d4="ngbDatepicker"  tabindex="-1">
                   <div class="input-group-append">
                       <button class="btn btn-outline-secondary calendar" (click)="d4.toggle()" type="button"><i class="icon-regular i-Calendar-4"></i></button>
                   </div>
@@ -262,8 +258,7 @@
             <div class="col-md-4 form-group mb-3 text-center">
               <label for="dataContrattoAziendaTpl">Data Contratto TPL</label>
               <div class="input-group">
-                  <input class="form-control" id="dataContrattoAziendaTpl" name="dataContrattoAziendaTpl"   (dateSelect)="onDataContrattoAziendaTpl($event)"
-                    ngbDatepicker #d5="ngbDatepicker"  tabindex="-1">
+                  <input class="form-control" id="dataContrattoAziendaTpl" formControlName="dataContrattoAziendaTpl" ngbDatepicker #d5="ngbDatepicker"  tabindex="-1">
                   <div class="input-group-append">
                       <button class="btn btn-outline-secondary calendar" (click)="d5.toggle()" type="button"><i class="icon-regular i-Calendar-4"></i></button>
                   </div>
@@ -272,8 +267,7 @@
             <div class="col-md-4 form-group mb-3 text-center">
               <label for="dataConsegnaAdAziendaTpl">Data Consegna TPL</label>
               <div class="input-group">
-                  <input class="form-control" id="dataConsegnaAdAziendaTpl" name="dataConsegnaAdAziendaTpl"  (dateSelect)="onDataConsegnaAdAziendaTpl($event)" 
-                    ngbDatepicker #d6="ngbDatepicker"  tabindex="-1">
+                  <input class="form-control" id="dataConsegnaAdAziendaTpl" formControlName="dataConsegnaAdAziendaTpl" ngbDatepicker #d6="ngbDatepicker"  tabindex="-1">
                   <div class="input-group-append">
                       <button class="btn btn-outline-secondary calendar" (click)="d6.toggle()" type="button"><i class="icon-regular i-Calendar-4"></i></button>
                   </div>
