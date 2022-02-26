@@ -249,6 +249,8 @@ export class CreazioneVeicoloComponent implements OnInit {
       )
   }
 
+ 
+
   salvaVeicolo(){
       this.submitted = true;
       let veicolo : Veicolo = new Veicolo();
@@ -270,7 +272,7 @@ export class CreazioneVeicoloComponent implements OnInit {
       veicolo.lunghezza = this.veicoloForm.controls.lunghezza.value;
 
       veicolo.numPorte = this.veicoloForm.controls.numPorte.value;
-      veicolo.targa1imm = this.veicoloForm.controls.targa1imm.value;
+      veicolo.targa1Imm = this.veicoloForm.controls.targa1imm.value;
       veicolo.dataPrimaImm = this.veicoloForm.controls.dataPrimaImm.value;
 
       veicolo.kmDataRevisione = this.veicoloForm.controls.kmDataRevisione.value;
@@ -318,21 +320,16 @@ export class CreazioneVeicoloComponent implements OnInit {
             this.toastr.error('Errore nella generazione del Veicolo!','Errore',{progressBar: false});
           }
       }, err => {
+        this.loading2=false;
         console.log(err);
         this.toastr.error('Errore nella generazione del Veicolo!','Errore',{progressBar: false});
       })
-       this.veicoloForm.reset();
-       this.modalService.dismissAll();
+      this.loading2=false;
+       //this.veicoloForm.reset();
+       //this.modalService.dismissAll();
   }
 
-  onDateSelection(date: NgbDate) {
-    this.veicoloForm.controls['dataPrimaImm'].setValue(date);
-  }
-
-  validateInput(currentValue: NgbDate | null, input: string): NgbDate | null {
-    const parsed = this.formatter.parse(input);
-    return parsed && this.calendar.isValid(NgbDate.from(parsed)) ? NgbDate.from(parsed) : currentValue;
-  }
+ 
   
 
 
@@ -365,6 +362,36 @@ export class CreazioneVeicoloComponent implements OnInit {
     return a && b && a.id === b.id;
   }
   
+
+  onDataPrimaImm(ngbDate: NgbDate) {
+    var data = new Date(ngbDate.year, ngbDate.month - 1, ngbDate.day)
+    this.veicoloForm.controls['dataPrimaImm'].setValue(data);
+  }
+  onDataAttivazioneavm(ngbDate: NgbDate) {
+    var data = new Date(ngbDate.year, ngbDate.month - 1, ngbDate.day)
+    this.veicoloForm.controls['dataAttivazioneavm'].setValue(data);
+  }
+  onDataConsegnaAdAziendaTpl(ngbDate: NgbDate) {
+    var data = new Date(ngbDate.year, ngbDate.month - 1, ngbDate.day)
+    this.veicoloForm.controls['dataConsegnaAdAziendaTpl'].setValue(data);
+  }
+  onDataContrattoAziendaTpl(ngbDate: NgbDate) {
+    var data = new Date(ngbDate.year, ngbDate.month - 1, ngbDate.day)
+    this.veicoloForm.controls['dataContrattoAziendaTpl'].setValue(data);
+  }
+  onDataUltimaRevisione(ngbDate: NgbDate) {
+    var data = new Date(ngbDate.year, ngbDate.month - 1, ngbDate.day)
+    this.veicoloForm.controls['dataUltimaRevisione'].setValue(data);
+  }
+  onDataScadUsufrutto(ngbDate: NgbDate) {
+    var data = new Date(ngbDate.year, ngbDate.month - 1, ngbDate.day)
+    this.veicoloForm.controls['dataScadUsufrutto'].setValue(data);
+  }
+
+  // validateInput(currentValue: NgbDate | null, input: string): NgbDate | null {
+  //   const parsed = this.formatter.parse(input);
+  //   return parsed && this.calendar.isValid(NgbDate.from(parsed)) ? NgbDate.from(parsed) : currentValue;
+  // }
 
   openLg(content:any, veicolo:Veicolo) {
     this.getListaDiz('CATEGORIA');
@@ -410,7 +437,10 @@ export class CreazioneVeicoloComponent implements OnInit {
         this.veicoloForm.controls['dataUltimaRevisione'].setValue('');
         this.veicoloForm.controls['depositoRicoveroProtComunicazione'].setValue('');
         this.veicoloForm.controls['note'].setValue('');
-        
+        this.veicoloForm.controls['indirizzoDepositoRicovero'].setValue('');
+       
+       
+      
         // this.veicoloForm.controls['dataScadGaranziaBase'].setValue('');
         // this.veicoloForm.controls['dataScadGaranziaEstesa'].setValue('');
         // this.veicoloForm.controls['dataScadVincolo'].setValue('');
@@ -433,7 +463,7 @@ export class CreazioneVeicoloComponent implements OnInit {
       this.veicoloForm.controls['tipoAlimentazione'].setValue(veicolo.tipoAlimentazione);
       this.veicoloForm.controls['tipoAllestimento'].setValue(veicolo.tipoAllestimento);
 
-      this.veicoloForm.controls['targa1imm'].setValue(veicolo.targa1imm);
+      this.veicoloForm.controls['targa1imm'].setValue(veicolo.targa1Imm);
       this.veicoloForm.controls['dataPrimaImm'].setValue(veicolo.dataPrimaImm);
      
       this.veicoloForm.controls['numSimSerialNumber'].setValue(veicolo.numSimSerialNumber);
@@ -450,10 +480,12 @@ export class CreazioneVeicoloComponent implements OnInit {
 
       this.veicoloForm.controls['dataUltimaRevisione'].setValue(veicolo.dataUltimaRevisione);
       this.veicoloForm.controls['depositoRicoveroProtComunicazione'].setValue(veicolo.depositoRicoveroProtComunicazione);
+      this.veicoloForm.controls['indirizzoDepositoRicovero'].setValue(veicolo.indirizzoDepositoRicovero);
+       
       this.veicoloForm.controls['kmDataRevisione'].setValue(veicolo.kmDataRevisione);
       this.veicoloForm.controls['lunghezza'].setValue(veicolo.lunghezza);
       this.veicoloForm.controls['note'].setValue(veicolo.note);
-      this.veicoloForm.controls['numPorte'].setValue(veicolo.note);
+      this.veicoloForm.controls['numPorte'].setValue(veicolo.numPorte);
       
       this.veicoloForm.controls['utimaVerIspettiva'].setValue(veicolo.utimaVerIspettiva);
       

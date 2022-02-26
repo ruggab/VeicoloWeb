@@ -52,19 +52,28 @@
       <tr>
         <th scope="col">Matricola</th>
         <th scope="col">Telaio</th>
-        <th scope="col">Azienda</th>
         <th scope="col">Assegnatario</th>
+        <th scope="col">Fornitore</th>
+        <th scope="col">Modello</th>
+        <th scope="col">Categoria</th>
+        <th scope="col">Classe</th>
+        <th scope="col">Alimentazione</th>
+        <th scope="col">Allestimento</th>
         <th scope="col">Targa 1 Imm</th>
         <th scope="col">Data 1 Imm</th>
-        <th scope="col">Finanziamento</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let l of listVeicolo">
         <th scope="row">{{l.matricola}}</th>
         <td>{{l.telaio}}</td>
-        <td>{{l.azienda}}</td>
-        <td>{{l.assegnatario}}</td>
+        <td>{{l.assegnatario.nome}}</td>
+        <td>{{l.fornitore.descrizione}}</td>
+        <td>{{l.modello.descrizione}}</td>
+        <td>{{l.categoria.descrizione}}</td>
+        <td>{{l.classe.descrizione}}</td>
+        <td>{{l.tipoAlimentazione.descrizione}}</td>
+        <td>{{l.tipoAllestimento.descrizione}}</td>
         <td>{{l.targa1Imm}}</td>
         <td>{{l.data1Imm}}</td>
         <td style="text-align: center;">
@@ -166,7 +175,7 @@
                     <label for="regimeProprieta">Regime Proprieta</label>
                     <select class="form-control" id="regimeProprieta" formControlName="regimeProprieta"   [compareWith]="compareFn">
                       <option [ngValue]="null" ></option>
-                      <option [ngValue]="l" *ngFor="let l of listModello">{{l.descrizione}}</option>
+                      <option [ngValue]="l" *ngFor="let l of listRegimeProprieta">{{l.descrizione}}</option>
                     </select>
                   </div>
             </div>
@@ -205,7 +214,7 @@
                 <div class="col-md-4 form-group mb-3 text-center">
                   <label for="dataPrimaImm">Data I Immatricolazione</label>
                   <div class="input-group">
-                      <input class="form-control" id="dataPrimaImm" name="dataPrimaImm"  [(ngModel)]="dataPrimaImm"
+                      <input class="form-control" id="dataPrimaImm" name="dataPrimaImm" (dateSelect)="onDataPrimaImm($event)" 
                         ngbDatepicker #d="ngbDatepicker"  tabindex="-1">
                       <div class="input-group-append">
                           <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"><i class="icon-regular i-Calendar-4"></i></button>
@@ -221,7 +230,7 @@
               <div class="col-md-4 form-group mb-3 text-center">
                 <label for="dataUltimaRevisione">Data Ultima Revisione</label>
                 <div class="input-group">
-                    <input class="form-control" id="dataUltimaRevisione" name="dataUltimaRevisione"   
+                    <input class="form-control" id="dataUltimaRevisione" name="dataUltimaRevisione"   (dateSelect)="onDataUltimaRevisione($event)" 
                       ngbDatepicker #d1="ngbDatepicker"  tabindex="-1">
                     <div class="input-group-append">
                         <button class="btn btn-outline-secondary calendar" (click)="d1.toggle()" type="button"><i class="icon-regular i-Calendar-4"></i></button>
@@ -231,7 +240,7 @@
               <div class="col-md-4 form-group mb-3 text-center">
                 <label for="dataScadUsufrutto">Data Scadenza Usufrutto</label>
                 <div class="input-group">
-                    <input class="form-control" id="dataScadUsufrutto" name="dataScadUsufrutto"   
+                    <input class="form-control" id="dataScadUsufrutto" name="dataScadUsufrutto"   (dateSelect)="onDataScadUsufrutto($event)" 
                       ngbDatepicker #d3="ngbDatepicker"  tabindex="-1">
                     <div class="input-group-append">
                         <button class="btn btn-outline-secondary calendar" (click)="d3.toggle()" type="button"><i class="icon-regular i-Calendar-4"></i></button>
@@ -243,7 +252,7 @@
             <div class="col-md-4 form-group mb-3 text-center">
               <label for="dataAttivazioneavm">Data Attivazione AVM</label>
               <div class="input-group">
-                  <input class="form-control" id="dataAttivazioneavm" name="dataAttivazioneavm"   
+                  <input class="form-control" id="dataAttivazioneavm" name="dataAttivazioneavm"   (dateSelect)="onDataAttivazioneavm($event)" 
                     ngbDatepicker #d4="ngbDatepicker"  tabindex="-1">
                   <div class="input-group-append">
                       <button class="btn btn-outline-secondary calendar" (click)="d4.toggle()" type="button"><i class="icon-regular i-Calendar-4"></i></button>
@@ -253,7 +262,7 @@
             <div class="col-md-4 form-group mb-3 text-center">
               <label for="dataContrattoAziendaTpl">Data Contratto TPL</label>
               <div class="input-group">
-                  <input class="form-control" id="dataContrattoAziendaTpl" name="dataContrattoAziendaTpl"   
+                  <input class="form-control" id="dataContrattoAziendaTpl" name="dataContrattoAziendaTpl"   (dateSelect)="onDataContrattoAziendaTpl($event)"
                     ngbDatepicker #d5="ngbDatepicker"  tabindex="-1">
                   <div class="input-group-append">
                       <button class="btn btn-outline-secondary calendar" (click)="d5.toggle()" type="button"><i class="icon-regular i-Calendar-4"></i></button>
@@ -263,7 +272,7 @@
             <div class="col-md-4 form-group mb-3 text-center">
               <label for="dataConsegnaAdAziendaTpl">Data Consegna TPL</label>
               <div class="input-group">
-                  <input class="form-control" id="dataConsegnaAdAziendaTpl" name="dataConsegnaAdAziendaTpl"   
+                  <input class="form-control" id="dataConsegnaAdAziendaTpl" name="dataConsegnaAdAziendaTpl"  (dateSelect)="onDataConsegnaAdAziendaTpl($event)" 
                     ngbDatepicker #d6="ngbDatepicker"  tabindex="-1">
                   <div class="input-group-append">
                       <button class="btn btn-outline-secondary calendar" (click)="d6.toggle()" type="button"><i class="icon-regular i-Calendar-4"></i></button>

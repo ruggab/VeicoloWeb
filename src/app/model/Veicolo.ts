@@ -27,7 +27,7 @@ export class Veicolo {
     lunghezza: number;
     note: string;
     numPorte: number;
-    targa1imm: string; 
+    targa1Imm: string; 
     utimaVerIspettiva:string;
     assegnatario:Azienda; 
     categoria: Dizionario; 
