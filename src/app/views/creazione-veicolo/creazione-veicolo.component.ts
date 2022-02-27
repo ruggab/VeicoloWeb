@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { NgbCalendar, NgbDate, NgbDateParserFormatter, NgbDatepicker, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDatepicker, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from 'src/environments/environment';
 import { ToastrService } from 'ngx-toastr';
 import { saveAs } from 'file-saver';
@@ -9,7 +9,6 @@ import { GenerateResponse } from 'src/app/model/GenerateResponse';
 import { Dizionario } from 'src/app/model/Dizionario';
 import { Veicolo } from 'src/app/model/Veicolo';
 import { Azienda } from 'src/app/model/Azienda';
-import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-creazione-veicolo',
@@ -33,9 +32,6 @@ export class CreazioneVeicoloComponent implements OnInit {
   listAlimentazione : Dizionario[] = [];
   listAllestimento : Dizionario[] = [];
   listDispCopiaCC : Dizionario[] = [];
-
- 
-  
   listVeicolo : Veicolo[] =[];
   submitted = false;
   
@@ -44,16 +40,13 @@ export class CreazioneVeicoloComponent implements OnInit {
     private fb: FormBuilder,
     private http: HttpClient,
     private toastr : ToastrService,
-    public formatter: NgbDateParserFormatter,
-    private calendar: NgbCalendar
   ) {
 
     
     this.cercaVeicoloForm = this.fb.group({
       matricola : [''],
       telaio : [''],
-      classe : new FormControl(null),
-      alimentazione : new FormControl(null)
+      assegnatario:new FormControl(null)
 
     });
 
@@ -101,7 +94,7 @@ export class CreazioneVeicoloComponent implements OnInit {
 
   ngOnInit() {
     this.getListaVeicolo();
-   
+    this.getListaAziende();
   }
 
   get f() { return this.veicoloForm.controls; }
@@ -239,6 +232,7 @@ export class CreazioneVeicoloComponent implements OnInit {
           if (res.length!==0) {
             this.listVeicolo= res;
           } else {
+            this.listVeicolo= res;
             this.toastr.error('Nessun Veicolo trovato!','Veicolo',{progressBar: false});
           }
           this.loading=false;
@@ -253,8 +247,10 @@ export class CreazioneVeicoloComponent implements OnInit {
  
 
   salvaVeicolo(){
+      var utente = JSON.parse(localStorage.getItem('currentUser'));
       this.submitted = true;
       let veicolo : Veicolo = new Veicolo();
+
       veicolo.id = this.veicoloForm.controls.id.value;
       veicolo.matricola = this.veicoloForm.controls.matricola.value;
       veicolo.telaio = this.veicoloForm.controls.telaio.value;
@@ -301,8 +297,8 @@ export class CreazioneVeicoloComponent implements OnInit {
       veicolo.utimaVerIspettiva = this.veicoloForm.controls.utimaVerIspettiva.value;
       veicolo.note = this.veicoloForm.controls.note.value;
      
-     
-     
+      veicolo.username = utente.username;
+  
      
       if (this.veicoloForm.invalid) {
         return;

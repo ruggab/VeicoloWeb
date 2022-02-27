@@ -227,12 +227,12 @@ export class NavigationService {
 
     //MODIFICA GABRIELE
     userMenu: IMenuItem[] = [
-        {
-            name: 'Manage Product',
+        {   
+            name: 'Veicolo',
+            description: 'Veicolo',
             type: 'link',
-            tooltip: 'Manage Product',
-            icon: 'i-File-Edit',
-            state: '/manageProduct'
+            icon: 'i-Jeep-2',
+            state: '/creazioneveicolo'
         }
     ]
 

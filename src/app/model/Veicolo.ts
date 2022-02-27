@@ -21,7 +21,7 @@ export class Veicolo {
     dataScadVincolo : Date;
     dataUltimaRevisione : Date;
     depositoRicoveroProtComunicazione : string;
-    idUtente: number;
+    username: string;
     indirizzoDepositoRicovero: string;
     kmDataRevisione: number; 
     lunghezza: number;
