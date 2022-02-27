@@ -68,7 +68,7 @@ export class SigninComponent implements OnInit {
                     this.loading = false;
                     this.authService.authenticated=true;
                     if (res.roles.indexOf('ROLE_USER') > -1) {
-                        this.router.navigateByUrl('/manageProduct');  
+                        this.router.navigateByUrl('/creazioneveicolo');  
                     }
                     if (res.roles.indexOf('ROLE_ADMIN') > -1) {
                         this.router.navigateByUrl('/creazioneazienda');  
