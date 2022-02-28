@@ -63,7 +63,7 @@ export class CreazioneVeicoloComponent implements OnInit {
       dataAttivazioneavm : new Date(null),
       dataConsegnaAdAziendaTpl : new Date(null),
       dataContrattoAziendaTpl : new Date(null),
-      dataPrimaImm : new Date(null),
+      dataPrimaImm : null,
       dataScadGaranziaBase : new Date(null),
       dataScadGaranziaEstesa :new Date(null),
       dataScadUsufrutto : new Date(null),
@@ -301,7 +301,18 @@ export class CreazioneVeicoloComponent implements OnInit {
   
      
       if (this.veicoloForm.invalid) {
-        return;
+        const invalid = [];
+          const controls = this.veicoloForm.controls;
+          for (const name in controls) {
+              if (name.indexOf("data") == -1 && controls[name].invalid) {
+                  invalid.push(name);
+              }
+          }
+          if (invalid.length > 0) {
+            //this.openDialogMessage('Validate the fields: ' + invalid);
+            console.log('Validate the fields: ' + invalid);
+            return;
+          }
       }
       console.log(veicolo);
       this.loading2=true;
@@ -378,7 +389,7 @@ export class CreazioneVeicoloComponent implements OnInit {
     if (date != null){
       return new Date(date['year'],date['month'],date['day']);
     } else {
-      return new Date (null);
+      return null;
     }
 }
   

@@ -206,7 +206,7 @@
                 </div>
                 <div class="col-md-4 form-group mb-3 text-center">
                     <label for="targa1imm">Targa 1 Immatricolazione</label>
-                    <input class="form-control" id="targa1imm" formControlName="targa1imm" placeholder="Targa" type="targa1imm" [ngClass]="{'is-invalid': submitted && f.targa1imm.errors }" />
+                    <input class="form-control" id="targa1imm" formControlName="targa1imm" placeholder="Targa" type="targa1imm"  />
                     <div *ngIf="submitted && f.targa1imm.errors" class="invalid-feedback">
                       <div *ngIf="f.targa1imm.errors.required">Targa obbligatoria!</div>
                     </div>
