@@ -22,7 +22,7 @@
               <div class="col-md-6 form-group mb-3 text-center">
                 <label for="assegnatario">Azienda Ass</label>
                 <select class="form-control" id="assegnatario" formControlName="assegnatario"   [compareWith]="compareAzienda">
-                  <option [ngValue]="null" ></option>
+                  <option [ngValue]="null" *ngIf="isAdmin" ></option>
                   <option [ngValue]="l" *ngFor="let l of listAzienda">{{l.nome}}</option>
                 </select>
               </div>
@@ -52,6 +52,7 @@
       <tr>
         <th scope="col">Matricola</th>
         <th scope="col">Telaio</th>
+        <th scope="col">Gara</th>
         <th scope="col">Assegnatario</th>
         <th scope="col">Fornitore</th>
         <th scope="col">Modello</th>
@@ -67,7 +68,8 @@
       <tr *ngFor="let l of listVeicolo">
         <th scope="row">{{l.matricola}}</th>
         <td>{{l.telaio}}</td>
-        <td>{{l.assegnatario.nome}}</td>
+        <td>{{l.gara?.codGara}}</td>
+        <td>{{l.assegnatario?.nome}}</td>
         <td>{{l.fornitore?.descrizione}}</td>
         <td>{{l.modello?.descrizione}}</td>
         <td>{{l.categoria?.descrizione}}</td>
@@ -117,22 +119,29 @@
                   </div>
                 </div>
                 <div class="col-md-4 form-group mb-3 text-center">
-                  <label for="telaio">Telaio</label>
-                  <input class="form-control" id="telaio" formControlName="telaio" placeholder="Telaio" type="telaio" [ngClass]="{'is-invalid': submitted && f.telaio.errors }" />
-                  <div *ngIf="submitted && f.telaio.errors" class="invalid-feedback">
-                    <div *ngIf="f.telaio.errors.required">Telaio obbligatario!</div>
-                  </div>
+                  <label for="gara">Gara</label>
+                  <select class="form-control" id="gara" formControlName="gara"   [compareWith]="compareGara">
+                    <option [ngValue]="null" ></option>
+                    <option [ngValue]="l" *ngFor="let l of listGara">{{l.codGara}}</option>
+                  </select>
                 </div>
                 <div class="col-md-4 form-group mb-3 text-center">
                   <label for="assegnatario">Azienda Assegnataria</label>
                   <select class="form-control" id="assegnatario" formControlName="assegnatario"   [compareWith]="compareAzienda">
-                    <option [ngValue]="null" ></option>
+                    <option [ngValue]="null" *ngIf="isAdmin" ></option>
                     <option [ngValue]="l" *ngFor="let l of listAzienda">{{l.nome}}</option>
                   </select>
                 </div>
               
             </div>
             <div class="row text-center">
+                <div class="col-md-4 form-group mb-3 text-center">
+                    <label for="telaio">Telaio</label>
+                    <input class="form-control" id="telaio" formControlName="telaio" placeholder="Telaio" type="telaio" [ngClass]="{'is-invalid': submitted && f.telaio.errors }" />
+                    <div *ngIf="submitted && f.telaio.errors" class="invalid-feedback">
+                      <div *ngIf="f.telaio.errors.required">Telaio obbligatario!</div>
+                    </div>
+                </div>
                 <div class="col-md-4 form-group mb-3 text-center">
                   <label for="fornitore">Fornitore</label>
                   <select class="form-control" id="fornitore" formControlName="fornitore"   [compareWith]="compareFn">
@@ -147,23 +156,18 @@
                     <option [ngValue]="l" *ngFor="let l of listCategoria">{{l.descrizione}}</option>
                   </select>
                 </div>
-                <div class="col-md-4 form-group mb-3 text-center">
-                  <label for="classe">Classe</label>
-                  <select class="form-control" id="classe" formControlName="classe"   [compareWith]="compareFn">
-                    <option [ngValue]="null" ></option>
-                    <option [ngValue]="l" *ngFor="let l of listClasse">{{l.descrizione}}</option>
-                  </select>
-                </div>
+               
 
             </div>
             <div class="row text-center">
                   <div class="col-md-4 form-group mb-3 text-center">
-                    <label for="dispCopiaCartaCirc">Copia Carta Circolazione</label>
-                    <select class="form-control" id="dispCopiaCartaCirc" formControlName="dispCopiaCartaCirc"   [compareWith]="compareFn">
+                    <label for="classe">Classe</label>
+                    <select class="form-control" id="classe" formControlName="classe"   [compareWith]="compareFn">
                       <option [ngValue]="null" ></option>
-                      <option [ngValue]="l" *ngFor="let l of listDispCopiaCC">{{l.descrizione}}</option>
+                      <option [ngValue]="l" *ngFor="let l of listClasse">{{l.descrizione}}</option>
                     </select>
                   </div>
+                 
                   <div class="col-md-4 form-group mb-3 text-center">
                     <label for="modello">Modello</label>
                     <select class="form-control" id="modello" formControlName="modello"   [compareWith]="compareFn">
@@ -181,6 +185,13 @@
             </div>
             <div class="row text-center">
                   <div class="col-md-4 form-group mb-3 text-center">
+                    <label for="dispCopiaCartaCirc">Copia Carta Circolazione</label>
+                    <select class="form-control" id="dispCopiaCartaCirc" formControlName="dispCopiaCartaCirc"   [compareWith]="compareFn">
+                      <option [ngValue]="null" ></option>
+                      <option [ngValue]="l" *ngFor="let l of listDispCopiaCC">{{l.descrizione}}</option>
+                    </select>
+                  </div>
+                  <div class="col-md-4 form-group mb-3 text-center">
                     <label for="tipoAlimentazione">Tipo Alimentazione</label>
                     <select class="form-control" id="tipoAlimentazione" formControlName="tipoAlimentazione"   [compareWith]="compareFn">
                       <option [ngValue]="null" ></option>
@@ -194,13 +205,14 @@
                       <option [ngValue]="l" *ngFor="let l of listAllestimento">{{l.descrizione}}</option>
                     </select>
                   </div>
-                  <div class="col-md-4 form-group mb-3 text-center">
-                    <label for="lunghezza">Lunghezza</label>
-                    <input class="form-control" id="lunghezza" formControlName="lunghezza" placeholder="Lunghezza" type="lunghezza" [ngClass]="{'is-invalid': submitted && f.lunghezza.errors }" />                  
-                  </div>
+               
           </div>
           <div class="row text-center">
-                <div class="col-md-4 form-group mb-3 text-center">
+                <div class="col-md-2 form-group mb-3 text-center">
+                  <label for="lunghezza">Lunghezza</label>
+                  <input class="form-control" id="lunghezza" formControlName="lunghezza" placeholder="Lunghezza" type="lunghezza" [ngClass]="{'is-invalid': submitted && f.lunghezza.errors }" />                  
+                </div>
+                <div class="col-md-2 form-group mb-3 text-center">
                     <label for="numPorte">Numero Porte</label>
                     <input class="form-control" id="numPorte" formControlName="numPorte" placeholder="Numero Porte" type="numPorte" [ngClass]="{'is-invalid': submitted && f.numPorte.errors }" />              
                 </div>

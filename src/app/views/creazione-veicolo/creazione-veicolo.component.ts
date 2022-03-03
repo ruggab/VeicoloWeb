@@ -9,6 +9,7 @@ import { GenerateResponse } from 'src/app/model/GenerateResponse';
 import { Dizionario } from 'src/app/model/Dizionario';
 import { Veicolo } from 'src/app/model/Veicolo';
 import { Azienda } from 'src/app/model/Azienda';
+import { Gara } from 'src/app/model/Gara';
 
 @Component({
   selector: 'app-creazione-veicolo',
@@ -24,6 +25,7 @@ export class CreazioneVeicoloComponent implements OnInit {
   cercaVeicoloForm : FormGroup;
   veicoloForm : FormGroup;
   listAzienda : Azienda[] = [];
+  listGara : Gara[] = [];
   listCategoria : Dizionario[] = [];
   listClasse : Dizionario[] = [];
   listFornitore : Dizionario[] = [];
@@ -34,6 +36,8 @@ export class CreazioneVeicoloComponent implements OnInit {
   listDispCopiaCC : Dizionario[] = [];
   listVeicolo : Veicolo[] =[];
   submitted = false;
+  utente: any;
+  isAdmin = false;
   
   constructor(
     private modalService: NgbModal,
@@ -42,12 +46,14 @@ export class CreazioneVeicoloComponent implements OnInit {
     private toastr : ToastrService,
   ) {
 
+    this.utente = JSON.parse(localStorage.getItem('currentUser'));
+    this.isAdmin = this.utente.roles.indexOf('ROLE_ADMIN') > -1;
     
     this.cercaVeicoloForm = this.fb.group({
       matricola : [''],
       telaio : [''],
-      assegnatario:new FormControl(null)
-
+      assegnatario:new FormControl(null),
+      gara:new FormControl(null)
     });
 
 
@@ -78,6 +84,7 @@ export class CreazioneVeicoloComponent implements OnInit {
       targa1imm: [''], 
       utimaVerIspettiva: [''],
       assegnatario:new FormControl(null), 
+      gara:new FormControl(null),
       categoria: new FormControl(null),
       classe :new FormControl(null),
       dispCopiaCartaCirc : new FormControl(null),
@@ -93,15 +100,26 @@ export class CreazioneVeicoloComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getListaVeicolo();
+    //this.getListaVeicolo();
     this.getListaAziende();
+    this.getListaGare();
+
+    //
+    let utente = JSON.parse(localStorage.getItem('currentUser'));
+   
+    this.cercaVeicoloForm.controls['assegnatario'].setValue(utente.aziendas[0]);
+    this.cercaVeicolo();
+
   }
 
   get f() { return this.veicoloForm.controls; }
 
  
   getListaVeicolo(){
-    this.moduleLoading = true;
+    //
+    let utente = JSON.parse(localStorage.getItem('currentUser'));
+    this.listAzienda = utente.aziendas;
+    //
     this.http.get<Veicolo[]>(`${environment.apiUrl}getListVeicolo`)
     .subscribe(
       res =>{
@@ -111,26 +129,46 @@ export class CreazioneVeicoloComponent implements OnInit {
         } else {
           this.toastr.error('Nessuna Veicolo trovato!','Veicolo',{progressBar: false});
         }
-        this.moduleLoading = false;
+        
       },
       err =>{
-        console.log(err);        
-        this.moduleLoading = false;
-
+        console.log(err); 
       }
     )
   }
 
   getListaAziende(){
+    
+    this.listAzienda = this.utente.aziendas;
+    if (this.isAdmin) {
+      
+      this.http.get<Azienda[]>(`${environment.apiUrl}getListAzienda`)
+      .subscribe(
+        res =>{
+          console.log(res);
+          if (res.length!==0) {
+            this.listAzienda= res;
+          } else {
+            this.toastr.error('Nessun Azienda trovata!','Azienda',{progressBar: false});
+          }
+        },
+        err =>{
+          console.log(err);        }
+      )
+    }
+    
+  }
+
+  getListaGare(){
     this.moduleLoading = true;
-    this.http.get<Azienda[]>(`${environment.apiUrl}getListAzienda`)
+    this.http.get<Gara[]>(`${environment.apiUrl}getListGara`)
     .subscribe(
       res =>{
         console.log(res);
         if (res.length!==0) {
-          this.listAzienda= res;
+          this.listGara= res;
         } else {
-          this.toastr.error('Nessun Azienda trovata!','Azienda',{progressBar: false});
+          this.toastr.error('Nessuna Gara trovata!','Gara',{progressBar: false});
         }
         this.moduleLoading = false;
       },
@@ -255,6 +293,7 @@ export class CreazioneVeicoloComponent implements OnInit {
       veicolo.matricola = this.veicoloForm.controls.matricola.value;
       veicolo.telaio = this.veicoloForm.controls.telaio.value;
       veicolo.assegnatario = this.veicoloForm.controls.assegnatario.value;
+      veicolo.gara = this.veicoloForm.controls.gara.value;
 
       veicolo.fornitore = this.veicoloForm.controls.fornitore.value;
       veicolo.categoria = this.veicoloForm.controls.categoria.value;
@@ -369,6 +408,10 @@ export class CreazioneVeicoloComponent implements OnInit {
   compareAzienda(a: Azienda, b: Azienda) {
     return a && b && a.id === b.id;
   }
+
+  compareGara(a: Gara, b: Gara) {
+    return a && b && a.id === b.id;
+  }
   
 
    fromStringToDate(dateString: any){
@@ -409,6 +452,7 @@ export class CreazioneVeicoloComponent implements OnInit {
         this.veicoloForm.controls['matricola'].setValue('');
         this.veicoloForm.controls['telaio'].setValue('');
         this.veicoloForm.controls['assegnatario'].setValue(null);
+        this.veicoloForm.controls['gara'].setValue(null);
         this.veicoloForm.controls['fornitore'].setValue(null);
 
         this.veicoloForm.controls['categoria'].setValue(null);
@@ -456,6 +500,7 @@ export class CreazioneVeicoloComponent implements OnInit {
       this.veicoloForm.controls['matricola'].setValue(veicolo.matricola);
       this.veicoloForm.controls['telaio'].setValue(veicolo.telaio);
       this.veicoloForm.controls['assegnatario'].setValue(veicolo.assegnatario);
+      this.veicoloForm.controls['gara'].setValue(veicolo.gara);
       this.veicoloForm.controls['fornitore'].setValue(veicolo.fornitore);
 
       this.veicoloForm.controls['categoria'].setValue(veicolo.categoria);

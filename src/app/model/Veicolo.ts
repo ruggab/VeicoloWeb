@@ -1,5 +1,6 @@
 import { Azienda } from "./Azienda";
 import { Dizionario } from "./Dizionario";
+import { Gara } from "./Gara";
 
 export class Veicolo {
     id:number;
@@ -30,6 +31,7 @@ export class Veicolo {
     targa1Imm: string; 
     utimaVerIspettiva:string;
     assegnatario:Azienda; 
+    gara:Gara; 
     categoria: Dizionario; 
     classe : Dizionario;
     dispCopiaCartaCirc : Dizionario;
