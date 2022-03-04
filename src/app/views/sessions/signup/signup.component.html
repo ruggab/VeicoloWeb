@@ -1,46 +1,19 @@
 <div class="card o-hidden" style="opacity: 0.8;"
   [@animate]="{value:'*',params:{y:'120px',opacity:'0',delay:'100ms', duration: '400ms'}}">
   <div class="row">
-    <div class="col-md-6" style="background-size: cover;background-color:#000;">
-      <div style="padding-left: 10%;padding-right:10%;">
+    <div class="col-md-6" style="background-size: cover; background-color: #fff;">
+      <div class="img-responsive center-block" style="padding-left: 10%;padding-right:10%;">
         <div class="auth-logo text-center" style="margin-top: 10%;">
-          <img src="assets/images/logo-web.png" alt="logo" style="max-height: 235px;">
+          <img  src="assets/images/acamir1.png" alt="logo">
         </div>
-        <p style="text-align: justify; color:#FFF; font-style: italic;font-size: 11px;">"Qualunque decisione tu abbia
-          preso per il tuo futuro, sei autorizzato,
-          e direi incoraggiato, a sottoporla ad un continuo esame, pronto a cambiarla,
-          se non risponde più ai tuoi desideri." <span style="color: #ABF2E0; font-style: italic;">Cit. Rita
-            Levi-Montalcini</span>
-        </p>
       </div>
-      <!--<div class="pl-3 auth-right">
-        <div class="auth-logo text-center mt-4">
-          <img src="assets/images/logo.png" alt="">
-        </div>
-        <div class="flex-grow-1"></div>-->
-      <!-- <div class="w-100 mb-4">
-          <button class="btn btn-outline-primary btn-outline-email btn-block btn-icon-text btn-rounded" routerLink="/sessions/signin">
-            <i class="i-Mail-with-At-Sign"></i>
-            Registrati con l'e-mail
-          </button>
-          <button class="btn btn-outline-primary btn-outline-google btn-block btn-icon-text btn-rounded">
-            <i class="i-Google-Plus"></i>
-            Registrati con Google
-          </button>
-          <button class="btn btn-outline-primary btn-outline-facebook btn-block btn-icon-text btn-rounded">
-            <i class="i-Facebook-2"></i>
-            Registrati con Facebook
-          </button>
-        </div> -->
-      <!--<div class="flex-grow-1"></div>
-      </div>-->
     </div>
-
-    <div class="col-md-6" style="background-size: cover; background-color: #000; ">
+    
+    <div class="col-md-6 text-center" style="background-size: cover; background-color: #4c6d96;">
       <div class="p-2" style="opacity: 1; padding-top: 5px;">
 
-        <h1 class="mb-2 text-24 text-left" style="width: 100%; color:#FFF; background-color: #000; margin-top: 19px;">
-          Registrati a Divisione HSE</h1>
+        <h1 class="mb-2 text-24 text-center"
+        style="margin-bottom: 0.1rem; margin-top: 1.2rem; width: 100%; color:#FFF; background-color: #4c6d96;">Registrati</h1>
         <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
           <div class="form-group">
             <label for="Username" class="labelsignup">Username</label>
@@ -81,9 +54,9 @@
           </div>
 
           <!-- <button class="btn btn-rounded btn-primary btn-block mt-2">Sign In</button> -->
-          <btn-loading btnClass="btn-primary btn-rounded btn-block mt-1 mb-3" [loadingText]="loadingText"
+          <btn-loading btnClass="btn-light btn-rounded btn-block mb-3 mt-3" style="background-color: #5a5252 !important;" [loadingText]="loadingText"
             [loading]="loading">
-            Registrati
+            Conferma
           </btn-loading>
           <div class="col-12 text-center">
             <a href="" class="text-muted" routerLink="/sessions/signin"><u style="color: #FFF;">oppure effettua l'accesso</u></a>

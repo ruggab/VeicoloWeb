@@ -55,7 +55,19 @@ export class HeaderSidebarLargeComponent implements OnInit {
     signout() {
       this.auth.logout();
       
-    this.router.navigateByUrl("/sessions/signin");
+      this.router.navigateByUrl("/sessions/signin");
+    }
+
+    signup() {
+      //this.auth.logout();
+      
+      this.router.navigateByUrl("/sessions/signup");
+    }
+
+    forgot() {
+      //this.auth.logout();
+      
+      this.router.navigateByUrl("/sessions/forgot");
     }
 
 }

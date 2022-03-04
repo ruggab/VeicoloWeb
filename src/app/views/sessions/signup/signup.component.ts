@@ -76,6 +76,8 @@ export class SignupComponent implements OnInit {
 
     return password === confirmPassword ? null : { notSame: true }
   }
+
+  
   signup() {
     this.loading = true;
     this.loadingText = 'Registrazione in corso...';
