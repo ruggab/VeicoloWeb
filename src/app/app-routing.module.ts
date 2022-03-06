@@ -47,7 +47,6 @@ const adminRoutes: Routes = [
       path: 'icons',
       loadChildren: () => import('./views/icons/icons.module').then(m => m.IconsModule)
     },
-    
     {
       path:'creazioneazienda',
       loadChildren: () => import('./views/creazione-azienda/creazione-azienda.module').then(m => m.CreazioneAziendaModule)
@@ -59,6 +58,14 @@ const adminRoutes: Routes = [
     {
       path:'creazioneveicolo',
       loadChildren: () => import('./views/creazione-veicolo/creazione-veicolo.module').then(m => m.CreazioneVeicoloModule)
+    },
+    {
+      path:'adduser',
+      loadChildren: () => import('./views/add-user/add-user.module').then(m => m.AddUserModule)
+    },
+    {
+      path:'changepassword',
+      loadChildren: () => import('./views/change-password/change-password.module').then(m => m.ChangePasswordModule)
     }
   ];
 

@@ -73,6 +73,13 @@ export class NavigationService {
             icon: 'i-Jeep-2',
             state: '/creazioneveicolo'
         },
+        {   
+            name: 'Aggiungi Utente',
+            description: 'Aggiungi Utente',
+            type: 'link',
+            icon: 'i-Add-User',
+            state: '/adduser'
+        }
        
        
       
@@ -233,6 +240,13 @@ export class NavigationService {
             type: 'link',
             icon: 'i-Jeep-2',
             state: '/creazioneveicolo'
+        },
+        {   
+            name: 'Cambia Password',
+            description: 'Cambia Password',
+            type: 'link',
+            icon: 'i-Password-shopping',
+            state: '/changepassword'
         }
     ]
 
