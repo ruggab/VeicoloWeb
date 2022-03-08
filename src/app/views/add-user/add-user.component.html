@@ -1,20 +1,16 @@
-<div class="card o-hidden" style="opacity: 0.8;"
-  [@animate]="{value:'*',params:{y:'120px',opacity:'0',delay:'100ms', duration: '400ms'}}">
-  <div class="row">
-    <div class="col-md-6" style="background-size: cover; background-color: #fff;">
-      <div class="img-responsive center-block" style="padding-left: 10%;padding-right:10%;">
-        <div class="auth-logo text-center" style="margin-top: 10%;">
-          <img  src="assets/images/acamir1.png" alt="logo">
-        </div>
-      </div>
-    </div>
-    
-    <div class="col-md-6 text-center" style="background-size: cover; background-color: #4c6d96;">
-      <div class="p-2" style="opacity: 1; padding-top: 5px;">
+<div class="breadcrumb">
+  <h1>Aggiungi Utente Azienda TPL</h1>
+</div>
 
-        <h1 class="mb-2 text-24 text-center"
-        style="margin-bottom: 0.1rem; margin-top: 1.2rem; width: 100%; color:#FFF; background-color: #4c6d96;">Registrati</h1>
-        <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+<div class="separator-breadcrumb border-top"></div>
+<div class="row mb-4">
+  <div class="col-md-3"></div>
+  <div class="col-md-6">
+    <div class="card mb-4 noround">
+      <div class="card-body">
+        <div class="card-title mb-3">Aggiungi Utente</div>
+        
+        <form [formGroup]="addUserForm" (ngSubmit)="onSubmit()">
           <div class="form-group">
             <label for="Username" class="labelsignup">Username</label>
             <input id="Username" class="form-control form-control-rounded inputsignup" formControlName="username"
@@ -22,6 +18,13 @@
             <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
               <div *ngIf="f.username.errors.required">Username è richiesto</div>
             </div>
+          </div>
+          <div class="form-group">
+            <label for="azienda" class="labelsignup">Azienda TPL</label>
+            <select class="form-control form-control-rounded" id="azienda" formControlName="azienda"   [compareWith]="compareAzienda">
+              <!--option [ngValue]="null" *ngIf="isAdmin" ></option-->
+              <option [ngValue]="l" *ngFor="let l of listAzienda">{{l.nome}}</option>
+            </select>
           </div>
           <div class="form-group">
             <label for="email" class="labelsignup">E-mail</label>
@@ -62,7 +65,7 @@
             <a href="" class="text-muted" routerLink="/sessions/signin"><u style="color: #FFF;">oppure effettua l'accesso</u></a>
           </div>
         </form>
-      </div>
+ 
     </div>
   </div>
 </div>
