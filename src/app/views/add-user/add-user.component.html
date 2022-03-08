@@ -2,15 +2,91 @@
   <h1>Aggiungi Utente Azienda TPL</h1>
 </div>
 
+
 <div class="separator-breadcrumb border-top"></div>
 <div class="row mb-4">
   <div class="col-md-3"></div>
   <div class="col-md-6">
     <div class="card mb-4 noround">
       <div class="card-body">
-        <div class="card-title mb-3">Aggiungi Utente</div>
+        <div class="card-title mb-3">Filtro Ricerca Utente</div>
+        <form [formGroup]="cercaUtenteForm" (ngSubmit)="cercaUtente()">
+          <div class="row">
+              <div class="col-md-6 form-group mb-3">
+                <label for="username">Username</label>
+                <input class="form-control" id="codGara" formControlName="username" placeholder="Username" type="username"/>
+              </div>
+              <div class="col-md-6 form-group mb-3 text-center">
+                <label for="azienda">Azienda Tpl</label>
+                <select class="form-control" id="azienda" formControlName="azienda"   [compareWith]="compareAzienda">
+                  <option [ngValue]="null" ></option>
+                  <option [ngValue]="l" *ngFor="let l of listAzienda">{{l.nome}}</option>
+                </select>
+              </div>
+          </div>
+            <br>
+            <div class="col-md-12 text-center">
+              <btn-loading type="submit" btnClass="btn-primary btn-lg" [loading]="loading">Cerca</btn-loading>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3"></div>
+</div>
+<br>
+
+
+<div class="row">
+  
+  <btn-loading type="button" btnClass="btn btn-info btn-lg" (click)="openLg(modalUtente,null)">Aggiungi</btn-loading>
+  &nbsp;&nbsp;
+  <btn-loading type="button" btnClass="btn btn-info btn-lg" (click)="exportCSV()">Esporta CSV</btn-loading>
+  
+  <table class="table table-bordered" style="margin-top: 5px;">
+    <thead class="thead-blue">
+      <tr>
+        <th scope="col">Username</th>
+        <th scope="col">Azienda</th>
+        <th scope="col">Email</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let l of listUtente">
+        <th scope="row">{{l.username}}</th>
+        <td>{{l?.azienda?.nome}}</td>
+        <td>{{l.email}}</td>
+        <td style="text-align: center;">
+          <button class="btn btn-info btn-lg" (click)="openLg(modalUtente, l)" type="button">
+            <i class="icon-regular i-Pen-2"></i>
+          </button>
+        </td>
+        <td style="text-align: center;">
+          <button class="btn btn-info btn-lg" (click)="deleteUtente(l.id)" type="button">
+            <i class="icon-regular i-Close"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+<ng-template #modalUtente let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Utente</h4>
+
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row text-center">
         
-        <form [formGroup]="addUserForm" (ngSubmit)="onSubmit()">
+        <form [formGroup]="addUserForm" (ngSubmit)="onSubmit()"  class="mx-auto" >
+         
+          <input class="form-control" id="id" formControlName="id" type="hidden"  />
+
           <div class="form-group">
             <label for="Username" class="labelsignup">Username</label>
             <input id="Username" class="form-control form-control-rounded inputsignup" formControlName="username"
@@ -61,11 +137,20 @@
             [loading]="loading">
             Conferma
           </btn-loading>
-          <div class="col-12 text-center">
-            <a href="" class="text-muted" routerLink="/sessions/signin"><u style="color: #FFF;">oppure effettua l'accesso</u></a>
-          </div>
         </form>
  
+      </div>
     </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark btn-rounded" (click)="modal.close('ok')">Chiudi</button>
+    </div>
+  </ng-template>
+
+
+  <div class="module-loader" *ngIf="moduleLoading">
+    <div class="spinner spinner-bubble spinner-bubble-primary mr-3"></div>
   </div>
-</div>
+  
+  <div class="module-loader" *ngIf="loadingcsv">
+    <div class="spinner spinner-bubble spinner-bubble-primary mr-3"></div>
+  </div>

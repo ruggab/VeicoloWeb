@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SharedAnimations } from 'src/app/shared/animations/shared-animations';
 import { FormBuilder, FormControl, FormGroup, PatternValidator, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 
@@ -10,6 +9,9 @@ import { MustMatch } from 'src/app/_helpers/must-match.validator';
 import { environment } from 'src/environments/environment';
 import { Azienda } from 'src/app/model/Azienda';
 import { GenerateResponse } from 'src/app/model/GenerateResponse';
+import { Utente } from 'src/app/model/Utente';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-add.user',
@@ -20,35 +22,31 @@ import { GenerateResponse } from 'src/app/model/GenerateResponse';
 export class AddUserComponent implements OnInit {
 
   loading: boolean;
+  moduleLoading;
+  loadingcsv;
   loadingText: string = "Registrazione";
   addUserForm: FormGroup;
-  submitted = false;
+  cercaUtenteForm : FormGroup;
+  
   listAzienda : Azienda[] = [];
 
-
-  headerDict = {
-    'Content-Type': 'application/json',
-    'Accept': 'application/json',
-    'Access-Control-Allow-Headers': 'Content-Type',
-  }
-  roles: string[] = [];
-
-  requestOptions = {
-    headers: new HttpHeaders(this.headerDict)
-  };
+  listUtente : Utente[] =[];
+  submitted = false;
 
   constructor(
+    private modalService: NgbModal,
     private fb: FormBuilder,
-    private router: Router,
     private http: HttpClient,
     private toastr: ToastrService
-  ) { }
+  ) { 
 
-  ngOnInit() {
+    this.cercaUtenteForm = this.fb.group({
+      username : [''],
+      azienda:new FormControl(null)
+    });
 
-    this.loading = false;
-
-    this.addUserForm = this.fb.group({      
+    this.addUserForm = this.fb.group({     
+      id : [''], 
       email: ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
       username: ['', Validators.required],
       azienda: [null, Validators.required],
@@ -58,9 +56,43 @@ export class AddUserComponent implements OnInit {
       validator: MustMatch('password', 'confirmPassword')
     });
 
+}
+
+  ngOnInit() {
+    
     this.getListaAziende();
+    this.cercaUtente();
+  }
 
-
+  cercaUtente(){
+    this.submitted = true;
+    let  utente: Utente = new Utente();
+    utente.username = this.cercaUtenteForm.controls.username.value;
+    utente.azienda = this.cercaUtenteForm.controls.azienda.value;
+    // veicolo.tipoAlimentazione = this.cercaVeicoloForm.controls.tipoAlimentazione.value;
+    // veicolo.classe = this.cercaVeicoloForm.controls.classe.value;
+    if (this.cercaUtenteForm.invalid) {
+      return;
+    }
+    console.log(utente);
+    this.loading=true;
+    
+    this.http.post<Utente[]>(`${environment.apiUrl}auth/getListUtenteByFilter`, utente).subscribe(
+        res =>{
+          console.log(res);
+          if (res.length!==0) {
+            this.listUtente= res;
+          } else {
+            this.listUtente= res;
+            this.toastr.error('Nessun Utente trovato!','Utente',{progressBar: false});
+          }
+          this.loading=false;
+        },
+        err =>{
+          console.log(err);        
+          this.loading=false;
+        }
+      )
   }
 
   getListaAziende(){
@@ -78,6 +110,40 @@ export class AddUserComponent implements OnInit {
           console.log(err);        }
       )
   }
+
+  exportCSV(){
+    this.loadingcsv = true;
+    this.http.get<Utente[]>(`${environment.apiUrl}auth/getListUtenteByFilter`)
+    .subscribe(
+      res =>{
+        console.log(res);
+        if(res.length!==0) {
+          this.listUtente = res;
+          this.downloadCSV(this.listUtente);
+          this.loadingcsv = false;
+        } else{
+          this.toastr.error('Nessun Utente trovato!','Utente',{progressBar: false});
+          this.loadingcsv = false;
+        }
+      },
+      err =>{
+        console.log(err);
+      }
+    )
+  }
+
+  downloadCSV(data: any){
+
+    const replacer = (key, value) => value === null ? '' : value; // specify how you want to handle null values here
+    const header = Object.keys(data[0]);
+    let csv = data.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(';'));
+    csv.unshift(header.join(';'));
+    let csvArray = csv.join('\r\n');
+
+    var blob = new Blob([csvArray], {type: 'text/csv' })
+    saveAs(blob, "lista-utenti.csv");
+  
+}
 
   compareAzienda(a: Azienda, b: Azienda) {
     return a && b && a.id === b.id;
@@ -115,7 +181,7 @@ export class AddUserComponent implements OnInit {
 
   conferma() {
       console.log(this.addUserForm.value);
-      this.http.post<GenerateResponse>(`${environment.apiUrl}auth/addUser`, JSON.stringify(this.addUserForm.value), this.requestOptions).subscribe(
+      this.http.post<GenerateResponse>(`${environment.apiUrl}auth/addUser`,this.addUserForm.value).subscribe(
    // this.http.post<GenerateResponse>(`${environment.apiUrl}generateAzienda`, azienda).subscribe(res => {
         res => {
           console.log(res);
@@ -128,6 +194,58 @@ export class AddUserComponent implements OnInit {
           this.loadingText = 'Aggiungi Utente';
           console.log(err);
         })
+  }
+
+  
+  deleteUtente(idUtente){
+    this.loading=true;
+    this.http.get<Utente[]>(`${environment.apiUrl}auth/deleteUtente/${idUtente}`)
+    .subscribe(
+      res =>{
+        console.log(res);
+        if (res.length!==0) {
+          this.listUtente= res;
+          this.toastr.success('Utente eliminato con successo!','Lista Utente aggiornata',{progressBar: false});
+        } else {
+          this.toastr.error('Nessun Utente trovato!','Utente',{progressBar: false});
+        }
+        this.loading=false;
+      },
+      err =>{
+        console.log(err);        
+        this.loading=false;
+      }
+    )
+  }
+
+  openLg(content:any, utente:Utente) {
+    this.getListaAziende();
+    //
+    if (utente == null) {
+     
+      this.addUserForm.controls['id'].setValue('');
+      this.addUserForm.controls['username'].setValue('');
+      this.addUserForm.controls['email'].setValue('');
+      this.addUserForm.controls['password'].setValue('');
+      this.addUserForm.controls['confirmPassword'].setValue('');
+      this.addUserForm.controls['azienda'].setValue(null);
+    }
+    if (utente != null) {
+      this.addUserForm.controls['id'].setValue(utente.id);
+      this.addUserForm.controls['username'].setValue(utente.username);
+      this.addUserForm.controls['email'].setValue(utente.email);
+      this.addUserForm.controls['password'].setValue(utente.password);
+      this.addUserForm.controls['confirmPassword'].setValue(utente.confirmPassword);
+      this.addUserForm.controls['azienda'].setValue(utente.azienda);
+     
+    }
+   
+    this.modalService.open(content, { ariaLabelledBy: 'modalsos', size: 'lg' })
+      .result.then((result) => {
+        console.log(result);
+      }, (reason) => {
+        console.log('Err!', reason);
+      });
   }
 
 }
