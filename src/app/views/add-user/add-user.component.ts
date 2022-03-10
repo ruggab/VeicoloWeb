@@ -68,7 +68,7 @@ export class AddUserComponent implements OnInit {
     this.submitted = true;
     let  utente: Utente = new Utente();
     utente.username = this.cercaUtenteForm.controls.username.value;
-    utente.azienda = this.cercaUtenteForm.controls.azienda.value;
+    utente.aziendas = this.cercaUtenteForm.controls.azienda.value;
     // veicolo.tipoAlimentazione = this.cercaVeicoloForm.controls.tipoAlimentazione.value;
     // veicolo.classe = this.cercaVeicoloForm.controls.classe.value;
     if (this.cercaUtenteForm.invalid) {
@@ -186,12 +186,13 @@ export class AddUserComponent implements OnInit {
         res => {
           console.log(res);
           this.toastr.success('Aggiungi Utente.', 'Utente inserito con successo', { progressBar: false });
-          // this.router.navigateByUrl('/sessions/signin');
+          this.cercaUtente();
           this.loading = false;
         }, err => {
           this.toastr.error('Aggiungi Utente.', err.error.message);
           this.loading = false;
           this.loadingText = 'Aggiungi Utente';
+          this.cercaUtente();
           console.log(err);
         })
   }
@@ -236,7 +237,7 @@ export class AddUserComponent implements OnInit {
       this.addUserForm.controls['email'].setValue(utente.email);
       this.addUserForm.controls['password'].setValue(utente.password);
       this.addUserForm.controls['confirmPassword'].setValue(utente.confirmPassword);
-      this.addUserForm.controls['azienda'].setValue(utente.azienda);
+      this.addUserForm.controls['azienda'].setValue(utente.aziendas[0]);
      
     }
    

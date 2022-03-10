@@ -54,7 +54,7 @@
     <tbody>
       <tr *ngFor="let l of listUtente">
         <th scope="row">{{l.username}}</th>
-        <td>{{l?.azienda?.nome}}</td>
+        <td>{{l?.aziendas[0]?.nome}}</td>
         <td>{{l.email}}</td>
         <td style="text-align: center;">
           <button class="btn btn-info btn-lg" (click)="openLg(modalUtente, l)" type="button">
