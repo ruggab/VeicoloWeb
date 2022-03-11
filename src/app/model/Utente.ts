@@ -6,5 +6,5 @@ export class Utente {
     email : string;
     password : string;
     confirmPassword : string;
-    aziendas : Azienda[];
+    aziendas : Azienda[] = [];
 }

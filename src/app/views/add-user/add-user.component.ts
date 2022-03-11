@@ -42,7 +42,7 @@ export class AddUserComponent implements OnInit {
 
     this.cercaUtenteForm = this.fb.group({
       username : [''],
-      azienda:new FormControl(null)
+      azienda: [null]
     });
 
     this.addUserForm = this.fb.group({     
@@ -68,7 +68,7 @@ export class AddUserComponent implements OnInit {
     this.submitted = true;
     let  utente: Utente = new Utente();
     utente.username = this.cercaUtenteForm.controls.username.value;
-    utente.aziendas = this.cercaUtenteForm.controls.azienda.value;
+    utente.aziendas[0] = this.cercaUtenteForm.controls.azienda.value;
     // veicolo.tipoAlimentazione = this.cercaVeicoloForm.controls.tipoAlimentazione.value;
     // veicolo.classe = this.cercaVeicoloForm.controls.classe.value;
     if (this.cercaUtenteForm.invalid) {
@@ -185,13 +185,13 @@ export class AddUserComponent implements OnInit {
    // this.http.post<GenerateResponse>(`${environment.apiUrl}generateAzienda`, azienda).subscribe(res => {
         res => {
           console.log(res);
-          this.toastr.success('Aggiungi Utente.', 'Utente inserito con successo', { progressBar: false });
+          this.toastr.success('Aggiornamento Utente', 'Utente aggionato correttamente', { progressBar: false });
           this.cercaUtente();
           this.loading = false;
         }, err => {
-          this.toastr.error('Aggiungi Utente.', err.error.message);
+          this.toastr.error('Aggiornamento Utente.', err.error.message);
           this.loading = false;
-          this.loadingText = 'Aggiungi Utente';
+          this.loadingText = 'Aggiornamento Utente';
           this.cercaUtente();
           console.log(err);
         })
@@ -235,8 +235,8 @@ export class AddUserComponent implements OnInit {
       this.addUserForm.controls['id'].setValue(utente.id);
       this.addUserForm.controls['username'].setValue(utente.username);
       this.addUserForm.controls['email'].setValue(utente.email);
-      this.addUserForm.controls['password'].setValue(utente.password);
-      this.addUserForm.controls['confirmPassword'].setValue(utente.confirmPassword);
+      this.addUserForm.controls['password'].setValue('');
+      this.addUserForm.controls['confirmPassword'].setValue('');
       this.addUserForm.controls['azienda'].setValue(utente.aziendas[0]);
      
     }
