@@ -92,7 +92,12 @@ export class CreazioneVeicoloComponent implements OnInit {
       modello: new FormControl(null),
       regimeProprieta: new FormControl(null),
       tipoAlimentazione: new FormControl(null),
-      tipoAllestimento: new FormControl(null)
+      tipoAllestimento: new FormControl(null),
+
+      contrattoServizio: [''],
+      dataCessMarcia: new Date(null),
+      motivoFermo: [''],
+
     });
     
 
@@ -324,7 +329,9 @@ export class CreazioneVeicoloComponent implements OnInit {
       veicolo.numSimTelefonico = this.veicoloForm.controls.numSimTelefonico.value;
       veicolo.costoAcquistoNettoIva = this.veicoloForm.controls.costoAcquistoNettoIva.value;
      
-     
+      veicolo.contrattoServizio = this.veicoloForm.controls.contrattoServizio.value;
+      veicolo.dataCessMarcia = this.veicoloForm.controls.dataCessMarcia.value;
+      veicolo.motivoFermo = this.veicoloForm.controls.motivoFermo.value;
       
       // veicolo.dataScadGaranziaBase = this.veicoloForm.controls.dataScadGaranziaBase.value;
       // veicolo.dataScadGaranziaEstesa = this.veicoloForm.controls.dataScadGaranziaEstesa.value;
@@ -482,6 +489,10 @@ export class CreazioneVeicoloComponent implements OnInit {
         this.veicoloForm.controls['depositoRicoveroProtComunicazione'].setValue('');
         this.veicoloForm.controls['note'].setValue('');
         this.veicoloForm.controls['indirizzoDepositoRicovero'].setValue('');
+
+        this.veicoloForm.controls['contrattoServizio'].setValue('');
+        this.veicoloForm.controls['dataCessMarcia'].setValue('');
+        this.veicoloForm.controls['motivoFermo'].setValue('');
        
        
       

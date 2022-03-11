@@ -20,11 +20,10 @@ export class Veicolo {
     dataScadGaranziaEstesa : Date;
     dataScadUsufrutto : Date;
     dataScadVincolo : Date;
-    dataUltimaRevisione : Date;
+   
     depositoRicoveroProtComunicazione : string;
     username: string;
-    indirizzoDepositoRicovero: string;
-    kmDataRevisione: number; 
+  
     lunghezza: number;
     note: string;
     numPorte: number;
@@ -34,11 +33,20 @@ export class Veicolo {
     gara:Gara; 
     categoria: Dizionario; 
     classe : Dizionario;
-    dispCopiaCartaCirc : Dizionario;
+   
     fornitore: Dizionario;
     modello: Dizionario;
     regimeProprieta: Dizionario;
     tipoAlimentazione: Dizionario;
     tipoAllestimento:  Dizionario;
+    //Dati Azienda
+    dispCopiaCartaCirc : Dizionario;
+    contrattoServizio: string;
+    dataCessMarcia: Date;
+    motivoFermo: string;
+    indirizzoDepositoRicovero: string;
+    kmDataRevisione: number; 
+    dataUltimaRevisione : Date;
+   
 
 }

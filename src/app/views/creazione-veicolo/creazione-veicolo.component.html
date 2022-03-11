@@ -43,7 +43,7 @@
 
 <div class="row">
   
-  <btn-loading type="button" btnClass="btn btn-info btn-lg" (click)="openLg(modalVeicolo,null)">Aggiungi</btn-loading>
+  <btn-loading type="button" btnClass="btn btn-info btn-lg" (click)="openLg(modalVeicolo,null)"  *ngIf="isAdmin" >Aggiungi</btn-loading>
   &nbsp;&nbsp;
   <btn-loading type="button" btnClass="btn btn-info btn-lg" (click)="exportCSV()">Esporta CSV</btn-loading>
   
@@ -107,220 +107,252 @@
   <div class="modal-body">
     <div class="row text-center">
         <form [formGroup]="veicoloForm" (ngSubmit)="salvaVeicolo()"   class="mx-auto">
+          <input class="form-control" id="id" formControlName="id" type="hidden"  />
+          
+          <nav ngbNav #nav="ngbNav" class="nav-tabs">
+            <ng-container ngbNavItem>
+                <a ngbNavLink>ACAMIR</a>
+                <ng-template ngbNavContent>
+                            <div class="row text-center">
+                                    <div class="col-md-4 form-group mb-3 text-center">
+                                      <label for="matricola">Matricolaa</label>
+                                      <input class="form-control" id="matricola" formControlName="matricola" placeholder="Matricola" type="matricola" [ngClass]="{'is-invalid': submitted && f.matricola.errors }" />
+                                      <div *ngIf="submitted && f.matricola.errors" class="invalid-feedback">
+                                        <div *ngIf="f.matricola.errors.required">Matricola obbligataria</div>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-4 form-group mb-3 text-center">
+                                      <label for="gara">Gara</label>
+                                      <select class="form-control" id="gara" formControlName="gara"   [compareWith]="compareGara">
+                                        <option [ngValue]="null" ></option>
+                                        <option [ngValue]="l" *ngFor="let l of listGara">{{l.codGara}}</option>
+                                      </select>
+                                    </div>
+                                    <div class="col-md-4 form-group mb-3 text-center">
+                                      <label for="assegnatario">Azienda Assegnataria</label>
+                                      <select class="form-control" id="assegnatario" formControlName="assegnatario"   [compareWith]="compareAzienda">
+                                        <option [ngValue]="null" *ngIf="isAdmin" ></option>
+                                        <option [ngValue]="l" *ngFor="let l of listAzienda">{{l.nome}}</option>
+                                      </select>
+                                    </div>
+                            </div>
+      
+                            <div class="row text-center">
+                                <div class="col-md-4 form-group mb-3 text-center">
+                                    <label for="telaio">Telaio</label>
+                                    <input class="form-control" id="telaio" formControlName="telaio" placeholder="Telaio" type="telaio" [ngClass]="{'is-invalid': submitted && f.telaio.errors }" />
+                                    <div *ngIf="submitted && f.telaio.errors" class="invalid-feedback">
+                                      <div *ngIf="f.telaio.errors.required">Telaio obbligatario!</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 form-group mb-3 text-center">
+                                  <label for="fornitore">Fornitore</label>
+                                  <select class="form-control" id="fornitore" formControlName="fornitore"   [compareWith]="compareFn">
+                                    <option [ngValue]="null" ></option>
+                                    <option [ngValue]="l" *ngFor="let l of listFornitore">{{l.descrizione}}</option>
+                                  </select>
+                                </div>
+                                <div class="col-md-4 form-group mb-3 text-center">
+                                  <label for="categoria">Categoria</label>
+                                  <select class="form-control" id="categoria" formControlName="categoria"   [compareWith]="compareFn">
+                                    <option [ngValue]="null" ></option>
+                                    <option [ngValue]="l" *ngFor="let l of listCategoria">{{l.descrizione}}</option>
+                                  </select>
+                                </div>
+                            </div>
+                            <div class="row text-center">
+                                  <div class="col-md-4 form-group mb-3 text-center">
+                                    <label for="classe">Classe</label>
+                                    <select class="form-control" id="classe" formControlName="classe"   [compareWith]="compareFn">
+                                      <option [ngValue]="null" ></option>
+                                      <option [ngValue]="l" *ngFor="let l of listClasse">{{l.descrizione}}</option>
+                                    </select>
+                                  </div>
+                                
+                                  <div class="col-md-4 form-group mb-3 text-center">
+                                    <label for="modello">Modello</label>
+                                    <select class="form-control" id="modello" formControlName="modello"   [compareWith]="compareFn">
+                                      <option [ngValue]="null" ></option>
+                                      <option [ngValue]="l" *ngFor="let l of listModello">{{l.descrizione}}</option>
+                                    </select>
+                                  </div>              
+                                  <div class="col-md-4 form-group mb-3 text-center">
+                                    <label for="regimeProprieta">Regime Proprieta</label>
+                                    <select class="form-control" id="regimeProprieta" formControlName="regimeProprieta"   [compareWith]="compareFn">
+                                      <option [ngValue]="null" ></option>
+                                      <option [ngValue]="l" *ngFor="let l of listRegimeProprieta">{{l.descrizione}}</option>
+                                    </select>
+                                  </div>
+                            </div>
+                            <div class="row text-center">
+                                  
+                                  <div class="col-md-4 form-group mb-3 text-center">
+                                    <label for="tipoAlimentazione">Tipo Alimentazione</label>
+                                    <select class="form-control" id="tipoAlimentazione" formControlName="tipoAlimentazione"   [compareWith]="compareFn">
+                                      <option [ngValue]="null" ></option>
+                                      <option [ngValue]="l" *ngFor="let l of listAlimentazione">{{l.descrizione}}</option>
+                                    </select>
+                                  </div>
+                                  <div class="col-md-4 form-group mb-3 text-center">
+                                    <label for="tipoAllestimento">Tipo Allestimento</label>
+                                    <select class="form-control" id="tipoAllestimento" formControlName="tipoAllestimento"   [compareWith]="compareFn">
+                                      <option [ngValue]="null" ></option>
+                                      <option [ngValue]="l" *ngFor="let l of listAllestimento">{{l.descrizione}}</option>
+                                    </select>
+                                  </div>
+                              
+                            </div>
+                            <div class="row text-center">
+                                      <div class="col-md-2 form-group mb-3 text-center">
+                                        <label for="lunghezza">Lunghezza</label>
+                                        <input class="form-control" id="lunghezza" formControlName="lunghezza" placeholder="Lunghezza" type="lunghezza" [ngClass]="{'is-invalid': submitted && f.lunghezza.errors }" />                  
+                                      </div>
+                                      <div class="col-md-2 form-group mb-3 text-center">
+                                          <label for="numPorte">Numero Porte</label>
+                                          <input class="form-control" id="numPorte" formControlName="numPorte" placeholder="Numero Porte" type="numPorte" [ngClass]="{'is-invalid': submitted && f.numPorte.errors }" />              
+                                      </div>
+                                      <div class="col-md-4 form-group mb-3 text-center">
+                                          <label for="targa1imm">Targa 1 Immatricolazione</label>
+                                          <input class="form-control" id="targa1imm" formControlName="targa1imm" placeholder="Targa" type="targa1imm"  />
+                                          <div *ngIf="submitted && f.targa1imm.errors" class="invalid-feedback">
+                                            <div *ngIf="f.targa1imm.errors.required">Targa obbligatoria!</div>
+                                          </div>
+                                      </div>
+                                      <div class="col-md-4 form-group mb-3 text-center">
+                                        <label for="dataPrimaImm">Data I Immatricolazione</label>
+                                        <div class="input-group">
+                                            <input class="form-control" id="dataPrimaImm"  formControlName="dataPrimaImm"  ngbDatepicker #d="ngbDatepicker"  tabindex="-1">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"><i class="icon-regular i-Calendar-4"></i></button>
+                                            </div>
+                                        </div>
+                                      </div>
+                            </div>
+                            <div class="row text-center">
+                                      
+                                      <div class="col-md-4 form-group mb-3 text-center">
+                                        <label for="dataScadUsufrutto">Data Scadenza Usufrutto</label>
+                                        <div class="input-group">
+                                            <input class="form-control" id="dataScadUsufrutto" formControlName="dataScadUsufrutto" ngbDatepicker #d3="ngbDatepicker"  tabindex="-1">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-outline-secondary calendar" (click)="d3.toggle()" type="button"><i class="icon-regular i-Calendar-4"></i></button>
+                                            </div>
+                                        </div>
+                                      </div>
+                            </div>
+                            <div class="row text-center">
+                                    <div class="col-md-4 form-group mb-3 text-center">
+                                      <label for="dataAttivazioneavm">Data Attivazione AVM</label>
+                                      <div class="input-group">
+                                          <input class="form-control" id="dataAttivazioneavm" formControlName="dataAttivazioneavm" ngbDatepicker #d4="ngbDatepicker"  tabindex="-1">
+                                          <div class="input-group-append">
+                                              <button class="btn btn-outline-secondary calendar" (click)="d4.toggle()" type="button"><i class="icon-regular i-Calendar-4"></i></button>
+                                          </div>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-4 form-group mb-3 text-center">
+                                      <label for="dataContrattoAziendaTpl">Data Contratto TPL</label>
+                                      <div class="input-group">
+                                          <input class="form-control" id="dataContrattoAziendaTpl" formControlName="dataContrattoAziendaTpl" ngbDatepicker #d5="ngbDatepicker"  tabindex="-1">
+                                          <div class="input-group-append">
+                                              <button class="btn btn-outline-secondary calendar" (click)="d5.toggle()" type="button"><i class="icon-regular i-Calendar-4"></i></button>
+                                          </div>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-4 form-group mb-3 text-center">
+                                      <label for="dataConsegnaAdAziendaTpl">Data Consegna TPL</label>
+                                      <div class="input-group">
+                                          <input class="form-control" id="dataConsegnaAdAziendaTpl" formControlName="dataConsegnaAdAziendaTpl" ngbDatepicker #d6="ngbDatepicker"  tabindex="-1">
+                                          <div class="input-group-append">
+                                              <button class="btn btn-outline-secondary calendar" (click)="d6.toggle()" type="button"><i class="icon-regular i-Calendar-4"></i></button>
+                                          </div>
+                                      </div>
+                                    </div>
+                            </div>
+                            <div class="row text-center">
+                                    <div class="col-md-4 form-group mb-3 text-center">
+                                        <label for="numSimSerialNumber">Numero SIM Serial N.</label>
+                                        <input class="form-control" id="numSimSerialNumber" formControlName="numSimSerialNumber" placeholder="SIM Serial N." type="numSimSerialNumber" [ngClass]="{'is-invalid': submitted && f.numSimSerialNumber.errors }" />              
+                                    </div>
+                                    <div class="col-md-4 form-group mb-3 text-center">
+                                      <label for="numSimTelefonico">Sim Tel.</label>
+                                      <input class="form-control" id="numSimTelefonico" formControlName="numSimTelefonico" placeholder="Sim Tel." type="numSimTelefonico" [ngClass]="{'is-invalid': submitted && f.numSimTelefonico.errors }" />              
+                                    </div>
+                                    <div class="col-md-4 form-group mb-3 text-center">
+                                      <label for="costoAcquistoNettoIva">Costo Acquisto Netto Iva</label>
+                                      <input class="form-control" id="costoAcquistoNettoIva" formControlName="costoAcquistoNettoIva" placeholder="Costo Acquisto" type="costoAcquistoNettoIva" [ngClass]="{'is-invalid': submitted && f.costoAcquistoNettoIva.errors }" />              
+                                    </div>
+                            </div>
+                            <div class="row text-center">
+                                  <div class="col-md-4 form-group mb-3 text-center">
+                                      <label for="depositoRicoveroProtComunicazione">N. Protocollo Ricovero</label>
+                                      <input class="form-control" id="depositoRicoveroProtComunicazione" formControlName="depositoRicoveroProtComunicazione" placeholder="N. Protocollo Ricovero" type="depositoRicoveroProtComunicazione" [ngClass]="{'is-invalid': submitted && f.depositoRicoveroProtComunicazione.errors }" />              
+                                  </div>
+                                
+                                  <div class="col-md-4 form-group mb-3 text-center">
+                                    <label for="utimaVerIspettiva">Ultima Ver. Ispettiva</label>
+                                    <input class="form-control" id="utimaVerIspettiva" formControlName="utimaVerIspettiva" placeholder="Ultima Ver. Ispettiva" type="utimaVerIspettiva" [ngClass]="{'is-invalid': submitted && f.utimaVerIspettiva.errors }" />              
+                                  </div>
+                            </div>
+                            <div class="row text-center">
+                                  <div class="col-md-12 form-group mb-3 text-center">
+                                      <label for="note">Note</label>
+                                      <input class="form-control" id="note" formControlName="note" placeholder="Note" type="note" [ngClass]="{'is-invalid': submitted && f.note.errors }" />              
+                                  </div>
+                            </div>
+                </ng-template>
+              </ng-container>
+              <ng-container ngbNavItem>
+                <a ngbNavLink>Azienda TPL</a>
+                <ng-template ngbNavContent>
+                      <div class="row text-center">
 
-            <input class="form-control" id="id" formControlName="id" type="hidden"  />
+                                <div class="col-md-4 form-group mb-3 text-center">
+                                  <label for="contrattoServizio">Contratto Servizio</label>
+                                  <input class="form-control" id="contrattoServizio" formControlName="contrattoServizio" placeholder="Contratto Servizio" type="contrattoServizio" [ngClass]="{'is-invalid': submitted && f.contrattoServizio.errors }" />              
+                                </div>
 
-            <div class="row text-center">
-                <div class="col-md-4 form-group mb-3 text-center">
-                  <label for="matricola">Matricolaa</label>
-                  <input class="form-control" id="matricola" formControlName="matricola" placeholder="Matricola" type="matricola" [ngClass]="{'is-invalid': submitted && f.matricola.errors }" />
-                  <div *ngIf="submitted && f.matricola.errors" class="invalid-feedback">
-                    <div *ngIf="f.matricola.errors.required">Matricola obbligataria</div>
-                  </div>
-                </div>
-                <div class="col-md-4 form-group mb-3 text-center">
-                  <label for="gara">Gara</label>
-                  <select class="form-control" id="gara" formControlName="gara"   [compareWith]="compareGara">
-                    <option [ngValue]="null" ></option>
-                    <option [ngValue]="l" *ngFor="let l of listGara">{{l.codGara}}</option>
-                  </select>
-                </div>
-                <div class="col-md-4 form-group mb-3 text-center">
-                  <label for="assegnatario">Azienda Assegnataria</label>
-                  <select class="form-control" id="assegnatario" formControlName="assegnatario"   [compareWith]="compareAzienda">
-                    <option [ngValue]="null" *ngIf="isAdmin" ></option>
-                    <option [ngValue]="l" *ngFor="let l of listAzienda">{{l.nome}}</option>
-                  </select>
-                </div>
-              
-            </div>
-            <div class="row text-center">
-                <div class="col-md-4 form-group mb-3 text-center">
-                    <label for="telaio">Telaio</label>
-                    <input class="form-control" id="telaio" formControlName="telaio" placeholder="Telaio" type="telaio" [ngClass]="{'is-invalid': submitted && f.telaio.errors }" />
-                    <div *ngIf="submitted && f.telaio.errors" class="invalid-feedback">
-                      <div *ngIf="f.telaio.errors.required">Telaio obbligatario!</div>
-                    </div>
-                </div>
-                <div class="col-md-4 form-group mb-3 text-center">
-                  <label for="fornitore">Fornitore</label>
-                  <select class="form-control" id="fornitore" formControlName="fornitore"   [compareWith]="compareFn">
-                    <option [ngValue]="null" ></option>
-                    <option [ngValue]="l" *ngFor="let l of listFornitore">{{l.descrizione}}</option>
-                  </select>
-                </div>
-                <div class="col-md-4 form-group mb-3 text-center">
-                  <label for="categoria">Categoria</label>
-                  <select class="form-control" id="categoria" formControlName="categoria"   [compareWith]="compareFn">
-                    <option [ngValue]="null" ></option>
-                    <option [ngValue]="l" *ngFor="let l of listCategoria">{{l.descrizione}}</option>
-                  </select>
-                </div>
-               
+                                <div class="col-md-4 form-group mb-3 text-center">
+                                  <label for="kmDataRevisione">Km Data Revisione</label>
+                                  <input class="form-control" id="kmDataRevisione" formControlName="kmDataRevisione" placeholder="Km" type="kmDataRevisione" [ngClass]="{'is-invalid': submitted && f.kmDataRevisione.errors }" />              
+                                </div>
 
-            </div>
-            <div class="row text-center">
-                  <div class="col-md-4 form-group mb-3 text-center">
-                    <label for="classe">Classe</label>
-                    <select class="form-control" id="classe" formControlName="classe"   [compareWith]="compareFn">
-                      <option [ngValue]="null" ></option>
-                      <option [ngValue]="l" *ngFor="let l of listClasse">{{l.descrizione}}</option>
-                    </select>
-                  </div>
-                 
-                  <div class="col-md-4 form-group mb-3 text-center">
-                    <label for="modello">Modello</label>
-                    <select class="form-control" id="modello" formControlName="modello"   [compareWith]="compareFn">
-                      <option [ngValue]="null" ></option>
-                      <option [ngValue]="l" *ngFor="let l of listModello">{{l.descrizione}}</option>
-                    </select>
-                  </div>              
-                  <div class="col-md-4 form-group mb-3 text-center">
-                    <label for="regimeProprieta">Regime Proprieta</label>
-                    <select class="form-control" id="regimeProprieta" formControlName="regimeProprieta"   [compareWith]="compareFn">
-                      <option [ngValue]="null" ></option>
-                      <option [ngValue]="l" *ngFor="let l of listRegimeProprieta">{{l.descrizione}}</option>
-                    </select>
-                  </div>
-            </div>
-            <div class="row text-center">
-                  <div class="col-md-4 form-group mb-3 text-center">
-                    <label for="dispCopiaCartaCirc">Copia Carta Circolazione</label>
-                    <select class="form-control" id="dispCopiaCartaCirc" formControlName="dispCopiaCartaCirc"   [compareWith]="compareFn">
-                      <option [ngValue]="null" ></option>
-                      <option [ngValue]="l" *ngFor="let l of listDispCopiaCC">{{l.descrizione}}</option>
-                    </select>
-                  </div>
-                  <div class="col-md-4 form-group mb-3 text-center">
-                    <label for="tipoAlimentazione">Tipo Alimentazione</label>
-                    <select class="form-control" id="tipoAlimentazione" formControlName="tipoAlimentazione"   [compareWith]="compareFn">
-                      <option [ngValue]="null" ></option>
-                      <option [ngValue]="l" *ngFor="let l of listAlimentazione">{{l.descrizione}}</option>
-                    </select>
-                  </div>
-                  <div class="col-md-4 form-group mb-3 text-center">
-                    <label for="tipoAllestimento">Tipo Allestimento</label>
-                    <select class="form-control" id="tipoAllestimento" formControlName="tipoAllestimento"   [compareWith]="compareFn">
-                      <option [ngValue]="null" ></option>
-                      <option [ngValue]="l" *ngFor="let l of listAllestimento">{{l.descrizione}}</option>
-                    </select>
-                  </div>
-               
-          </div>
-          <div class="row text-center">
-                <div class="col-md-2 form-group mb-3 text-center">
-                  <label for="lunghezza">Lunghezza</label>
-                  <input class="form-control" id="lunghezza" formControlName="lunghezza" placeholder="Lunghezza" type="lunghezza" [ngClass]="{'is-invalid': submitted && f.lunghezza.errors }" />                  
-                </div>
-                <div class="col-md-2 form-group mb-3 text-center">
-                    <label for="numPorte">Numero Porte</label>
-                    <input class="form-control" id="numPorte" formControlName="numPorte" placeholder="Numero Porte" type="numPorte" [ngClass]="{'is-invalid': submitted && f.numPorte.errors }" />              
-                </div>
-                <div class="col-md-4 form-group mb-3 text-center">
-                    <label for="targa1imm">Targa 1 Immatricolazione</label>
-                    <input class="form-control" id="targa1imm" formControlName="targa1imm" placeholder="Targa" type="targa1imm"  />
-                    <div *ngIf="submitted && f.targa1imm.errors" class="invalid-feedback">
-                      <div *ngIf="f.targa1imm.errors.required">Targa obbligatoria!</div>
-                    </div>
-                </div>
-                <div class="col-md-4 form-group mb-3 text-center">
-                  <label for="dataPrimaImm">Data I Immatricolazione</label>
-                  <div class="input-group">
-                      <input class="form-control" id="dataPrimaImm"  formControlName="dataPrimaImm"  ngbDatepicker #d="ngbDatepicker"  tabindex="-1">
-                      <div class="input-group-append">
-                          <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"><i class="icon-regular i-Calendar-4"></i></button>
-                      </div>
-                  </div>
-                </div>
-          </div>
-          <div class="row text-center">
-              <div class="col-md-4 form-group mb-3 text-center">
-                  <label for="kmDataRevisione">Km Data Revisione</label>
-                  <input class="form-control" id="kmDataRevisione" formControlName="kmDataRevisione" placeholder="Km" type="kmDataRevisione" [ngClass]="{'is-invalid': submitted && f.kmDataRevisione.errors }" />              
-              </div>
-              <div class="col-md-4 form-group mb-3 text-center">
-                <label for="dataUltimaRevisione">Data Ultima Revisione</label>
-                <div class="input-group">
-                    <input class="form-control" id="dataUltimaRevisione" formControlName="dataUltimaRevisione"  ngbDatepicker #d1="ngbDatepicker"  tabindex="-1">
-                    <div class="input-group-append">
-                        <button class="btn btn-outline-secondary calendar" (click)="d1.toggle()" type="button"><i class="icon-regular i-Calendar-4"></i></button>
-                    </div>
-                </div>
-              </div>
-              <div class="col-md-4 form-group mb-3 text-center">
-                <label for="dataScadUsufrutto">Data Scadenza Usufrutto</label>
-                <div class="input-group">
-                    <input class="form-control" id="dataScadUsufrutto" formControlName="dataScadUsufrutto" ngbDatepicker #d3="ngbDatepicker"  tabindex="-1">
-                    <div class="input-group-append">
-                        <button class="btn btn-outline-secondary calendar" (click)="d3.toggle()" type="button"><i class="icon-regular i-Calendar-4"></i></button>
-                    </div>
-                </div>
-              </div>
-          </div>
-          <div class="row text-center">
-            <div class="col-md-4 form-group mb-3 text-center">
-              <label for="dataAttivazioneavm">Data Attivazione AVM</label>
-              <div class="input-group">
-                  <input class="form-control" id="dataAttivazioneavm" formControlName="dataAttivazioneavm" ngbDatepicker #d4="ngbDatepicker"  tabindex="-1">
-                  <div class="input-group-append">
-                      <button class="btn btn-outline-secondary calendar" (click)="d4.toggle()" type="button"><i class="icon-regular i-Calendar-4"></i></button>
-                  </div>
-              </div>
-            </div>
-            <div class="col-md-4 form-group mb-3 text-center">
-              <label for="dataContrattoAziendaTpl">Data Contratto TPL</label>
-              <div class="input-group">
-                  <input class="form-control" id="dataContrattoAziendaTpl" formControlName="dataContrattoAziendaTpl" ngbDatepicker #d5="ngbDatepicker"  tabindex="-1">
-                  <div class="input-group-append">
-                      <button class="btn btn-outline-secondary calendar" (click)="d5.toggle()" type="button"><i class="icon-regular i-Calendar-4"></i></button>
-                  </div>
-              </div>
-            </div>
-            <div class="col-md-4 form-group mb-3 text-center">
-              <label for="dataConsegnaAdAziendaTpl">Data Consegna TPL</label>
-              <div class="input-group">
-                  <input class="form-control" id="dataConsegnaAdAziendaTpl" formControlName="dataConsegnaAdAziendaTpl" ngbDatepicker #d6="ngbDatepicker"  tabindex="-1">
-                  <div class="input-group-append">
-                      <button class="btn btn-outline-secondary calendar" (click)="d6.toggle()" type="button"><i class="icon-regular i-Calendar-4"></i></button>
-                  </div>
-              </div>
-            </div>
-          </div>
-          <div class="row text-center">
-                <div class="col-md-4 form-group mb-3 text-center">
-                    <label for="numSimSerialNumber">Numero SIM Serial N.</label>
-                    <input class="form-control" id="numSimSerialNumber" formControlName="numSimSerialNumber" placeholder="SIM Serial N." type="numSimSerialNumber" [ngClass]="{'is-invalid': submitted && f.numSimSerialNumber.errors }" />              
-                </div>
-                <div class="col-md-4 form-group mb-3 text-center">
-                  <label for="numSimTelefonico">Sim Tel.</label>
-                  <input class="form-control" id="numSimTelefonico" formControlName="numSimTelefonico" placeholder="Sim Tel." type="numSimTelefonico" [ngClass]="{'is-invalid': submitted && f.numSimTelefonico.errors }" />              
-                </div>
-                <div class="col-md-4 form-group mb-3 text-center">
-                  <label for="costoAcquistoNettoIva">Costo Acquisto Netto Iva</label>
-                  <input class="form-control" id="costoAcquistoNettoIva" formControlName="costoAcquistoNettoIva" placeholder="Costo Acquisto" type="costoAcquistoNettoIva" [ngClass]="{'is-invalid': submitted && f.costoAcquistoNettoIva.errors }" />              
-                </div>
-          </div>
-          <div class="row text-center">
-              <div class="col-md-4 form-group mb-3 text-center">
-                  <label for="depositoRicoveroProtComunicazione">N. Protocollo Ricovero</label>
-                  <input class="form-control" id="depositoRicoveroProtComunicazione" formControlName="depositoRicoveroProtComunicazione" placeholder="N. Protocollo Ricovero" type="depositoRicoveroProtComunicazione" [ngClass]="{'is-invalid': submitted && f.depositoRicoveroProtComunicazione.errors }" />              
-              </div>
-              <div class="col-md-4 form-group mb-3 text-center">
-                <label for="indirizzoDepositoRicovero">Indirizzo Ricovero</label>
-                <input class="form-control" id="indirizzoDepositoRicovero" formControlName="indirizzoDepositoRicovero" placeholder="Indirizzo Ricovero" type="indirizzoDepositoRicovero" [ngClass]="{'is-invalid': submitted && f.indirizzoDepositoRicovero.errors }" />              
-              </div>
-              <div class="col-md-4 form-group mb-3 text-center">
-                <label for="utimaVerIspettiva">Ultima Ver. Ispettiva</label>
-                <input class="form-control" id="utimaVerIspettiva" formControlName="utimaVerIspettiva" placeholder="Ultima Ver. Ispettiva" type="utimaVerIspettiva" [ngClass]="{'is-invalid': submitted && f.utimaVerIspettiva.errors }" />              
-              </div>
-          </div>
-          <div class="row text-center">
-            <div class="col-md-12 form-group mb-3 text-center">
-                <label for="note">Note</label>
-                <input class="form-control" id="note" formControlName="note" placeholder="Note" type="note" [ngClass]="{'is-invalid': submitted && f.note.errors }" />              
-            </div>
-        </div>
+                                <div class="col-md-4 form-group mb-3 text-center">
+                                  <label for="dataUltimaRevisione">Data Ultima Revisione</label>
+                                  <div class="input-group">
+                                      <input class="form-control" id="dataUltimaRevisione" formControlName="dataUltimaRevisione"  ngbDatepicker #d1="ngbDatepicker"  tabindex="-1">
+                                      <div class="input-group-append">
+                                          <button class="btn btn-outline-secondary calendar" (click)="d1.toggle()" type="button"><i class="icon-regular i-Calendar-4"></i></button>
+                                      </div>
+                                  </div>
+                                </div>
 
+                                <div class="col-md-4 form-group mb-3 text-center">
+                                  <label for="dataCessMarcia">Data Cessazione Marcia</label>
+                                  <div class="input-group">
+                                      <input class="form-control" id="dataCessMarcia" formControlName="dataCessMarcia"  ngbDatepicker #d1="ngbDatepicker"  tabindex="-1">
+                                      <div class="input-group-append">
+                                          <button class="btn btn-outline-secondary calendar" (click)="d1.toggle()" type="button"><i class="icon-regular i-Calendar-4"></i></button>
+                                      </div>
+                                  </div>
+                                </div>
+
+                                <div class="col-md-4 form-group mb-3 text-center">
+                                  <label for="indirizzoDepositoRicovero">Indirizzo Ricovero</label>
+                                  <input class="form-control" id="indirizzoDepositoRicovero" formControlName="indirizzoDepositoRicovero" placeholder="Indirizzo Ricovero" type="indirizzoDepositoRicovero" [ngClass]="{'is-invalid': submitted && f.indirizzoDepositoRicovero.errors }" />              
+                                </div>
+
+                                <div class="col-md-4 form-group mb-3 text-center">
+                                  <label for="motivoFermo">Motivazione Fermo</label>
+                                  <input class="form-control" id="motivoFermo" formControlName="motivoFermo" placeholder="Motivazione Fermo" type="motivoFermo" [ngClass]="{'is-invalid': submitted && f.indirizzoDepositoRicovero.errors }" />              
+                                </div>
+
+                               
+                      </div>        
+                </ng-template>
+              </ng-container>
+            </nav>
+            <div [ngbNavOutlet]="nav" class="mt-2"></div>
           <br>
 
           <div class="col-md-12 text-center">
