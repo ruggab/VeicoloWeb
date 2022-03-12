@@ -6,43 +6,46 @@ export class Veicolo {
     id:number;
     matricola : string;
     telaio : string;
-    
     numSimSerialNumber: string;
     numSimTelefonico: string;
-    costoAcquistoNettoIva: string;
-    dataAggiornamento : Date;
-    dataAttivazioneavm : Date;
-    dataConsegnaAdAziendaTpl : Date;
-    dataContrattoAziendaTpl : Date;
-    dataInserimento : Date;
+   
     dataPrimaImm : Date;
     dataScadGaranziaBase : Date;
     dataScadGaranziaEstesa : Date;
-    dataScadUsufrutto : Date;
-    dataScadVincolo : Date;
-   
-    depositoRicoveroProtComunicazione : string;
-    username: string;
   
+    dataScadVincolo : Date;
     lunghezza: number;
-    note: string;
     numPorte: number;
     targa1Imm: string; 
     utimaVerIspettiva:string;
-    assegnatario:Azienda; 
-    gara:Gara; 
     categoria: Dizionario; 
     classe : Dizionario;
-   
     fornitore: Dizionario;
     modello: Dizionario;
-    regimeProprieta: Dizionario;
     tipoAlimentazione: Dizionario;
     tipoAllestimento:  Dizionario;
-    //Campi nuovi
-    
 	classeAmbientale: Dizionario;
-	determAssegnazione: string;
+	
+   
+    //Info Veicolo
+    gara:Gara;
+    assegnatario:Azienda; 
+    determAssegnazione: string;
+    dataConsegnaAziendaTpl : Date;
+    dataContrattoAssegnAziendaTpl : Date;
+	dataContrattoApplAziendaTpl : Date;
+    dataAttivazioneAvm : Date;
+    regimeProprieta: Dizionario;
+    costoAcquistoNettoIva: string;
+    numProtocolloRicovero : string;
+    protArrivoAcamMessADispCons: string;
+    protComSituazApparati: string;
+    dataUltimaVerificaIsp: Date;
+	estremiProtRappVerIsp: string;
+    noteVerificaIsp: string;
+
+    //Dati Usufrutto
+    dataScadUsufrutto : Date;
     estremiContrUsufrutto: string;
 	dataContrUsufrutto: Date;
 	valAnnuoCanone: number;
@@ -51,9 +54,9 @@ export class Veicolo {
 	val9Canone: number;
 	val10Canone: number;
 	val11Canone: number;
-	dataContrAssTpl : Date;
-	dataContrAssApplTpl : Date;
-	protArrivoAcamMessADispCons: string;
+   
+
+	
 	numPolGaranziaBase: string;
 	numPolGaranziaEstesa: string;
 	protFidGaranziaBase: string;
@@ -61,11 +64,10 @@ export class Veicolo {
 	dataScadTassaPossesso: Date;
     dataScadRca : Date;
 	protComReferente: string;
-	protComSituazApparati: string;
-	dataUltimaVerificaIsp: Date;
-	estremiProtRappVerIsp: string;
+
+	
     
-    //Dati iseriti dall' Azienda
+    //Dati inseriti dall' Azienda
     dispCopiaCartaCirc : Dizionario;
     contrattoServizio: string;
     dataCessMarcia: Date;
@@ -74,5 +76,9 @@ export class Veicolo {
     kmDataRevisione: number; 
     dataUltimaRevisione : Date;
    
+
+    username: string;
+    dataAggiornamento : Date;
+    dataInserimento : Date;
 
 }

@@ -66,40 +66,59 @@ export class CreazioneVeicoloComponent implements OnInit {
       telaio : [''],
       numSimSerialNumber : [''],
       numSimTelefonico : [''],
-      costoAcquistoNettoIva : [''],
-      dataAttivazioneavm : new Date(null),
-      dataConsegnaAdAziendaTpl : new Date(null),
-      dataContrattoAziendaTpl : new Date(null),
       dataPrimaImm : null,
       dataScadGaranziaBase : new Date(null),
       dataScadGaranziaEstesa :new Date(null),
-      dataScadUsufrutto : new Date(null),
       dataScadVincolo : new Date(null),
-      dataUltimaRevisione : new Date(null),
-      depositoRicoveroProtComunicazione : [''],
-      indirizzoDepositoRicovero: [''],
-      kmDataRevisione: [''],
       lunghezza: [''],
-      note: [''],
       numPorte: [''],
       targa1imm: [''], 
-      utimaVerIspettiva: [''],
-      assegnatario:new FormControl(null), 
-      gara:new FormControl(null),
+      fornitore: new FormControl(null),
+      modello: new FormControl(null),
+      tipoAlimentazione: new FormControl(null),
+      tipoAllestimento: new FormControl(null),
       categoria: new FormControl(null),
       classe :new FormControl(null),
       classeAmbientale :new FormControl(null),
-      dispCopiaCartaCirc : new FormControl(null),
-      fornitore: new FormControl(null),
-      modello: new FormControl(null),
-      regimeProprieta: new FormControl(null),
-      tipoAlimentazione: new FormControl(null),
-      tipoAllestimento: new FormControl(null),
 
+
+      //Info
+      gara:new FormControl(null),
+      assegnatario:new FormControl(null), 
+      determAssegnazione:[''],
+      dataConsegnaAziendaTpl : new Date(null),
+      dataContrattoAssegnAziendaTpl : new Date(null),
+      dataContrattoApplAziendaTpl: new Date(null),
+      dataAttivazioneAvm : new Date(null),
+      regimeProprieta: new FormControl(null),
+      costoAcquistoNettoIva : [''],
+      numProtocolloRicovero : [''],
+      protArrivoAcamMessADispCons: [''],
+      protComSituazApparati: [''],
+      dataUltimaVerificaIsp: new Date(null),
+      estremiProtRappVerIsp:[''],
+      noteVerificaIsp: [''],
+     
+      
+      //Usufrutto
+      dataScadUsufrutto : new Date(null),
+      estremiContrUsufrutto : [''],  
+      dataContrUsufrutto:new Date(null),
+      valAnnuoCanone : [''],  
+      valPrimoCanone : [''],  
+      valDa2a8Canone : [''],  
+      val9Canone : [''],  
+      val10Canone : [''],  
+      val11Canone : [''],  
+
+      //Azienda
+      dispCopiaCartaCirc : new FormControl(null),
       contrattoServizio: [''],
       dataCessMarcia: new Date(null),
       motivoFermo: [''],
-
+      indirizzoDepositoRicovero: [''],
+      kmDataRevisione: [''],
+      dataUltimaRevisione : new Date(null),
     });
     
 
@@ -298,57 +317,65 @@ export class CreazioneVeicoloComponent implements OnInit {
       var utente = JSON.parse(localStorage.getItem('currentUser'));
       this.submitted = true;
       let veicolo : Veicolo = new Veicolo();
-
+      // Dati Veicolo
       veicolo.id = this.veicoloForm.controls.id.value;
       veicolo.matricola = this.veicoloForm.controls.matricola.value;
       veicolo.telaio = this.veicoloForm.controls.telaio.value;
-      veicolo.assegnatario = this.veicoloForm.controls.assegnatario.value;
-      veicolo.gara = this.veicoloForm.controls.gara.value;
-
       veicolo.fornitore = this.veicoloForm.controls.fornitore.value;
       veicolo.categoria = this.veicoloForm.controls.categoria.value;
       veicolo.classe = this.veicoloForm.controls.classe.value;
       veicolo.classeAmbientale = this.veicoloForm.controls.classeAmbientale.value;
-
       veicolo.dispCopiaCartaCirc = this.veicoloForm.controls.dispCopiaCartaCirc.value;
       veicolo.modello = this.veicoloForm.controls.modello.value;
-      veicolo.regimeProprieta = this.veicoloForm.controls.regimeProprieta.value;
-
       veicolo.tipoAlimentazione = this.veicoloForm.controls.tipoAlimentazione.value;
       veicolo.tipoAllestimento = this.veicoloForm.controls.tipoAllestimento.value;
       veicolo.lunghezza = this.veicoloForm.controls.lunghezza.value;
-
       veicolo.numPorte = this.veicoloForm.controls.numPorte.value;
       veicolo.targa1Imm = this.veicoloForm.controls.targa1imm.value;
       veicolo.dataPrimaImm = this.fromNgbDatePickerToDate(this.veicoloForm.controls.dataPrimaImm.value);
-
-      veicolo.kmDataRevisione = this.veicoloForm.controls.kmDataRevisione.value;
-      veicolo.dataUltimaRevisione = this.fromNgbDatePickerToDate(this.veicoloForm.controls.dataUltimaRevisione.value);
-      veicolo.dataScadUsufrutto = this.fromNgbDatePickerToDate(this.veicoloForm.controls.dataScadUsufrutto.value);
-
-      veicolo.dataAttivazioneavm = this.fromNgbDatePickerToDate(this.veicoloForm.controls.dataAttivazioneavm.value);
-      veicolo.dataContrattoAziendaTpl = this.fromNgbDatePickerToDate(this.veicoloForm.controls.dataContrattoAziendaTpl.value);
-      veicolo.dataConsegnaAdAziendaTpl = this.fromNgbDatePickerToDate(this.veicoloForm.controls.dataConsegnaAdAziendaTpl.value);
-     
-
       veicolo.numSimSerialNumber = this.veicoloForm.controls.numSimSerialNumber.value;
       veicolo.numSimTelefonico = this.veicoloForm.controls.numSimTelefonico.value;
-      veicolo.costoAcquistoNettoIva = this.veicoloForm.controls.costoAcquistoNettoIva.value;
+      
      
+      //info Veicolo
+      veicolo.gara = this.veicoloForm.controls.gara.value;
+      veicolo.assegnatario = this.veicoloForm.controls.assegnatario.value;
+      veicolo.determAssegnazione = this.veicoloForm.controls.determAssegnazione.value;
+      veicolo.dataContrattoAssegnAziendaTpl = this.fromNgbDatePickerToDate(this.veicoloForm.controls.dataContrattoAssegnAziendaTpl.value);
+      veicolo.dataConsegnaAziendaTpl = this.fromNgbDatePickerToDate(this.veicoloForm.controls.dataConsegnaAziendaTpl.value);
+      veicolo.dataContrattoApplAziendaTpl = this.fromNgbDatePickerToDate(this.veicoloForm.controls.dataContrattoApplAziendaTpl.value);
+      veicolo.dataAttivazioneAvm = this.fromNgbDatePickerToDate(this.veicoloForm.controls.dataAttivazioneAvm.value);
+      veicolo.regimeProprieta = this.veicoloForm.controls.regimeProprieta.value;
+      veicolo.costoAcquistoNettoIva = this.veicoloForm.controls.costoAcquistoNettoIva.value;
+      veicolo.numProtocolloRicovero = this.veicoloForm.controls.numProtocolloRicovero.value;
+      veicolo.protComSituazApparati = this.veicoloForm.controls.protComSituazApparati.value;
+      veicolo.protArrivoAcamMessADispCons = this.veicoloForm.controls.protArrivoAcamMessADispCons.value;
+      veicolo.dataUltimaVerificaIsp = this.veicoloForm.controls.dataUltimaVerificaIsp.value;
+      veicolo.estremiProtRappVerIsp = this.veicoloForm.controls.estremiProtRappVerIsp.value;
+      veicolo.noteVerificaIsp = this.veicoloForm.controls.noteVerificaIsp.value;
+     
+
+      //Usufrutto
+      veicolo.estremiContrUsufrutto = this.veicoloForm.controls.estremiContrUsufrutto.value;
+      veicolo.dataContrUsufrutto = this.fromNgbDatePickerToDate(this.veicoloForm.controls.dataContrUsufrutto.value);
+      veicolo.dataScadUsufrutto = this.fromNgbDatePickerToDate(this.veicoloForm.controls.dataScadUsufrutto.value);
+      veicolo.valAnnuoCanone = this.veicoloForm.controls.valAnnuoCanone.value;
+      veicolo.valPrimoCanone = this.veicoloForm.controls.valPrimoCanone.value;
+      veicolo.valDa2a8Canone = this.veicoloForm.controls.valDa2a8Canone.value;
+      veicolo.val9Canone = this.veicoloForm.controls.val9Canone.value;
+      veicolo.val10Canone = this.veicoloForm.controls.val10Canone.value;
+      veicolo.val11Canone = this.veicoloForm.controls.val11Canone.value;
+
+      //Azienda
       veicolo.contrattoServizio = this.veicoloForm.controls.contrattoServizio.value;
       veicolo.dataCessMarcia = this.veicoloForm.controls.dataCessMarcia.value;
       veicolo.motivoFermo = this.veicoloForm.controls.motivoFermo.value;
-      
-      // veicolo.dataScadGaranziaBase = this.veicoloForm.controls.dataScadGaranziaBase.value;
-      // veicolo.dataScadGaranziaEstesa = this.veicoloForm.controls.dataScadGaranziaEstesa.value;
-      // veicolo.dataScadVincolo = this.veicoloForm.controls.dataScadVincolo.value;
-      
-      veicolo.depositoRicoveroProtComunicazione = this.veicoloForm.controls.depositoRicoveroProtComunicazione.value;
       veicolo.indirizzoDepositoRicovero = this.veicoloForm.controls.indirizzoDepositoRicovero.value;
-     
-      veicolo.utimaVerIspettiva = this.veicoloForm.controls.utimaVerIspettiva.value;
-      veicolo.note = this.veicoloForm.controls.note.value;
-     
+      veicolo.dataUltimaRevisione = this.fromNgbDatePickerToDate(this.veicoloForm.controls.dataUltimaRevisione.value);
+      veicolo.kmDataRevisione = this.veicoloForm.controls.kmDataRevisione.value;
+
+
+
       veicolo.username = utente.username;
   
      
@@ -465,99 +492,138 @@ export class CreazioneVeicoloComponent implements OnInit {
         this.veicoloForm.controls['id'].setValue('');
         this.veicoloForm.controls['matricola'].setValue('');
         this.veicoloForm.controls['telaio'].setValue('');
-        this.veicoloForm.controls['assegnatario'].setValue(null);
-        this.veicoloForm.controls['gara'].setValue(null);
         this.veicoloForm.controls['fornitore'].setValue(null);
-
         this.veicoloForm.controls['categoria'].setValue(null);
         this.veicoloForm.controls['classe'].setValue(null);
         this.veicoloForm.controls['classeAmbientale'].setValue(null);
-        this.veicoloForm.controls['dispCopiaCartaCirc'].setValue(null);
         this.veicoloForm.controls['modello'].setValue(null);
-
-        this.veicoloForm.controls['regimeProprieta'].setValue(null);
         this.veicoloForm.controls['tipoAlimentazione'].setValue(null);
         this.veicoloForm.controls['tipoAllestimento'].setValue(null);
-
         this.veicoloForm.controls['targa1imm'].setValue('');
         this.veicoloForm.controls['numPorte'].setValue('');
         this.veicoloForm.controls['lunghezza'].setValue('');
-        this.veicoloForm.controls['kmDataRevisione'].setValue('');
         this.veicoloForm.controls['numSimSerialNumber'].setValue('');
         this.veicoloForm.controls['numSimTelefonico'].setValue('');
-        this.veicoloForm.controls['costoAcquistoNettoIva'].setValue('');
-
         this.veicoloForm.controls['dataPrimaImm'].setValue('');
-        this.veicoloForm.controls['dataAttivazioneavm'].setValue('');
-        this.veicoloForm.controls['dataConsegnaAdAziendaTpl'].setValue('');
-        this.veicoloForm.controls['dataContrattoAziendaTpl'].setValue('');
+      
+        
+       
+        //Info veicolo
+        this.veicoloForm.controls['gara'].setValue(null);
+        this.veicoloForm.controls['assegnatario'].setValue(null);
+        this.veicoloForm.controls['determAssegnazione'].setValue('');
+        this.veicoloForm.controls['dataConsegnaAziendaTpl'].setValue('');
+        this.veicoloForm.controls['dataContrattoAssegnAziendaTpl'].setValue('');
+        this.veicoloForm.controls['dataContrattoApplAziendaTpl'].setValue('');
+        this.veicoloForm.controls['dataAttivazioneAvm'].setValue('');
+        this.veicoloForm.controls['regimeProprieta'].setValue(null);
+        this.veicoloForm.controls['costoAcquistoNettoIva'].setValue('');
+        this.veicoloForm.controls['numProtocolloRicovero'].setValue('');
+        this.veicoloForm.controls['protArrivoAcamMessADispCons'].setValue('');
+        this.veicoloForm.controls['protComSituazApparati'].setValue('');
+        this.veicoloForm.controls['dataUltimaVerificaIsp'].setValue('');
+        this.veicoloForm.controls['estremiProtRappVerIsp'].setValue('');
+        this.veicoloForm.controls['noteVerificaIsp'].setValue('');
+
+        //usufrutto
+        this.veicoloForm.controls['estremiContrUsufrutto'].setValue('');
+        this.veicoloForm.controls['dataContrUsufrutto'].setValue('');
         this.veicoloForm.controls['dataScadUsufrutto'].setValue('');
-        this.veicoloForm.controls['dataUltimaRevisione'].setValue('');
 
-        this.veicoloForm.controls['depositoRicoveroProtComunicazione'].setValue('');
-        this.veicoloForm.controls['note'].setValue('');
+        this.veicoloForm.controls['valAnnuoCanone'].setValue('');
+        this.veicoloForm.controls['valPrimoCanone'].setValue('');
+        this.veicoloForm.controls['valDa2a8Canone'].setValue('');
+
+        this.veicoloForm.controls['val9Canone'].setValue('');
+        this.veicoloForm.controls['val10Canone'].setValue('');
+        this.veicoloForm.controls['val11Canone'].setValue('');
+
+        //Azienda
         this.veicoloForm.controls['indirizzoDepositoRicovero'].setValue('');
-
         this.veicoloForm.controls['contrattoServizio'].setValue('');
         this.veicoloForm.controls['dataCessMarcia'].setValue('');
         this.veicoloForm.controls['motivoFermo'].setValue('');
-       
-       
-      
-        // this.veicoloForm.controls['dataScadGaranziaBase'].setValue('');
-        // this.veicoloForm.controls['dataScadGaranziaEstesa'].setValue('');
-        // this.veicoloForm.controls['dataScadVincolo'].setValue('');
+        this.veicoloForm.controls['kmDataRevisione'].setValue('');
+        this.veicoloForm.controls['dataUltimaRevisione'].setValue('');
+        this.veicoloForm.controls['dispCopiaCartaCirc'].setValue(null);
        
     }
 
     if (veicolo != null) { 
 
-      
-
       this.veicoloForm.controls['id'].setValue(veicolo.id);
-
       this.veicoloForm.controls['matricola'].setValue(veicolo.matricola);
       this.veicoloForm.controls['telaio'].setValue(veicolo.telaio);
-      this.veicoloForm.controls['assegnatario'].setValue(veicolo.assegnatario);
-      this.veicoloForm.controls['gara'].setValue(veicolo.gara);
       this.veicoloForm.controls['fornitore'].setValue(veicolo.fornitore);
-
       this.veicoloForm.controls['categoria'].setValue(veicolo.categoria);
       this.veicoloForm.controls['classe'].setValue(veicolo.classe);
       this.veicoloForm.controls['classeAmbientale'].setValue(veicolo.classeAmbientale);
-      this.veicoloForm.controls['dispCopiaCartaCirc'].setValue(veicolo.dispCopiaCartaCirc);
+      
       this.veicoloForm.controls['modello'].setValue(veicolo.modello);
 
-      this.veicoloForm.controls['regimeProprieta'].setValue(veicolo.regimeProprieta);
+    
       this.veicoloForm.controls['tipoAlimentazione'].setValue(veicolo.tipoAlimentazione);
       this.veicoloForm.controls['tipoAllestimento'].setValue(veicolo.tipoAllestimento);
       this.veicoloForm.controls['targa1imm'].setValue(veicolo.targa1Imm);
 
       this.veicoloForm.controls['dataPrimaImm'].setValue(this.fromStringToDate(veicolo.dataPrimaImm));
-      this.veicoloForm.controls['dataScadUsufrutto'].setValue(this.fromStringToDate(veicolo.dataScadUsufrutto));
-      this.veicoloForm.controls['dataAttivazioneavm'].setValue(this.fromStringToDate(veicolo.dataAttivazioneavm));
-      this.veicoloForm.controls['dataConsegnaAdAziendaTpl'].setValue(this.fromStringToDate(veicolo.dataConsegnaAdAziendaTpl));
-      this.veicoloForm.controls['dataContrattoAziendaTpl'].setValue(this.fromStringToDate(veicolo.dataContrattoAziendaTpl));
+      
+      
       this.veicoloForm.controls['dataUltimaRevisione'].setValue(this.fromStringToDate(veicolo.dataUltimaRevisione));
       
       this.veicoloForm.controls['numSimSerialNumber'].setValue(veicolo.numSimSerialNumber);
       this.veicoloForm.controls['numSimTelefonico'].setValue(veicolo.numSimTelefonico);
-      this.veicoloForm.controls['costoAcquistoNettoIva'].setValue(veicolo.costoAcquistoNettoIva);
-      // this.veicoloForm.controls['dataScadGaranziaBase'].setValue(veicolo.dataScadGaranziaBase);
+      
+      //
+      
       // this.veicoloForm.controls['dataScadGaranziaEstesa'].setValue(veicolo.dataScadGaranziaEstesa);
       // this.veicoloForm.controls['dataScadVincolo'].setValue(veicolo.dataScadVincolo);
 
-
-
-      this.veicoloForm.controls['depositoRicoveroProtComunicazione'].setValue(veicolo.depositoRicoveroProtComunicazione);
+     
       this.veicoloForm.controls['indirizzoDepositoRicovero'].setValue(veicolo.indirizzoDepositoRicovero);
        
       this.veicoloForm.controls['kmDataRevisione'].setValue(veicolo.kmDataRevisione);
       this.veicoloForm.controls['lunghezza'].setValue(veicolo.lunghezza);
-      this.veicoloForm.controls['note'].setValue(veicolo.note);
+    
       this.veicoloForm.controls['numPorte'].setValue(veicolo.numPorte);
+
+      //Info Veicolo
+      this.veicoloForm.controls['assegnatario'].setValue(veicolo.assegnatario);
+      this.veicoloForm.controls['gara'].setValue(veicolo.gara);
+      this.veicoloForm.controls['determAssegnazione'].setValue(veicolo.determAssegnazione);
+     
+      this.veicoloForm.controls['dataConsegnaAziendaTpl'].setValue(this.fromStringToDate(veicolo.dataConsegnaAziendaTpl));
+      this.veicoloForm.controls['dataContrattoAssegnAziendaTpl'].setValue(this.fromStringToDate(veicolo.dataContrattoAssegnAziendaTpl));
+      this.veicoloForm.controls['dataContrattoApplAziendaTpl'].setValue(this.fromStringToDate(veicolo.dataContrattoApplAziendaTpl));
+      this.veicoloForm.controls['dataAttivazioneAvm'].setValue(this.fromStringToDate(veicolo.dataAttivazioneAvm));
+      this.veicoloForm.controls['regimeProprieta'].setValue(veicolo.regimeProprieta);
+      this.veicoloForm.controls['costoAcquistoNettoIva'].setValue(veicolo.costoAcquistoNettoIva);
+      this.veicoloForm.controls['numProtocolloRicovero'].setValue(veicolo.numProtocolloRicovero);
+      this.veicoloForm.controls['protArrivoAcamMessADispCons'].setValue(veicolo.protArrivoAcamMessADispCons);
+      this.veicoloForm.controls['protComSituazApparati'].setValue(veicolo.protComSituazApparati);
+      this.veicoloForm.controls['dataUltimaVerificaIsp'].setValue(veicolo.dataUltimaVerificaIsp);
+      this.veicoloForm.controls['estremiProtRappVerIsp'].setValue(veicolo.estremiProtRappVerIsp);
+      this.veicoloForm.controls['noteVerificaIsp'].setValue(veicolo.noteVerificaIsp);
+
+     
+     
+      //Usufrutto
+      this.veicoloForm.controls['estremiContrUsufrutto'].setValue(veicolo.estremiContrUsufrutto);
+      this.veicoloForm.controls['dataContrUsufrutto'].setValue(this.fromStringToDate(veicolo.dataContrUsufrutto));
+      this.veicoloForm.controls['dataScadUsufrutto'].setValue(this.fromStringToDate(veicolo.dataScadUsufrutto));
+
+      this.veicoloForm.controls['valAnnuoCanone'].setValue(veicolo.valAnnuoCanone);
+      this.veicoloForm.controls['valPrimoCanone'].setValue(veicolo.valPrimoCanone);
+      this.veicoloForm.controls['valDa2a8Canone'].setValue(veicolo.valDa2a8Canone);
+
+      this.veicoloForm.controls['val9Canone'].setValue(veicolo.val9Canone);
+      this.veicoloForm.controls['val10Canone'].setValue(veicolo.val10Canone);
+      this.veicoloForm.controls['val11Canone'].setValue(veicolo.val11Canone);
+
       
-      this.veicoloForm.controls['utimaVerIspettiva'].setValue(veicolo.utimaVerIspettiva);
+      //Azienda
+      this.veicoloForm.controls['dispCopiaCartaCirc'].setValue(veicolo.dispCopiaCartaCirc);
+      
       
     }
     this.modalService.open(content, { ariaLabelledBy: 'modalsos', size: 'lg' })

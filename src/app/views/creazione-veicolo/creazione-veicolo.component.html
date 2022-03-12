@@ -215,18 +215,7 @@
                                         </div>
                                       </div>
                             </div>
-                            <div class="row text-center">
-                                      
-                                      <div class="col-md-4 form-group mb-3 text-center">
-                                        <label for="dataScadUsufrutto">Data Scadenza Usufrutto</label>
-                                        <div class="input-group">
-                                            <input class="form-control" id="dataScadUsufrutto" formControlName="dataScadUsufrutto" ngbDatepicker #d3="ngbDatepicker"  tabindex="-1">
-                                            <div class="input-group-append">
-                                                <button class="btn btn-outline-secondary calendar" (click)="d3.toggle()" type="button"><i class="icon-regular i-Calendar-4"></i></button>
-                                            </div>
-                                        </div>
-                                      </div>
-                            </div>
+                           
                            
                             <div class="row text-center">
                                     <div class="col-md-4 form-group mb-3 text-center">
@@ -266,68 +255,164 @@
                           </div>
 
                           <div class="col-md-4 form-group mb-3 text-center">
+                            <label for="determAssegnazione">Determina Assegnazione</label>
+                            <input class="form-control" id="determAssegnazione" formControlName="determAssegnazione" placeholder="Determina Assegnazione" type="determAssegnazione" [ngClass]="{'is-invalid': submitted && f.determAssegnazione.errors }" />              
+                          </div>
+
+                          <div class="col-md-4 form-group mb-3 text-center">
+                            <label for="dataConsegnaAziendaTpl">Data Consegna TPL</label>
+                            <div class="input-group">
+                                <input class="form-control" id="dataConsegnaAziendaTpl" formControlName="dataConsegnaAziendaTpl" ngbDatepicker #d4="ngbDatepicker"  tabindex="-1">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary calendar" (click)="d4.toggle()" type="button"><i class="icon-regular i-Calendar-4"></i></button>
+                                </div>
+                            </div>
+                          </div>
+
+                          <div class="col-md-4 form-group mb-3 text-center">
+                            <label for="dataContrattoAssegnAziendaTpl">Data Contratto Assegnazione Azienda TPL</label>
+                            <div class="input-group">
+                                <input class="form-control" id="dataContrattoAssegnAziendaTpl" formControlName="dataContrattoAssegnAziendaTpl" ngbDatepicker #dca="ngbDatepicker"  tabindex="-1">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary calendar" (click)="dca.toggle()" type="button"><i class="icon-regular i-Calendar-4"></i></button>
+                                </div>
+                            </div>
+                          </div>
+
+                          <div class="col-md-4 form-group mb-3 text-center">
+                            <label for="dataContrattoApplAziendaTpl">Data Contratto Applicativo Assegnazione Azienda TPL</label>
+                            <div class="input-group">
+                                <input class="form-control" id="dataContrattoApplAziendaTpl" formControlName="dataContrattoApplAziendaTpl" ngbDatepicker #dcaa="ngbDatepicker"  tabindex="-1">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary calendar" (click)="dcaa.toggle()" type="button"><i class="icon-regular i-Calendar-4"></i></button>
+                                </div>
+                            </div>
+                          </div>
+
+                          <div class="col-md-4 form-group mb-3 text-center">
+                            <label for="dataAttivazioneAvm">Data Attivazione AVM</label>
+                            <div class="input-group">
+                                <input class="form-control" id="dataAttivazioneAvm" formControlName="dataAttivazioneAvm" ngbDatepicker #davm="ngbDatepicker"  tabindex="-1">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary calendar" (click)="davm.toggle()" type="button"><i class="icon-regular i-Calendar-4"></i></button>
+                                </div>
+                            </div>
+                          </div>
+
+                          <div class="col-md-4 form-group mb-3 text-center">
                             <label for="regimeProprieta">Regime Proprieta</label>
                             <select class="form-control" id="regimeProprieta" formControlName="regimeProprieta"   [compareWith]="compareFn">
                               <option [ngValue]="null" ></option>
                               <option [ngValue]="l" *ngFor="let l of listRegimeProprieta">{{l.descrizione}}</option>
                             </select>
                           </div>
-                      </div>
 
-                      <div class="row text-center">
-                            <div class="col-md-4 form-group mb-3 text-center">
-                              <label for="dataAttivazioneavm">Data Attivazione AVM</label>
-                              <div class="input-group">
-                                  <input class="form-control" id="dataAttivazioneavm" formControlName="dataAttivazioneavm" ngbDatepicker #d4="ngbDatepicker"  tabindex="-1">
-                                  <div class="input-group-append">
-                                      <button class="btn btn-outline-secondary calendar" (click)="d4.toggle()" type="button"><i class="icon-regular i-Calendar-4"></i></button>
-                                  </div>
-                              </div>
-                            </div>
-                            <div class="col-md-4 form-group mb-3 text-center">
-                              <label for="dataContrattoAziendaTpl">Data Contratto TPL</label>
-                              <div class="input-group">
-                                  <input class="form-control" id="dataContrattoAziendaTpl" formControlName="dataContrattoAziendaTpl" ngbDatepicker #d5="ngbDatepicker"  tabindex="-1">
-                                  <div class="input-group-append">
-                                      <button class="btn btn-outline-secondary calendar" (click)="d5.toggle()" type="button"><i class="icon-regular i-Calendar-4"></i></button>
-                                  </div>
-                              </div>
-                            </div>
-                            <div class="col-md-4 form-group mb-3 text-center">
-                              <label for="dataConsegnaAdAziendaTpl">Data Consegna TPL</label>
-                              <div class="input-group">
-                                  <input class="form-control" id="dataConsegnaAdAziendaTpl" formControlName="dataConsegnaAdAziendaTpl" ngbDatepicker #d6="ngbDatepicker"  tabindex="-1">
-                                  <div class="input-group-append">
-                                      <button class="btn btn-outline-secondary calendar" (click)="d6.toggle()" type="button"><i class="icon-regular i-Calendar-4"></i></button>
-                                  </div>
-                              </div>
-                            </div>
-                      </div>
-                      <div class="row text-center">
                           <div class="col-md-4 form-group mb-3 text-center">
-                            <label for="costoAcquistoNettoIva">Costo Acquisto Netto Iva</label>
+                            <label for="costoAcquistoNettoIva">Costo Acquisto Netto Iva €</label>
                             <input class="form-control" id="costoAcquistoNettoIva" formControlName="costoAcquistoNettoIva" placeholder="Costo Acquisto" type="costoAcquistoNettoIva" [ngClass]="{'is-invalid': submitted && f.costoAcquistoNettoIva.errors }" />              
                           </div>
+
                           <div class="col-md-4 form-group mb-3 text-center">
-                              <label for="depositoRicoveroProtComunicazione">N. Protocollo Ricovero</label>
-                              <input class="form-control" id="depositoRicoveroProtComunicazione" formControlName="depositoRicoveroProtComunicazione" placeholder="N. Protocollo Ricovero" type="depositoRicoveroProtComunicazione" [ngClass]="{'is-invalid': submitted && f.depositoRicoveroProtComunicazione.errors }" />              
+                              <label for="numProtocolloRicovero">N. Protocollo Ricovero</label>
+                              <input class="form-control" id="numProtocolloRicovero" formControlName="numProtocolloRicovero" placeholder="N. Protocollo Ricovero" type="numProtocolloRicovero" [ngClass]="{'is-invalid': submitted && f.numProtocolloRicovero.errors }" />              
                           </div>
-                        
+
+                          <div class="col-md-6 form-group mb-3 text-center">
+                            <label for="protArrivoAcamMessADispCons">Protocollo Arricvo Acamir Messa a Disposizione Consegna</label>
+                            <input class="form-control" id="protArrivoAcamMessADispCons" formControlName="protArrivoAcamMessADispCons" placeholder="N. Protocollo Arrivo Acamir" type="protArrivoAcamMessADispCons" [ngClass]="{'is-invalid': submitted && f.protArrivoAcamMessADispCons.errors }" />              
+                         </div>
+
+                         <div class="col-md-6 form-group mb-3 text-center">
+                          <label for="protComSituazApparati">Protocollo Situazione Apparati</label>
+                          <input class="form-control" id="protComSituazApparati" formControlName="protComSituazApparati" placeholder="Protocollo Situazione Apparati" type="protComSituazApparati" [ngClass]="{'is-invalid': submitted && f.protComSituazApparati.errors }" />              
+                         </div>
+                    
                           <div class="col-md-4 form-group mb-3 text-center">
-                            <label for="utimaVerIspettiva">Ultima Ver. Ispettiva</label>
-                            <input class="form-control" id="utimaVerIspettiva" formControlName="utimaVerIspettiva" placeholder="Ultima Ver. Ispettiva" type="utimaVerIspettiva" [ngClass]="{'is-invalid': submitted && f.utimaVerIspettiva.errors }" />              
+                            <label for="dataUltimaVerificaIsp">Data Ultima Verifica Ispettiva</label>
+                            <div class="input-group">
+                                <input class="form-control" id="dataUltimaVerificaIsp" formControlName="dataUltimaVerificaIsp" ngbDatepicker #duvi="ngbDatepicker"  tabindex="-1">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary calendar" (click)="duvi.toggle()" type="button"><i class="icon-regular i-Calendar-4"></i></button>
+                                </div>
+                            </div>
                           </div>
-                      </div>
-                      <div class="row text-center">
                           <div class="col-md-12 form-group mb-3 text-center">
-                              <label for="note">Note</label>
-                              <input class="form-control" id="note" formControlName="note" placeholder="Note" type="note" [ngClass]="{'is-invalid': submitted && f.note.errors }" />              
+                            <label for="estremiProtRappVerIsp">Estremi Protocollo Rapporto Verifica Ispettiva</label>
+                            <input class="form-control" id="estremiProtRappVerIsp" formControlName="estremiProtRappVerIsp" placeholder="Estremi Protocollo Rapporto Verifica Ispettiva" type="note" [ngClass]="{'is-invalid': submitted && f.estremiProtRappVerIsp.errors }" />              
+                          </div>
+                          <div class="col-md-12 form-group mb-3 text-center">
+                              <label for="noteVerificaIsp">Note Verifica Ispettiva</label>
+                              <input class="form-control" id="noteVerificaIsp" formControlName="noteVerificaIsp" placeholder="Note Verifica Ispettiva" type="note" [ngClass]="{'is-invalid': submitted && f.noteVerificaIsp.errors }" />              
                           </div>
                       </div>
 
 
                 </ng-template>
               </ng-container>     
+
+              <ng-container ngbNavItem>
+                <a ngbNavLink>Dati Usufrutto</a>
+                <ng-template ngbNavContent>
+                  
+                    <div class="row text-center"> 
+                            <div class="col-md-4 form-group mb-3 text-center">
+                              <label for="estremiContrUsufrutto">Estremi Contratto Usufrutto</label>
+                              <input class="form-control" id="estremiContrUsufrutto" formControlName="estremiContrUsufrutto" placeholder="Estremi" type="estremiContrUsufrutto" [ngClass]="{'is-invalid': submitted && f.estremiContrUsufrutto.errors }" />              
+                            </div>  
+                            <div class="col-md-4 form-group mb-3 text-center">
+                                <label for="dataContrUsufrutto">Data Contratto Usufrutto</label>
+                                <div class="input-group">
+                                    <input class="form-control" id="dataContrUsufrutto" formControlName="dataContrUsufrutto" ngbDatepicker #d5="ngbDatepicker"  tabindex="-1">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-secondary calendar" (click)="d5.toggle()" type="button"><i class="icon-regular i-Calendar-4"></i></button>
+                                    </div>
+                                </div>
+                            </div>          
+                            <div class="col-md-4 form-group mb-3 text-center">
+                                <label for="dataScadUsufrutto">Data Scadenza Usufrutto</label>
+                                <div class="input-group">
+                                    <input class="form-control" id="dataScadUsufrutto" formControlName="dataScadUsufrutto" ngbDatepicker #d6="ngbDatepicker"  tabindex="-1">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-secondary calendar" (click)="d6.toggle()" type="button"><i class="icon-regular i-Calendar-4"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                         
+                 
+                            <div class="col-md-4 form-group mb-3 text-center">
+                              <label for="valAnnuoCanone">Valore Annuo Canone €</label>
+                              <input class="form-control" id="valAnnuoCanone" formControlName="valAnnuoCanone" placeholder="Canone Annuo" type="number" [ngClass]="{'is-invalid': submitted && f.valAnnuoCanone.errors }" />              
+                            </div>  
+                            <div class="col-md-4 form-group mb-3 text-center">
+                              <label for="valPrimoCanone">Valore Primo Canone €</label>
+                              <input class="form-control" id="valPrimoCanone" formControlName="valPrimoCanone" placeholder="Primo Canone" type="number" [ngClass]="{'is-invalid': submitted && f.valPrimoCanone.errors }" />              
+                            </div>         
+                            <div class="col-md-4 form-group mb-3 text-center">
+                              <label for="valDa2a8Canone">Valore Canone da 2 a 8 €</label>
+                              <input class="form-control" id="valDa2a8Canone" formControlName="valDa2a8Canone" placeholder="Canone da 2 a 8" type="number" [ngClass]="{'is-invalid': submitted && f.valDa2a8Canone.errors }" />              
+                            </div> 
+
+
+                            <div class="col-md-4 form-group mb-3 text-center">
+                              <label for="val9Canone">Valore Canone 9 €</label>
+                              <input class="form-control" id="val9Canone" formControlName="val9Canone" placeholder="Canone 9" type="number" [ngClass]="{'is-invalid': submitted && f.val9Canone.errors }" />              
+                            </div>  
+                            <div class="col-md-4 form-group mb-3 text-center">
+                              <label for="val10Canone">Valore Canone 10 €</label>
+                              <input class="form-control" id="val10Canone" formControlName="val10Canone" placeholder="Canone 10" type="number" [ngClass]="{'is-invalid': submitted && f.val10Canone.errors }" />              
+                            </div>         
+                            <div class="col-md-4 form-group mb-3 text-center">
+                              <label for="val11Canone">Valore Canone 11 €</label>
+                              <input class="form-control" id="val11Canone" formControlName="val11Canone" placeholder="Canone 11" type="number" [ngClass]="{'is-invalid': submitted && f.val11Canone.errors }" />              
+                            </div> 
+
+
+
+                    </div>
+
+                </ng-template>
+              </ng-container> 
+
 
               <ng-container ngbNavItem>
                 <a ngbNavLink>Azienda TPL</a>
@@ -347,9 +432,9 @@
                                 <div class="col-md-4 form-group mb-3 text-center">
                                   <label for="dataUltimaRevisione">Data Ultima Revisione</label>
                                   <div class="input-group">
-                                      <input class="form-control" id="dataUltimaRevisione" formControlName="dataUltimaRevisione"  ngbDatepicker #d1="ngbDatepicker"  tabindex="-1">
+                                      <input class="form-control" id="dataUltimaRevisione" formControlName="dataUltimaRevisione"  ngbDatepicker #d7="ngbDatepicker"  tabindex="-1">
                                       <div class="input-group-append">
-                                          <button class="btn btn-outline-secondary calendar" (click)="d1.toggle()" type="button"><i class="icon-regular i-Calendar-4"></i></button>
+                                          <button class="btn btn-outline-secondary calendar" (click)="d7.toggle()" type="button"><i class="icon-regular i-Calendar-4"></i></button>
                                       </div>
                                   </div>
                                 </div>
@@ -357,9 +442,9 @@
                                 <div class="col-md-4 form-group mb-3 text-center">
                                   <label for="dataCessMarcia">Data Cessazione Marcia</label>
                                   <div class="input-group">
-                                      <input class="form-control" id="dataCessMarcia" formControlName="dataCessMarcia"  ngbDatepicker #d1="ngbDatepicker"  tabindex="-1">
+                                      <input class="form-control" id="dataCessMarcia" formControlName="dataCessMarcia"  ngbDatepicker #d8="ngbDatepicker"  tabindex="-1">
                                       <div class="input-group-append">
-                                          <button class="btn btn-outline-secondary calendar" (click)="d1.toggle()" type="button"><i class="icon-regular i-Calendar-4"></i></button>
+                                          <button class="btn btn-outline-secondary calendar" (click)="d8.toggle()" type="button"><i class="icon-regular i-Calendar-4"></i></button>
                                       </div>
                                   </div>
                                 </div>
