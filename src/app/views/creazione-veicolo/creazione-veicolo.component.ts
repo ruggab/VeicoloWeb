@@ -28,6 +28,7 @@ export class CreazioneVeicoloComponent implements OnInit {
   listGara : Gara[] = [];
   listCategoria : Dizionario[] = [];
   listClasse : Dizionario[] = [];
+  listClasseAmb : Dizionario[] = [];
   listFornitore : Dizionario[] = [];
   listRegimeProprieta : Dizionario[] = [];
   listModello : Dizionario[] = [];
@@ -87,6 +88,7 @@ export class CreazioneVeicoloComponent implements OnInit {
       gara:new FormControl(null),
       categoria: new FormControl(null),
       classe :new FormControl(null),
+      classeAmbientale :new FormControl(null),
       dispCopiaCartaCirc : new FormControl(null),
       fornitore: new FormControl(null),
       modello: new FormControl(null),
@@ -194,6 +196,9 @@ export class CreazioneVeicoloComponent implements OnInit {
         } 
         if (contesto=='CLASSE') {
           this.listClasse= res;
+        } 
+        if (contesto=='CLASSE_AMB') {
+          this.listClasseAmb= res;
         } 
         if (contesto=='SN') {
           this.listDispCopiaCC= res;
@@ -303,6 +308,7 @@ export class CreazioneVeicoloComponent implements OnInit {
       veicolo.fornitore = this.veicoloForm.controls.fornitore.value;
       veicolo.categoria = this.veicoloForm.controls.categoria.value;
       veicolo.classe = this.veicoloForm.controls.classe.value;
+      veicolo.classeAmbientale = this.veicoloForm.controls.classeAmbientale.value;
 
       veicolo.dispCopiaCartaCirc = this.veicoloForm.controls.dispCopiaCartaCirc.value;
       veicolo.modello = this.veicoloForm.controls.modello.value;
@@ -452,6 +458,7 @@ export class CreazioneVeicoloComponent implements OnInit {
     this.getListaDiz('REGIME_PROPRIETA');
     this.getListaDiz('TIPO_ALIMENT');
     this.getListaDiz('TIPO_ALLESTIMENTO');
+    this.getListaDiz('CLASSE_AMB');
     this.getListaAziende();
     //
     if (veicolo == null) { 
@@ -464,6 +471,7 @@ export class CreazioneVeicoloComponent implements OnInit {
 
         this.veicoloForm.controls['categoria'].setValue(null);
         this.veicoloForm.controls['classe'].setValue(null);
+        this.veicoloForm.controls['classeAmbientale'].setValue(null);
         this.veicoloForm.controls['dispCopiaCartaCirc'].setValue(null);
         this.veicoloForm.controls['modello'].setValue(null);
 
@@ -516,6 +524,7 @@ export class CreazioneVeicoloComponent implements OnInit {
 
       this.veicoloForm.controls['categoria'].setValue(veicolo.categoria);
       this.veicoloForm.controls['classe'].setValue(veicolo.classe);
+      this.veicoloForm.controls['classeAmbientale'].setValue(veicolo.classeAmbientale);
       this.veicoloForm.controls['dispCopiaCartaCirc'].setValue(veicolo.dispCopiaCartaCirc);
       this.veicoloForm.controls['modello'].setValue(veicolo.modello);
 

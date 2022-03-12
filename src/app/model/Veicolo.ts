@@ -39,7 +39,33 @@ export class Veicolo {
     regimeProprieta: Dizionario;
     tipoAlimentazione: Dizionario;
     tipoAllestimento:  Dizionario;
-    //Dati Azienda
+    //Campi nuovi
+    
+	classeAmbientale: Dizionario;
+	determAssegnazione: string;
+    estremiContrUsufrutto: string;
+	dataContrUsufrutto: Date;
+	valAnnuoCanone: number;
+	valPrimoCanone: number;
+	valDa2a8Canone: number;
+	val9Canone: number;
+	val10Canone: number;
+	val11Canone: number;
+	dataContrAssTpl : Date;
+	dataContrAssApplTpl : Date;
+	protArrivoAcamMessADispCons: string;
+	numPolGaranziaBase: string;
+	numPolGaranziaEstesa: string;
+	protFidGaranziaBase: string;
+	protFidGaranziaEstesa: string;
+	dataScadTassaPossesso: Date;
+    dataScadRca : Date;
+	protComReferente: string;
+	protComSituazApparati: string;
+	dataUltimaVerificaIsp: Date;
+	estremiProtRappVerIsp: string;
+    
+    //Dati iseriti dall' Azienda
     dispCopiaCartaCirc : Dizionario;
     contrattoServizio: string;
     dataCessMarcia: Date;
