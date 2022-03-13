@@ -16,7 +16,7 @@
                 <label for="username">Username</label>
                 <input class="form-control" id="codGara" formControlName="username" placeholder="Username" type="username"/>
               </div>
-              <div class="col-md-6 form-group mb-3 text-center">
+              <div class="col-md-6 form-group mb-3 ">
                 <label for="azienda">Azienda Tpl</label>
                 <select class="form-control" id="azienda" formControlName="azienda"   [compareWith]="compareAzienda">
                   <option [ngValue]="null" ></option>
@@ -44,11 +44,12 @@
   <btn-loading type="button" btnClass="btn btn-info btn-lg" (click)="exportCSV()">Esporta CSV</btn-loading>
   
   <table class="table table-bordered" style="margin-top: 5px;">
-    <thead class="thead-blue">
+    <thead class="thead-light">
       <tr>
         <th scope="col">Username</th>
         <th scope="col">Azienda</th>
         <th scope="col">Email</th>
+        <th scope="col"  style="text-align: center;">Azioni</th>
       </tr>
     </thead>
     <tbody>
@@ -60,8 +61,7 @@
           <button class="btn btn-info btn-lg" (click)="openLg(modalUtente, l)" type="button">
             <i class="icon-regular i-Pen-2"></i>
           </button>
-        </td>
-        <td style="text-align: center;">
+          &nbsp;&nbsp;
           <button class="btn btn-info btn-lg" (click)="deleteUtente(l.id)" type="button">
             <i class="icon-regular i-Close"></i>
           </button>

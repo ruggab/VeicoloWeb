@@ -57,7 +57,7 @@
   <btn-loading type="button" btnClass="btn btn-info btn-lg" (click)="exportCSV()">Esporta CSV</btn-loading>
   
   <table class="table table-bordered" style="margin-top: 5px;">
-    <thead class="thead-blue">
+    <thead class="thead-light">
       <tr>
         <th scope="col">Cod Gara</th>
         <th scope="col">CUP</th>
@@ -65,6 +65,7 @@
         <th scope="col">RUP</th>
         <th scope="col">DEC</th>
         <th scope="col">Finanziamento</th>
+        <th scope="col"  style="text-align: center;">Azioni</th>
       </tr>
     </thead>
     <tbody>
@@ -75,12 +76,12 @@
         <td>{{l.rup}}</td>
         <td>{{l.drec}}</td>
         <td>{{l?.finAcq?.descrizione}}</td>
+        
         <td style="text-align: center;">
           <button class="btn btn-info btn-lg" (click)="openLg(modalGara, l)" type="button">
             <i class="icon-regular i-Pen-2"></i>
           </button>
-        </td>
-        <td style="text-align: center;">
+          &nbsp;&nbsp;
           <button class="btn btn-info btn-lg" (click)="deleteGara(l.id)" type="button">
             <i class="icon-regular i-Close"></i>
           </button>
