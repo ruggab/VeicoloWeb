@@ -67,8 +67,7 @@ export class CreazioneVeicoloComponent implements OnInit {
       numSimSerialNumber : [''],
       numSimTelefonico : [''],
       dataPrimaImm : null,
-      dataScadGaranziaBase : new Date(null),
-      dataScadGaranziaEstesa :new Date(null),
+     
       dataScadVincolo : new Date(null),
       lunghezza: [''],
       numPorte: [''],
@@ -95,11 +94,23 @@ export class CreazioneVeicoloComponent implements OnInit {
       numProtocolloRicovero : [''],
       protArrivoAcamMessADispCons: [''],
       protComSituazApparati: [''],
+      dataScadTassaPossesso : new Date(null),
+      dataScadRca : new Date(null),
       dataUltimaVerificaIsp: new Date(null),
       estremiProtRappVerIsp:[''],
       noteVerificaIsp: [''],
      
-      
+      //Polizze Garanzie
+      protFidGaranziaBase: [''],
+    	protFidGaranziaEstesa : [''],
+	    numPolGaranziaBase : [''],
+	    numPolGaranziaEstesa : [''],
+      dataScadPolGaranziaBase  : new Date(null),
+      dataScadPolGaranziaEstesa  : new Date(null),
+      dataScadGaranziaBase : new Date(null),
+      dataScadGaranziaEstesa : new Date(null),
+
+
       //Usufrutto
       dataScadUsufrutto : new Date(null),
       estremiContrUsufrutto : [''],  
@@ -186,7 +197,6 @@ export class CreazioneVeicoloComponent implements OnInit {
   }
 
   getListaGare(){
-    this.moduleLoading = true;
     this.http.get<Gara[]>(`${environment.apiUrl}getListGara`)
     .subscribe(
       res =>{
@@ -196,12 +206,9 @@ export class CreazioneVeicoloComponent implements OnInit {
         } else {
           this.toastr.error('Nessuna Gara trovata!','Gara',{progressBar: false});
         }
-        this.moduleLoading = false;
       },
       err =>{
-        console.log(err);        
-        this.moduleLoading = false;
-
+        console.log(err); 
       }
     )
   }
@@ -291,7 +298,7 @@ export class CreazioneVeicoloComponent implements OnInit {
       return;
     }
     console.log(veicolo);
-    this.loading=true;
+    this.moduleLoading=true;
     
     this.http.post<Veicolo[]>(`${environment.apiUrl}getListVeicoloByFilter`, veicolo).subscribe(
         res =>{
@@ -302,11 +309,11 @@ export class CreazioneVeicoloComponent implements OnInit {
             this.listVeicolo= res;
             this.toastr.error('Nessun Veicolo trovato!','Veicolo',{progressBar: false});
           }
-          this.loading=false;
+          this.moduleLoading=false;
         },
         err =>{
           console.log(err);        
-          this.loading=false;
+          this.moduleLoading=false;
         }
       )
   }
@@ -350,10 +357,21 @@ export class CreazioneVeicoloComponent implements OnInit {
       veicolo.numProtocolloRicovero = this.veicoloForm.controls.numProtocolloRicovero.value;
       veicolo.protComSituazApparati = this.veicoloForm.controls.protComSituazApparati.value;
       veicolo.protArrivoAcamMessADispCons = this.veicoloForm.controls.protArrivoAcamMessADispCons.value;
-      veicolo.dataUltimaVerificaIsp = this.veicoloForm.controls.dataUltimaVerificaIsp.value;
+      veicolo.dataScadTassaPossesso = this.fromNgbDatePickerToDate(this.veicoloForm.controls.dataScadTassaPossesso.value);
+      veicolo.dataScadRca = this.fromNgbDatePickerToDate(this.veicoloForm.controls.dataScadRca.value);
+      veicolo.dataUltimaVerificaIsp = this.fromNgbDatePickerToDate(this.veicoloForm.controls.dataUltimaVerificaIsp.value);
       veicolo.estremiProtRappVerIsp = this.veicoloForm.controls.estremiProtRappVerIsp.value;
       veicolo.noteVerificaIsp = this.veicoloForm.controls.noteVerificaIsp.value;
      
+      //Pollize Garanzie
+      veicolo.protFidGaranziaBase = this.veicoloForm.controls.protFidGaranziaBase.value;
+      veicolo.protFidGaranziaEstesa = this.veicoloForm.controls.protFidGaranziaEstesa.value;
+      veicolo.numPolGaranziaBase = this.veicoloForm.controls.numPolGaranziaBase.value;
+      veicolo.numPolGaranziaEstesa = this.veicoloForm.controls.numPolGaranziaEstesa.value;
+      veicolo.dataScadPolGaranziaBase = this.fromNgbDatePickerToDate(this.veicoloForm.controls.dataScadPolGaranziaBase.value);
+      veicolo.dataScadPolGaranziaEstesa = this.fromNgbDatePickerToDate(this.veicoloForm.controls.dataScadPolGaranziaEstesa.value);
+      veicolo.dataScadGaranziaBase = this.fromNgbDatePickerToDate(this.veicoloForm.controls.dataScadGaranziaBase.value);
+      veicolo.dataScadGaranziaEstesa = this.fromNgbDatePickerToDate(this.veicoloForm.controls.dataScadGaranziaEstesa.value);
 
       //Usufrutto
       veicolo.estremiContrUsufrutto = this.veicoloForm.controls.estremiContrUsufrutto.value;
@@ -521,10 +539,23 @@ export class CreazioneVeicoloComponent implements OnInit {
         this.veicoloForm.controls['numProtocolloRicovero'].setValue('');
         this.veicoloForm.controls['protArrivoAcamMessADispCons'].setValue('');
         this.veicoloForm.controls['protComSituazApparati'].setValue('');
+        this.veicoloForm.controls['dataScadTassaPossesso'].setValue('');
+        this.veicoloForm.controls['dataScadRca'].setValue('');
         this.veicoloForm.controls['dataUltimaVerificaIsp'].setValue('');
         this.veicoloForm.controls['estremiProtRappVerIsp'].setValue('');
         this.veicoloForm.controls['noteVerificaIsp'].setValue('');
 
+        //Pollize Garanzie
+        this.veicoloForm.controls['protFidGaranziaBase'].setValue('');
+        this.veicoloForm.controls['protFidGaranziaEstesa'].setValue('');
+        this.veicoloForm.controls['numPolGaranziaBase'].setValue('');
+        this.veicoloForm.controls['numPolGaranziaEstesa'].setValue('');
+        this.veicoloForm.controls['dataScadPolGaranziaBase'].setValue('');
+        this.veicoloForm.controls['dataScadPolGaranziaEstesa'].setValue('');
+        this.veicoloForm.controls['dataScadGaranziaBase'].setValue('');
+        this.veicoloForm.controls['dataScadGaranziaEstesa'].setValue('');
+     
+     
         //usufrutto
         this.veicoloForm.controls['estremiContrUsufrutto'].setValue('');
         this.veicoloForm.controls['dataContrUsufrutto'].setValue('');
@@ -601,10 +632,21 @@ export class CreazioneVeicoloComponent implements OnInit {
       this.veicoloForm.controls['numProtocolloRicovero'].setValue(veicolo.numProtocolloRicovero);
       this.veicoloForm.controls['protArrivoAcamMessADispCons'].setValue(veicolo.protArrivoAcamMessADispCons);
       this.veicoloForm.controls['protComSituazApparati'].setValue(veicolo.protComSituazApparati);
-      this.veicoloForm.controls['dataUltimaVerificaIsp'].setValue(veicolo.dataUltimaVerificaIsp);
+      this.veicoloForm.controls['dataScadTassaPossesso'].setValue(this.fromStringToDate(veicolo.dataScadTassaPossesso));
+      this.veicoloForm.controls['dataScadRca'].setValue(this.fromStringToDate(veicolo.dataScadRca));
+      this.veicoloForm.controls['dataUltimaVerificaIsp'].setValue(this.fromStringToDate(veicolo.dataUltimaVerificaIsp));
       this.veicoloForm.controls['estremiProtRappVerIsp'].setValue(veicolo.estremiProtRappVerIsp);
       this.veicoloForm.controls['noteVerificaIsp'].setValue(veicolo.noteVerificaIsp);
 
+      //Polizze Garanzie
+      this.veicoloForm.controls['protFidGaranziaBase'].setValue(veicolo.protFidGaranziaBase);
+      this.veicoloForm.controls['protFidGaranziaEstesa'].setValue(veicolo.protFidGaranziaEstesa);
+      this.veicoloForm.controls['numPolGaranziaBase'].setValue(veicolo.numPolGaranziaBase);
+      this.veicoloForm.controls['numPolGaranziaEstesa'].setValue(veicolo.numPolGaranziaEstesa);
+      this.veicoloForm.controls['dataScadPolGaranziaBase'].setValue(this.fromStringToDate(veicolo.dataScadPolGaranziaBase));
+      this.veicoloForm.controls['dataScadPolGaranziaEstesa'].setValue(this.fromStringToDate(veicolo.dataScadPolGaranziaEstesa));
+      this.veicoloForm.controls['dataScadGaranziaBase'].setValue(this.fromStringToDate(veicolo.dataScadGaranziaBase));
+      this.veicoloForm.controls['dataScadGaranziaEstesa'].setValue(this.fromStringToDate(veicolo.dataScadGaranziaEstesa));
      
      
       //Usufrutto

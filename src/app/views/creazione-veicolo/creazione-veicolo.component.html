@@ -117,16 +117,16 @@
                                     <div class="col-md-4 form-group mb-3 text-center">
                                       <label for="matricola">Matricolaa</label>
                                       <input class="form-control" id="matricola" formControlName="matricola" placeholder="Matricola" type="matricola" [ngClass]="{'is-invalid': submitted && f.matricola.errors }" />
-                                      <div *ngIf="submitted && f.matricola.errors" class="invalid-feedback">
+                                      <!--div *ngIf="submitted && f.matricola.errors" class="invalid-feedback">
                                         <div *ngIf="f.matricola.errors.required">Matricola obbligataria</div>
-                                      </div>
+                                      </div-->
                                     </div>
                                     <div class="col-md-4 form-group mb-3 text-center">
                                         <label for="telaio">Telaio</label>
                                         <input class="form-control" id="telaio" formControlName="telaio" placeholder="Telaio" type="telaio" [ngClass]="{'is-invalid': submitted && f.telaio.errors }" />
-                                        <div *ngIf="submitted && f.telaio.errors" class="invalid-feedback">
+                                        <!--div *ngIf="submitted && f.telaio.errors" class="invalid-feedback">
                                           <div *ngIf="f.telaio.errors.required">Telaio obbligatario!</div>
-                                        </div>
+                                        </div-->
                                     </div>
                                     <div class="col-md-4 form-group mb-3 text-center">
                                       <label for="fornitore">Fornitore</label>
@@ -135,8 +135,7 @@
                                         <option [ngValue]="l" *ngFor="let l of listFornitore">{{l.descrizione}}</option>
                                       </select>
                                     </div>
-                            </div>
-                            <div class="row text-center">
+                           
                                
                                   <div class="col-md-4 form-group mb-3 text-center">
                                     <label for="categoria">Categoria</label>
@@ -161,8 +160,7 @@
                                       <option [ngValue]="l" *ngFor="let l of listClasseAmb">{{l.descrizione}}</option>
                                     </select>
                                   </div>
-                            </div>
-                            <div class="row text-center">                     
+                                         
                                   <div class="col-md-4 form-group mb-3 text-center">
                                     <label for="modello">Modello</label>
                                     <select class="form-control" id="modello" formControlName="modello"   [compareWith]="compareFn">
@@ -187,9 +185,7 @@
                                   </div>
 
                                
-                              
-                            </div>
-                            <div class="row text-center">
+                        
                                       <div class="col-md-2 form-group mb-3 text-center">
                                         <label for="lunghezza">Lunghezza</label>
                                         <input class="form-control" id="lunghezza" formControlName="lunghezza" placeholder="Lunghezza" type="lunghezza" [ngClass]="{'is-invalid': submitted && f.lunghezza.errors }" />                  
@@ -201,9 +197,9 @@
                                       <div class="col-md-4 form-group mb-3 text-center">
                                           <label for="targa1imm">Targa 1 Immatricolazione</label>
                                           <input class="form-control" id="targa1imm" formControlName="targa1imm" placeholder="Targa" type="targa1imm"  />
-                                          <div *ngIf="submitted && f.targa1imm.errors" class="invalid-feedback">
+                                          <!--div *ngIf="submitted && f.targa1imm.errors" class="invalid-feedback">
                                             <div *ngIf="f.targa1imm.errors.required">Targa obbligatoria!</div>
-                                          </div>
+                                          </div-->
                                       </div>
                                       <div class="col-md-4 form-group mb-3 text-center">
                                         <label for="dataPrimaImm">Data I Immatricolazione</label>
@@ -214,10 +210,7 @@
                                             </div>
                                         </div>
                                       </div>
-                            </div>
                            
-                           
-                            <div class="row text-center">
                                     <div class="col-md-4 form-group mb-3 text-center">
                                         <label for="numSimSerialNumber">Numero SIM Serial N.</label>
                                         <input class="form-control" id="numSimSerialNumber" formControlName="numSimSerialNumber" placeholder="SIM Serial N." type="numSimSerialNumber" [ngClass]="{'is-invalid': submitted && f.numSimSerialNumber.errors }" />              
@@ -317,15 +310,35 @@
                               <input class="form-control" id="numProtocolloRicovero" formControlName="numProtocolloRicovero" placeholder="N. Protocollo Ricovero" type="numProtocolloRicovero" [ngClass]="{'is-invalid': submitted && f.numProtocolloRicovero.errors }" />              
                           </div>
 
-                          <div class="col-md-6 form-group mb-3 text-center">
-                            <label for="protArrivoAcamMessADispCons">Protocollo Arricvo Acamir Messa a Disposizione Consegna</label>
+                          <div class="col-md-4 form-group mb-3 text-center">
+                            <label for="protArrivoAcamMessADispCons">Protocollo Arrivo Acamir Messa a Disposizione Consegna</label>
                             <input class="form-control" id="protArrivoAcamMessADispCons" formControlName="protArrivoAcamMessADispCons" placeholder="N. Protocollo Arrivo Acamir" type="protArrivoAcamMessADispCons" [ngClass]="{'is-invalid': submitted && f.protArrivoAcamMessADispCons.errors }" />              
                          </div>
 
-                         <div class="col-md-6 form-group mb-3 text-center">
+                         <div class="col-md-4 form-group mb-3 text-center">
                           <label for="protComSituazApparati">Protocollo Situazione Apparati</label>
                           <input class="form-control" id="protComSituazApparati" formControlName="protComSituazApparati" placeholder="Protocollo Situazione Apparati" type="protComSituazApparati" [ngClass]="{'is-invalid': submitted && f.protComSituazApparati.errors }" />              
                          </div>
+
+                         <div class="col-md-4 form-group mb-3 text-center">
+                          <label for="dataScadTassaPossesso">Data Scadenza Tassa Possesso</label>
+                          <div class="input-group">
+                              <input class="form-control" id="dataScadTassaPossesso" formControlName="dataScadTassaPossesso" ngbDatepicker #dstp="ngbDatepicker"  tabindex="-1">
+                              <div class="input-group-append">
+                                  <button class="btn btn-outline-secondary calendar" (click)="dstp.toggle()" type="button"><i class="icon-regular i-Calendar-4"></i></button>
+                              </div>
+                          </div>
+                        </div>
+
+                        <div class="col-md-4 form-group mb-3 text-center">
+                          <label for="dataScadRca">Data Scadenza RCA</label>
+                          <div class="input-group">
+                              <input class="form-control" id="dataScadRca" formControlName="dataScadRca" ngbDatepicker #dsrca="ngbDatepicker"  tabindex="-1">
+                              <div class="input-group-append">
+                                  <button class="btn btn-outline-secondary calendar" (click)="dsrca.toggle()" type="button"><i class="icon-regular i-Calendar-4"></i></button>
+                              </div>
+                          </div>
+                        </div>
                     
                           <div class="col-md-4 form-group mb-3 text-center">
                             <label for="dataUltimaVerificaIsp">Data Ultima Verifica Ispettiva</label>
@@ -406,14 +419,78 @@
                               <input class="form-control" id="val11Canone" formControlName="val11Canone" placeholder="Canone 11" type="number" [ngClass]="{'is-invalid': submitted && f.val11Canone.errors }" />              
                             </div> 
 
-
-
                     </div>
-
                 </ng-template>
               </ng-container> 
+              <ng-container ngbNavItem>
+                <a ngbNavLink>Polizze e Garanzie</a>
+                <ng-template ngbNavContent>
+                      <div class="row text-center">
 
+                          <div class="col-md-6 form-group mb-3 text-center">
+                            <label for="protFidGaranziaBase">Prot Arrivo ACaMIR polizza fideiussoria garanzia base</label>
+                            <input class="form-control" id="protFidGaranziaBase" formControlName="protFidGaranziaBase" placeholder="Prot Garanzia Base" type="protFidGaranziaBase" [ngClass]="{'is-invalid': submitted && f.protFidGaranziaBase.errors }" />              
+                          </div>
+                          
+                          <div class="col-md-6 form-group mb-3 text-center">
+                            <label for="protFidGaranziaEstesa">Prot Arrivo ACaMIR polizza fideiussoria garanzia estesa</label>
+                            <input class="form-control" id="protFidGaranziaEstesa" formControlName="protFidGaranziaEstesa" placeholder="Prot Garanzia Estesa" type="protFidGaranziaEstesa" [ngClass]="{'is-invalid': submitted && f.protFidGaranziaEstesa.errors }" />              
+                          </div>
 
+                          <div class="col-md-4 form-group mb-3 text-center">
+                            <label for="numPolGaranziaBase">Numero polizza garanzia di base</label>
+                            <input class="form-control" id="numPolGaranziaBase" formControlName="numPolGaranziaBase" placeholder="Num Polizza Base" type="numPolGaranziaBase" [ngClass]="{'is-invalid': submitted && f.numPolGaranziaBase.errors }" />              
+                          </div>
+
+                          <div class="col-md-4 form-group mb-3 text-center">
+                            <label for="dataScadPolGaranziaBase">Data Scadenza Polizza Garanzia Base</label>
+                            <div class="input-group">
+                                <input class="form-control" id="dataScadPolGaranziaBase" formControlName="dataScadPolGaranziaBase" ngbDatepicker #dspgb="ngbDatepicker"  tabindex="-1">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary calendar" (click)="dspgb.toggle()" type="button"><i class="icon-regular i-Calendar-4"></i></button>
+                                </div>
+                            </div>
+                          </div>
+
+                          <div class="col-md-4 form-group mb-3 text-center">
+                            <label for="dataScadGaranziaBase">Data Scadenza Garanzia Base</label>
+                            <div class="input-group">
+                                <input class="form-control" id="dataScadGaranziaBase" formControlName="dataScadGaranziaBase" ngbDatepicker #dsgb="ngbDatepicker"  tabindex="-1">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary calendar" (click)="dsgb.toggle()" type="button"><i class="icon-regular i-Calendar-4"></i></button>
+                                </div>
+                            </div>
+                          </div>
+
+                          <div class="col-md-4 form-group mb-3 text-center">
+                            <label for="numPolGaranziaEstesa">Numero polizza garanzia estesa</label>
+                            <input class="form-control" id="numPolGaranziaEstesa" formControlName="numPolGaranziaEstesa" placeholder="Num Polizza Estesa" type="numPolGaranziaEstesa" [ngClass]="{'is-invalid': submitted && f.numPolGaranziaEstesa.errors }" />              
+                          </div>
+
+                          <div class="col-md-4 form-group mb-3 text-center">
+                            <label for="dataScadPolGaranziaEstesa">Data Scadenza Polizza Garanzia Estesa</label>
+                            <div class="input-group">
+                                <input class="form-control" id="dataScadPolGaranziaEstesa" formControlName="dataScadPolGaranziaEstesa" ngbDatepicker #dspge="ngbDatepicker"  tabindex="-1">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary calendar" (click)="dspge.toggle()" type="button"><i class="icon-regular i-Calendar-4"></i></button>
+                                </div>
+                            </div>
+                          </div>
+
+                          <div class="col-md-4 form-group mb-3 text-center">
+                            <label for="dataScadGaranziaEstesa">Data Scadenza Garanzia Estesa</label>
+                            <div class="input-group">
+                                <input class="form-control" id="dataScadGaranziaEstesa" formControlName="dataScadGaranziaEstesa" ngbDatepicker #dsge="ngbDatepicker"  tabindex="-1">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary calendar" (click)="dsge.toggle()" type="button"><i class="icon-regular i-Calendar-4"></i></button>
+                                </div>
+                            </div>
+                          </div>
+
+                        
+                      </div>
+                </ng-template>
+              </ng-container> 
               <ng-container ngbNavItem>
                 <a ngbNavLink>Azienda TPL</a>
                 <ng-template ngbNavContent>

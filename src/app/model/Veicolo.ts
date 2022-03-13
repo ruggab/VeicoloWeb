@@ -8,10 +8,7 @@ export class Veicolo {
     telaio : string;
     numSimSerialNumber: string;
     numSimTelefonico: string;
-   
     dataPrimaImm : Date;
-    dataScadGaranziaBase : Date;
-    dataScadGaranziaEstesa : Date;
   
     dataScadVincolo : Date;
     lunghezza: number;
@@ -40,9 +37,12 @@ export class Veicolo {
     numProtocolloRicovero : string;
     protArrivoAcamMessADispCons: string;
     protComSituazApparati: string;
+    dataScadTassaPossesso: Date;
+    dataScadRca : Date;
     dataUltimaVerificaIsp: Date;
 	estremiProtRappVerIsp: string;
     noteVerificaIsp: string;
+
 
     //Dati Usufrutto
     dataScadUsufrutto : Date;
@@ -56,14 +56,15 @@ export class Veicolo {
 	val11Canone: number;
    
 
-	
-	numPolGaranziaBase: string;
-	numPolGaranziaEstesa: string;
-	protFidGaranziaBase: string;
+	//Polizze e garanzie
+    protFidGaranziaBase: string;
 	protFidGaranziaEstesa: string;
-	dataScadTassaPossesso: Date;
-    dataScadRca : Date;
-	protComReferente: string;
+	numPolGaranziaBase: string; 
+	numPolGaranziaEstesa: string;
+    dataScadPolGaranziaBase : Date;
+    dataScadPolGaranziaEstesa : Date;
+    dataScadGaranziaBase : Date;
+    dataScadGaranziaEstesa : Date;
 
 	
     
@@ -77,8 +78,12 @@ export class Veicolo {
     dataUltimaRevisione : Date;
    
 
+    //dati interni
     username: string;
     dataAggiornamento : Date;
     dataInserimento : Date;
+
+
+    protComReferente: string;
 
 }
