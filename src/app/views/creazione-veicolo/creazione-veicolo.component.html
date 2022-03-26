@@ -9,8 +9,14 @@
     <div class="card mb-4 noround">
       <div class="card-body">
         <div class="card-title mb-3">Filtro Ricerca Veicolo</div>
+        
         <form [formGroup]="cercaVeicoloForm" (ngSubmit)="cercaVeicolo()">
           <div class="row">
+              
+               
+              
+                
+               
                 <div class="col-md-6 form-group mb-3">
                   <label for="matricola">Matricola</label>
                   <input class="form-control" id="matricola" formControlName="matricola" placeholder="Matricola" type="matricola"/>
@@ -535,8 +541,10 @@
                                   <label for="motivoFermo">Motivazione Fermo</label>
                                   <input class="form-control" id="motivoFermo" formControlName="motivoFermo" placeholder="Motivazione Fermo" type="motivoFermo" [ngClass]="{'is-invalid': submitted && f.indirizzoDepositoRicovero.errors }" />              
                                 </div>
-
-                               
+                                <div class="col-md-4 form-group mb-3 text-center">
+                                   <app-upload-file></app-upload-file>
+                                </div>
+                                
                       </div>        
                 </ng-template>
               </ng-container>

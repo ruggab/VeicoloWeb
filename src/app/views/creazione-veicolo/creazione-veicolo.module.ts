@@ -13,6 +13,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { CreazioneVeicoloComponent } from './creazione-veicolo.component';
 import { CreazioneVeicoloRouting } from './creazione-veicolo-routing.module';
+import { UploadFileComponent } from 'src/app/shared/components/upload-file/upload-file.component';
 
 @NgModule({
   imports: [
@@ -31,6 +32,6 @@ import { CreazioneVeicoloRouting } from './creazione-veicolo-routing.module';
     NgxPaginationModule,
     NgxDatatableModule
   ],
-  declarations: [CreazioneVeicoloComponent]
+  declarations: [CreazioneVeicoloComponent, UploadFileComponent]
 })
 export class CreazioneVeicoloModule { }

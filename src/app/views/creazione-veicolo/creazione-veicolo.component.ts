@@ -386,7 +386,7 @@ export class CreazioneVeicoloComponent implements OnInit {
 
       //Azienda
       veicolo.contrattoServizio = this.veicoloForm.controls.contrattoServizio.value;
-      veicolo.dataCessMarcia = this.veicoloForm.controls.dataCessMarcia.value;
+      veicolo.dataCessMarcia = this.fromNgbDatePickerToDate(this.veicoloForm.controls.dataCessMarcia.value);
       veicolo.motivoFermo = this.veicoloForm.controls.motivoFermo.value;
       veicolo.indirizzoDepositoRicovero = this.veicoloForm.controls.indirizzoDepositoRicovero.value;
       veicolo.dataUltimaRevisione = this.fromNgbDatePickerToDate(this.veicoloForm.controls.dataUltimaRevisione.value);
@@ -408,6 +408,7 @@ export class CreazioneVeicoloComponent implements OnInit {
           if (invalid.length > 0) {
             //this.openDialogMessage('Validate the fields: ' + invalid);
             console.log('Validate the fields: ' + invalid);
+            this.toastr.error('Valida il campo: ' + invalid,'Errore',{progressBar: false});
             return;
           }
       }
@@ -665,6 +666,12 @@ export class CreazioneVeicoloComponent implements OnInit {
       
       //Azienda
       this.veicoloForm.controls['dispCopiaCartaCirc'].setValue(veicolo.dispCopiaCartaCirc);
+      this.veicoloForm.controls['dataCessMarcia'].setValue(this.fromStringToDate(veicolo.dataCessMarcia));
+      this.veicoloForm.controls['indirizzoDepositoRicovero'].setValue(veicolo.indirizzoDepositoRicovero);
+      this.veicoloForm.controls['contrattoServizio'].setValue(veicolo.contrattoServizio);
+      this.veicoloForm.controls['motivoFermo'].setValue(veicolo.motivoFermo);
+      this.veicoloForm.controls['kmDataRevisione'].setValue('');
+      this.veicoloForm.controls['dataUltimaRevisione'].setValue('');
       
       
     }

@@ -9,6 +9,7 @@ import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from './shared/inmemory-db/inmemory-db.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BasicHttpInterceptorService } from './shared/services/basic-http-interceptor.service';
+import { UploadFileComponent } from './shared/components/upload-file/upload-file.component';
 
 @NgModule({
   declarations: [
