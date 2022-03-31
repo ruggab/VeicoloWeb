@@ -15,13 +15,14 @@ import { UploadFileService } from 'src/app/shared/services/upload-file';
 export class UploadFileComponent implements OnInit {
   selectedFiles: FileList;
   currentFile: File;
+  fileName: String;
   progress = 0;
   message = '';
   fileInfos: Observable<any>;
 
+
   constructor(private uploadService: UploadFileService) { 
 
-    
   }
 
 
@@ -33,6 +34,8 @@ ngOnInit() {
 
 selectFile(event) {
   this.selectedFiles = event.target.files;
+  this.fileName = this.selectedFiles.item(0).name;
+  
 }
 
 upload() {

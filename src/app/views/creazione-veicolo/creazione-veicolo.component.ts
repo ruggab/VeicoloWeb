@@ -39,6 +39,8 @@ export class CreazioneVeicoloComponent implements OnInit {
   submitted = false;
   utente: any;
   isAdmin = false;
+
+  fileCC?: File;
   
   constructor(
     private modalService: NgbModal,
@@ -130,6 +132,7 @@ export class CreazioneVeicoloComponent implements OnInit {
       indirizzoDepositoRicovero: [''],
       kmDataRevisione: [''],
       dataUltimaRevisione : new Date(null),
+      nomefileCC: ['']
     });
     
 
@@ -684,7 +687,10 @@ export class CreazioneVeicoloComponent implements OnInit {
   }
 
 
- 
+  selectFileCC(event) {
+    this.fileCC = event.target.files[0];
+    this.veicoloForm.controls['nomefileCC'].setValue(this.fileCC.name);
+  }
 
 
 

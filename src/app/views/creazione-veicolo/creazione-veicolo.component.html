@@ -541,8 +541,17 @@
                                   <label for="motivoFermo">Motivazione Fermo</label>
                                   <input class="form-control" id="motivoFermo" formControlName="motivoFermo" placeholder="Motivazione Fermo" type="motivoFermo" [ngClass]="{'is-invalid': submitted && f.indirizzoDepositoRicovero.errors }" />              
                                 </div>
+
                                 <div class="col-md-4 form-group mb-3 text-center">
-                                   <app-upload-file></app-upload-file>
+                                  <label for="cc">Carta Circolazione</label>
+                                  <div class="input-group">
+                                      <label class="input-group-btn">
+                                          <span class="btn btn-primary">
+                                              Browse <input type="file" style="display: none;" (change)="selectFileCC($event)"       >
+                                          </span>
+                                      </label>
+                                      <input class="form-control" id="nomefileCC"  formControlName="nomefileCC"  type="nomefileCC"  readonly >
+                                  </div>
                                 </div>
                                 
                       </div>        
