@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbDatepicker, NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -41,6 +41,8 @@ export class CreazioneVeicoloComponent implements OnInit {
   isAdmin = false;
 
   fileCC?: File;
+  fileELA?: File;
+
   
   constructor(
     private modalService: NgbModal,
@@ -81,6 +83,8 @@ export class CreazioneVeicoloComponent implements OnInit {
       categoria: new FormControl(null),
       classe :new FormControl(null),
       classeAmbientale :new FormControl(null),
+
+     
 
 
       //Info
@@ -132,7 +136,9 @@ export class CreazioneVeicoloComponent implements OnInit {
       indirizzoDepositoRicovero: [''],
       kmDataRevisione: [''],
       dataUltimaRevisione : new Date(null),
-      nomefileCC: ['']
+      nomefileCC: [''],
+      nomefileELA: ['']
+
     });
     
 
@@ -394,9 +400,9 @@ export class CreazioneVeicoloComponent implements OnInit {
       veicolo.indirizzoDepositoRicovero = this.veicoloForm.controls.indirizzoDepositoRicovero.value;
       veicolo.dataUltimaRevisione = this.fromNgbDatePickerToDate(this.veicoloForm.controls.dataUltimaRevisione.value);
       veicolo.kmDataRevisione = this.veicoloForm.controls.kmDataRevisione.value;
-
-
-
+      //veicolo.fileCC = this.fileCC;
+      //veicolo.fileELA = this.fileELA;
+      //
       veicolo.username = utente.username;
   
      
@@ -415,9 +421,21 @@ export class CreazioneVeicoloComponent implements OnInit {
             return;
           }
       }
+
+       const formData = new FormData();
+       formData.append("fileCC", this.fileCC);
+       formData.append("fileELA", this.fileELA);
+       formData.append("veicolo",  new Blob([JSON.stringify(veicolo)],
+       {
+           type: "application/json"
+       }));
+      
+
+      
       console.log(veicolo);
       this.loading2=true;
-      this.http.post<GenerateResponse>(`${environment.apiUrl}generateVeicolo`, veicolo).subscribe(res => {
+      this.http.post<GenerateResponse>(`${environment.apiUrl}generateVeicolo`, formData ).subscribe(res => {
+        
         if(res){
             //this.garaGenerata = res.id;
             this.loading2=false;
@@ -593,19 +611,12 @@ export class CreazioneVeicoloComponent implements OnInit {
       this.veicoloForm.controls['categoria'].setValue(veicolo.categoria);
       this.veicoloForm.controls['classe'].setValue(veicolo.classe);
       this.veicoloForm.controls['classeAmbientale'].setValue(veicolo.classeAmbientale);
-      
       this.veicoloForm.controls['modello'].setValue(veicolo.modello);
-
-    
       this.veicoloForm.controls['tipoAlimentazione'].setValue(veicolo.tipoAlimentazione);
       this.veicoloForm.controls['tipoAllestimento'].setValue(veicolo.tipoAllestimento);
       this.veicoloForm.controls['targa1imm'].setValue(veicolo.targa1Imm);
-
       this.veicoloForm.controls['dataPrimaImm'].setValue(this.fromStringToDate(veicolo.dataPrimaImm));
-      
-      
       this.veicoloForm.controls['dataUltimaRevisione'].setValue(this.fromStringToDate(veicolo.dataUltimaRevisione));
-      
       this.veicoloForm.controls['numSimSerialNumber'].setValue(veicolo.numSimSerialNumber);
       this.veicoloForm.controls['numSimTelefonico'].setValue(veicolo.numSimTelefonico);
       
@@ -690,6 +701,11 @@ export class CreazioneVeicoloComponent implements OnInit {
   selectFileCC(event) {
     this.fileCC = event.target.files[0];
     this.veicoloForm.controls['nomefileCC'].setValue(this.fileCC.name);
+  }
+
+  selectFileELA(event) {
+    this.fileELA = event.target.files[0];
+    this.veicoloForm.controls['nomefileELA'].setValue(this.fileELA.name);
   }
 
 

@@ -112,7 +112,7 @@
   </div>
   <div class="modal-body">
     <div class="row text-center">
-        <form [formGroup]="veicoloForm" (ngSubmit)="salvaVeicolo()"   class="mx-auto">
+        <form [formGroup]="veicoloForm" (ngSubmit)="salvaVeicolo()"   class="mx-auto"  >
           <input class="form-control" id="id" formControlName="id" type="hidden"  />
           
           <nav ngbNav #nav="ngbNav" class="nav-tabs" >
@@ -543,7 +543,7 @@
                                 </div>
 
                                 <div class="col-md-4 form-group mb-3 text-center">
-                                  <label for="cc">Carta Circolazione</label>
+                                  <label for="nomefileCC">Carta Circolazione</label>
                                   <div class="input-group">
                                       <label class="input-group-btn">
                                           <span class="btn btn-primary">
@@ -551,6 +551,18 @@
                                           </span>
                                       </label>
                                       <input class="form-control" id="nomefileCC"  formControlName="nomefileCC"  type="nomefileCC"  readonly >
+                                  </div>
+                                </div>
+
+                                <div class="col-md-4 form-group mb-3 text-center">
+                                  <label for="nomefileELA">Elenco Linee Autorizzate</label>
+                                  <div class="input-group">
+                                      <label class="input-group-btn">
+                                          <span class="btn btn-primary">
+                                              Browse <input type="file" style="display: none;" (change)="selectFileELA($event)"       >
+                                          </span>
+                                      </label>
+                                      <input class="form-control" id="nomefileELA"  formControlName="nomefileELA"  type="nomefileELA"  readonly >
                                   </div>
                                 </div>
                                 

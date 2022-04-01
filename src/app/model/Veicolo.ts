@@ -76,7 +76,8 @@ export class Veicolo {
     indirizzoDepositoRicovero: string;
     kmDataRevisione: number; 
     dataUltimaRevisione : Date;
-   
+    fileCC:File;
+    fileELA:File;
 
     //dati interni
     username: string;
