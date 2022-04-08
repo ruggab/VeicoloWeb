@@ -66,8 +66,6 @@ export class Veicolo {
     dataScadGaranziaBase : Date;
     dataScadGaranziaEstesa : Date;
 
-	
-    
     //Dati inseriti dall' Azienda
     dispCopiaCartaCirc : Dizionario;
     contrattoServizio: string;
@@ -76,8 +74,6 @@ export class Veicolo {
     indirizzoDepositoRicovero: string;
     kmDataRevisione: number; 
     dataUltimaRevisione : Date;
-    fileCC:File;
-    fileELA:File;
 
     //dati interni
     username: string;

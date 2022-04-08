@@ -42,6 +42,8 @@ export class CreazioneVeicoloComponent implements OnInit {
 
   fileCC?: File;
   fileELA?: File;
+  fileVC?: File;
+  fileTitPropFR?: File;
 
   
   constructor(
@@ -94,6 +96,7 @@ export class CreazioneVeicoloComponent implements OnInit {
       dataConsegnaAziendaTpl : new Date(null),
       dataContrattoAssegnAziendaTpl : new Date(null),
       dataContrattoApplAziendaTpl: new Date(null),
+      nomefileVC: [''],
       dataAttivazioneAvm : new Date(null),
       regimeProprieta: new FormControl(null),
       costoAcquistoNettoIva : [''],
@@ -105,12 +108,14 @@ export class CreazioneVeicoloComponent implements OnInit {
       dataUltimaVerificaIsp: new Date(null),
       estremiProtRappVerIsp:[''],
       noteVerificaIsp: [''],
+      verbaleConsegnaDdt: [''],
      
       //Polizze Garanzie
       protFidGaranziaBase: [''],
     	protFidGaranziaEstesa : [''],
 	    numPolGaranziaBase : [''],
 	    numPolGaranziaEstesa : [''],
+      nomefileTitPropFR: [''],
       dataScadPolGaranziaBase  : new Date(null),
       dataScadPolGaranziaEstesa  : new Date(null),
       dataScadGaranziaBase : new Date(null),
@@ -425,6 +430,7 @@ export class CreazioneVeicoloComponent implements OnInit {
        const formData = new FormData();
        formData.append("fileCC", this.fileCC);
        formData.append("fileELA", this.fileELA);
+       formData.append("fileVC", this.fileVC);
        formData.append("veicolo",  new Blob([JSON.stringify(veicolo)],
        {
            type: "application/json"
@@ -708,6 +714,17 @@ export class CreazioneVeicoloComponent implements OnInit {
     this.veicoloForm.controls['nomefileELA'].setValue(this.fileELA.name);
   }
 
+  selectFileVC(event) {
+    this.fileVC = event.target.files[0];
+    this.veicoloForm.controls['nomefileVC'].setValue(this.fileVC.name);
+  }
+
+  selectFileTitPropFR(event) {
+    this.fileTitPropFR = event.target.files[0];
+    this.veicoloForm.controls['nomefileTitPropFR'].setValue(this.fileTitPropFR.name);
+  }
+
+  
 
 
 }

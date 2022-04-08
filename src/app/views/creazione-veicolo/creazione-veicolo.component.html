@@ -279,6 +279,18 @@
                           </div>
 
                           <div class="col-md-4 form-group mb-3 text-center">
+                            <label for="nomefileVC">Verbale Consegna</label>
+                            <div class="input-group">
+                                <label class="input-group-btn">
+                                    <span class="btn btn-primary">
+                                        Browse <input type="file" style="display: none;" (change)="selectFileVC($event)"       >
+                                    </span>
+                                </label>
+                                <input class="form-control" id="nomefileVC"  formControlName="nomefileVC"  type="nomefileVC"  readonly >
+                            </div>
+                          </div>
+
+                          <div class="col-md-4 form-group mb-3 text-center">
                             <label for="dataContrattoApplAziendaTpl">Data Contratto Applicativo Assegnazione Azienda TPL</label>
                             <div class="input-group">
                                 <input class="form-control" id="dataContrattoApplAziendaTpl" formControlName="dataContrattoApplAziendaTpl" ngbDatepicker #dcaa="ngbDatepicker"  tabindex="-1">
@@ -471,6 +483,18 @@
                           <div class="col-md-4 form-group mb-3 text-center">
                             <label for="numPolGaranziaEstesa">Numero polizza garanzia estesa</label>
                             <input class="form-control" id="numPolGaranziaEstesa" formControlName="numPolGaranziaEstesa" placeholder="Num Polizza Estesa" type="numPolGaranziaEstesa" [ngClass]="{'is-invalid': submitted && f.numPolGaranziaEstesa.errors }" />              
+                          </div>
+
+                          <div class="col-md-4 form-group mb-3 text-center">
+                            <label for="nomefileTitPropFR">Titolo Proprietà Fronte/Retro</label>
+                            <div class="input-group">
+                                <label class="input-group-btn">
+                                    <span class="btn btn-primary">
+                                        Browse <input type="file" style="display: none;" (change)="selectFileTitPropFR($event)"       >
+                                    </span>
+                                </label>
+                                <input class="form-control" id="nomefileTitPropFR"  formControlName="nomefileTitPropFR"  type="nomefileTitPropFR"  readonly >
+                            </div>
                           </div>
 
                           <div class="col-md-4 form-group mb-3 text-center">

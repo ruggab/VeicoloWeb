@@ -182,7 +182,7 @@ export class AddUserComponent implements OnInit {
   conferma() {
       console.log(this.addUserForm.value);
       this.http.post<GenerateResponse>(`${environment.apiUrl}auth/addUser`,this.addUserForm.value).subscribe(
-   // this.http.post<GenerateResponse>(`${environment.apiUrl}generateAzienda`, azienda).subscribe(res => {
+  
         res => {
           console.log(res);
           this.toastr.success('Aggiornamento Utente', 'Utente aggionato correttamente', { progressBar: false });

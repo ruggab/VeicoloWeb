@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  apiUrl : "http://" + window.location.hostname + ":8080/veicolo/api/"
+  apiUrl : "http://" + window.location.hostname + ":8080/VeicoloBe/api/"
 
 };
