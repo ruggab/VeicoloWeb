@@ -44,6 +44,7 @@ export class CreazioneVeicoloComponent implements OnInit {
   fileELA?: File;
   fileVC?: File;
   fileTitPropFR?: File;
+  fileCCI?: File;
 
   
   constructor(
@@ -73,11 +74,11 @@ export class CreazioneVeicoloComponent implements OnInit {
       numSimSerialNumber : [''],
       numSimTelefonico : [''],
       dataPrimaImm : null,
-     
       dataScadVincolo : new Date(null),
       lunghezza: [''],
       numPorte: [''],
       targa1imm: [''], 
+      nomefileCCI: [''],
       fornitore: new FormControl(null),
       modello: new FormControl(null),
       tipoAlimentazione: new FormControl(null),
@@ -427,10 +428,14 @@ export class CreazioneVeicoloComponent implements OnInit {
           }
       }
 
+     
+
        const formData = new FormData();
        formData.append("fileCC", this.fileCC);
        formData.append("fileELA", this.fileELA);
        formData.append("fileVC", this.fileVC);
+       formData.append("fileTitPropFR", this.fileTitPropFR);
+       formData.append("fileCCI", this.fileCCI);
        formData.append("veicolo",  new Blob([JSON.stringify(veicolo)],
        {
            type: "application/json"
@@ -707,6 +712,11 @@ export class CreazioneVeicoloComponent implements OnInit {
   selectFileCC(event) {
     this.fileCC = event.target.files[0];
     this.veicoloForm.controls['nomefileCC'].setValue(this.fileCC.name);
+  }
+
+  selectFileCCI(event) {
+    this.fileCCI = event.target.files[0];
+    this.veicoloForm.controls['nomefileCCI'].setValue(this.fileCCI.name);
   }
 
   selectFileELA(event) {

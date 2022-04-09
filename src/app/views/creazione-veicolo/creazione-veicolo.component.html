@@ -208,6 +208,19 @@
                                           </div-->
                                       </div>
                                       <div class="col-md-4 form-group mb-3 text-center">
+                                        <label for="nomefileCCI">Carta Circolazione Iniziale</label>
+                                        <div class="input-group">
+                                            <label class="input-group-btn">
+                                                <span class="btn btn-primary">
+                                                    Browse <input type="file" style="display: none;" (change)="selectFileCCI($event)"       >
+                                                </span>
+                                            </label>
+                                            <input class="form-control" id="nomefileCCI"  formControlName="nomefileCCI"  type="nomefileCCI"  readonly >
+                                        </div>
+                                      </div>
+
+
+                                      <div class="col-md-4 form-group mb-3 text-center">
                                         <label for="dataPrimaImm">Data I Immatricolazione</label>
                                         <div class="input-group">
                                             <input class="form-control" id="dataPrimaImm"  formControlName="dataPrimaImm"  ngbDatepicker #d="ngbDatepicker"  tabindex="-1">
@@ -567,7 +580,7 @@
                                 </div>
 
                                 <div class="col-md-4 form-group mb-3 text-center">
-                                  <label for="nomefileCC">Carta Circolazione</label>
+                                  <label for="nomefileCC">Copia Carta Circolazione</label>
                                   <div class="input-group">
                                       <label class="input-group-btn">
                                           <span class="btn btn-primary">
