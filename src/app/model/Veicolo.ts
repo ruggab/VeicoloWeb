@@ -9,11 +9,11 @@ export class Veicolo {
     numSimSerialNumber: string;
     numSimTelefonico: string;
     dataPrimaImm : Date;
-  
     dataScadVincolo : Date;
     lunghezza: number;
     numPorte: number;
     targa1Imm: string; 
+    nomefileCCI: string; 
     utimaVerIspettiva:string;
     categoria: Dizionario; 
     classe : Dizionario;
@@ -31,6 +31,7 @@ export class Veicolo {
     dataConsegnaAziendaTpl : Date;
     dataContrattoAssegnAziendaTpl : Date;
 	dataContrattoApplAziendaTpl : Date;
+    nomefileVC: string;
     dataAttivazioneAvm : Date;
     regimeProprieta: Dizionario;
     costoAcquistoNettoIva: string;
@@ -61,6 +62,7 @@ export class Veicolo {
 	protFidGaranziaEstesa: string;
 	numPolGaranziaBase: string; 
 	numPolGaranziaEstesa: string;
+    nomefileTitPropFR: string;
     dataScadPolGaranziaBase : Date;
     dataScadPolGaranziaEstesa : Date;
     dataScadGaranziaBase : Date;
@@ -74,6 +76,8 @@ export class Veicolo {
     indirizzoDepositoRicovero: string;
     kmDataRevisione: number; 
     dataUltimaRevisione : Date;
+    nomefileCC: string;
+    nomefileELA: string;
 
     //dati interni
     username: string;
