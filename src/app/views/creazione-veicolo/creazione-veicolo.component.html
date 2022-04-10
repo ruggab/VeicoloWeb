@@ -211,12 +211,18 @@
                                         <label for="nomefileCCI">Carta Circolazione Iniziale</label>
                                         <div class="input-group">
                                             <label class="input-group-btn">
-                                                <span class="btn btn-primary">
+                                                <span class="btn btn-info">
                                                     Browse <input type="file" style="display: none;" (change)="selectFileCCI($event)"       >
                                                 </span>
                                             </label>
                                             <input class="form-control" id="nomefileCCI"  formControlName="nomefileCCI"  type="nomefileCCI"  readonly >
+                                            <label class="input-group-btn"  *ngIf="f.nomefileCCI.value && f.id.value" >
+                                              <span class="btn btn-success" (click)="viewFile(f.nomefileCCI.value)" >
+                                                View
+                                              </span>
+                                            </label>
                                         </div>
+                                       
                                       </div>
 
 
@@ -295,11 +301,16 @@
                             <label for="nomefileVC">Verbale Consegna</label>
                             <div class="input-group">
                                 <label class="input-group-btn">
-                                    <span class="btn btn-primary">
+                                    <span class="btn btn-info">
                                         Browse <input type="file" style="display: none;" (change)="selectFileVC($event)"       >
                                     </span>
                                 </label>
                                 <input class="form-control" id="nomefileVC"  formControlName="nomefileVC"  type="nomefileVC"  readonly >
+                                <label class="input-group-btn"  *ngIf="f.nomefileVC.value && f.id.value" >
+                                  <span class="btn btn-success" (click)="viewFile(f.nomefileVC.value)" >
+                                    View
+                                  </span>
+                                </label>
                             </div>
                           </div>
 
@@ -502,11 +513,16 @@
                             <label for="nomefileTitPropFR">Titolo Proprietà Fronte/Retro</label>
                             <div class="input-group">
                                 <label class="input-group-btn">
-                                    <span class="btn btn-primary">
+                                    <span class="btn btn-info">
                                         Browse <input type="file" style="display: none;" (change)="selectFileTitPropFR($event)"       >
                                     </span>
                                 </label>
                                 <input class="form-control" id="nomefileTitPropFR"  formControlName="nomefileTitPropFR"  type="nomefileTitPropFR"  readonly >
+                                <label class="input-group-btn"  *ngIf="f.nomefileTitPropFR.value && f.id.value" >
+                                  <span class="btn btn-success" (click)="viewFile(f.nomefileTitPropFR.value)" >
+                                    View
+                                  </span>
+                                </label>
                             </div>
                           </div>
 
@@ -583,11 +599,16 @@
                                   <label for="nomefileCC">Copia Carta Circolazione</label>
                                   <div class="input-group">
                                       <label class="input-group-btn">
-                                          <span class="btn btn-primary">
+                                          <span class="btn btn-info">
                                               Browse <input type="file" style="display: none;" (change)="selectFileCC($event)"       >
                                           </span>
                                       </label>
                                       <input class="form-control" id="nomefileCC"  formControlName="nomefileCC"  type="nomefileCC"  readonly >
+                                      <label class="input-group-btn"  *ngIf="f.nomefileCC.value && f.id.value" >
+                                        <span class="btn btn-success" (click)="viewFile(f.nomefileCC.value)" >
+                                          View
+                                        </span>
+                                      </label>
                                   </div>
                                 </div>
 
@@ -595,11 +616,16 @@
                                   <label for="nomefileELA">Elenco Linee Autorizzate</label>
                                   <div class="input-group">
                                       <label class="input-group-btn">
-                                          <span class="btn btn-primary">
+                                          <span class="btn btn-info">
                                               Browse <input type="file" style="display: none;" (change)="selectFileELA($event)"       >
                                           </span>
                                       </label>
                                       <input class="form-control" id="nomefileELA"  formControlName="nomefileELA"  type="nomefileELA"  readonly >
+                                      <label class="input-group-btn"  *ngIf="f.nomefileELA.value && f.id.value" >
+                                        <span class="btn btn-success" (click)="viewFile(f.nomefileELA.value)" >
+                                          View
+                                        </span>
+                                      </label>
                                   </div>
                                 </div>
                                 

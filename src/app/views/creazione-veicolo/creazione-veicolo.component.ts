@@ -10,6 +10,7 @@ import { Dizionario } from 'src/app/model/Dizionario';
 import { Veicolo } from 'src/app/model/Veicolo';
 import { Azienda } from 'src/app/model/Azienda';
 import { Gara } from 'src/app/model/Gara';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-creazione-veicolo',
@@ -737,8 +738,17 @@ export class CreazioneVeicoloComponent implements OnInit {
     this.veicoloForm.controls['nomefileTitPropFR'].setValue(this.fileTitPropFR.name);
   }
 
-  
+  download(fileName:string) : Observable<Blob>{
+    let idVeicolo = this.veicoloForm.controls.id.value;
+    return  this.http.get(`${environment.apiUrl}files?idVeicolo=` + idVeicolo + `&nomeFile=` + fileName, {  
+        responseType: 'blob'
+    })
+  }
 
+
+  viewFile(fileName:string): void {
+    this.download(fileName).subscribe(blob => saveAs(blob, fileName));
+  }
 
 }
 
