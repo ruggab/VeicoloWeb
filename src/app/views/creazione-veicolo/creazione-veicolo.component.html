@@ -19,7 +19,7 @@
                
                 <div class="col-md-6 form-group mb-3">
                   <label for="matricola">Matricola</label>
-                  <input class="form-control" id="matricola" formControlName="matricola" placeholder="Matricola" type="matricola"/>
+                  <input class="form-control" id="matricola" formControlName="matricola" placeholder="Matricola" type="matricola"  maxlength="5"/>
                 </div>
                 <div class="col-md-6 form-group mb-3">
                   <label for="telaio">Telaio</label>
@@ -121,11 +121,11 @@
                 <ng-template ngbNavContent>
                             <div class="row text-center">
                                     <div class="col-md-4 form-group mb-3 text-center">
-                                      <label for="matricola">Matricolaa</label>
+                                      <label for="matricola">Matricola</label>
                                       <input   class="form-control" id="matricola" formControlName="matricola" placeholder="Matricola" type="matricola" [ngClass]="{'is-invalid': submitted && f.matricola.errors }" />
-                                      <!--div *ngIf="submitted && f.matricola.errors" class="invalid-feedback">
-                                        <div *ngIf="f.matricola.errors.required">Matricola obbligataria</div>
-                                      </div-->
+                                      <div *ngIf="submitted && f.matricola.errors" class="invalid-feedback">
+                                        <div *ngIf="f.matricola.errors.maxlength">Massimo 5 Caratteri</div>
+                                      </div>
                                     </div>
                                     <div class="col-md-4 form-group mb-3 text-center">
                                         <label for="telaio">Telaio</label>

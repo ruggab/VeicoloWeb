@@ -70,7 +70,7 @@ export class CreazioneVeicoloComponent implements OnInit {
 
     this.veicoloForm = this.fb.group({
       id : [''],
-      matricola : ['',Validators.required],
+      matricola : ['',[Validators.required, Validators.maxLength(5)]],
       telaio : [''],
       numSimSerialNumber : [''],
       numSimTelefonico : [''],
@@ -80,7 +80,7 @@ export class CreazioneVeicoloComponent implements OnInit {
       numPorte: [''],
       targa1imm: [''], 
       nomefileCCI: [''],
-      fornitore: new FormControl(null),
+      fornitore: new FormControl(null, Validators.required),
       modello: new FormControl(null),
       tipoAlimentazione: new FormControl(null),
       tipoAllestimento: new FormControl(null),
@@ -92,8 +92,8 @@ export class CreazioneVeicoloComponent implements OnInit {
 
 
       //Info
-      gara:new FormControl(null),
-      assegnatario:new FormControl(null), 
+      gara:new FormControl(null, Validators.required),
+      assegnatario:new FormControl(null, Validators.required),
       determAssegnazione:[''],
       dataConsegnaAziendaTpl : new Date(null),
       dataContrattoAssegnAziendaTpl : new Date(null),
@@ -171,7 +171,7 @@ export class CreazioneVeicoloComponent implements OnInit {
   getListaVeicolo(){
     //
     let utente = JSON.parse(localStorage.getItem('currentUser'));
-    this.listAzienda = utente.aziendas;
+    //this.listAzienda = utente.aziendas;
     //
     this.http.get<Veicolo[]>(`${environment.apiUrl}getListVeicolo`)
     .subscribe(
@@ -195,7 +195,7 @@ export class CreazioneVeicoloComponent implements OnInit {
     this.listAzienda = this.utente.aziendas;
     if (this.isAdmin) {
       
-      this.http.get<Azienda[]>(`${environment.apiUrl}getListAzienda`)
+      this.http.get<Azienda[]>(`${environment.apiUrl}getListAziendaNoAcamir`)
       .subscribe(
         res =>{
           console.log(res);
@@ -463,7 +463,7 @@ export class CreazioneVeicoloComponent implements OnInit {
           }
       }, err => {
         this.loading2=false;
-        console.log(err);
+        console.log(err.error);
         this.toastr.error('Errore nella generazione del Veicolo!','Errore',{progressBar: false});
       })
       this.loading2=false;
@@ -477,14 +477,17 @@ export class CreazioneVeicoloComponent implements OnInit {
 
   deleteVeicolo(idVeicolo){
       this.loading=true;
-      this.http.get<Veicolo[]>(`${environment.apiUrl}deleteVeicolo/${idVeicolo}`)
+      this.http.get<GenerateResponse>(`${environment.apiUrl}deleteVeicolo/${idVeicolo}`)
       .subscribe(
         res =>{
           console.log(res);
-          if (res.length!==0) {
-            this.listVeicolo= res;
+          if (res) {
+            this.loading=false;
+            this.getListaVeicolo();
             this.toastr.success('Veicolo eliminato con successo!','Lista Veicoli aggiornata',{progressBar: false});
           } else {
+            this.loading=false;
+            this.getListaVeicolo();
             this.toastr.error('Nessun Veicolo trovato!','Veicolo',{progressBar: false});
           }
           this.loading=false;
@@ -541,7 +544,7 @@ export class CreazioneVeicoloComponent implements OnInit {
     this.getListaDiz('TIPO_ALIMENT');
     this.getListaDiz('TIPO_ALLESTIMENTO');
     this.getListaDiz('CLASSE_AMB');
-    this.getListaAziende();
+    //this.getListaAziende();
     //
     if (veicolo == null) { 
       //Dati Veicolo
@@ -715,26 +718,36 @@ export class CreazioneVeicoloComponent implements OnInit {
 
   selectFileCC(event) {
     this.fileCC = event.target.files[0];
+    console.log('size', this.fileCC.size);
+    console.log('size', this.fileCC.type);
     this.veicoloForm.controls['nomefileCC'].setValue(this.fileCC.name);
   }
 
   selectFileCCI(event) {
     this.fileCCI = event.target.files[0];
+    console.log('size', this.fileCCI.size);
+    console.log('size', this.fileCCI.type);
     this.veicoloForm.controls['nomefileCCI'].setValue(this.fileCCI.name);
   }
 
   selectFileELA(event) {
     this.fileELA = event.target.files[0];
+    console.log('size', this.fileELA.size);
+    console.log('size', this.fileELA.type);
     this.veicoloForm.controls['nomefileELA'].setValue(this.fileELA.name);
   }
 
   selectFileVC(event) {
     this.fileVC = event.target.files[0];
+    console.log('size', this.fileVC.size);
+    console.log('size', this.fileVC.type);
     this.veicoloForm.controls['nomefileVC'].setValue(this.fileVC.name);
   }
 
   selectFileTitPropFR(event) {
     this.fileTitPropFR = event.target.files[0];
+    console.log('size', this.fileTitPropFR.size);
+    console.log('size', this.fileTitPropFR.type);
     this.veicoloForm.controls['nomefileTitPropFR'].setValue(this.fileTitPropFR.name);
   }
 

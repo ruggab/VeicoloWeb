@@ -113,7 +113,10 @@ export class AddUserComponent implements OnInit {
 
   exportCSV(){
     this.loadingcsv = true;
-    this.http.get<Utente[]>(`${environment.apiUrl}auth/getListUtenteByFilter`)
+    let  utente: Utente = new Utente();
+    utente.username = this.cercaUtenteForm.controls.username.value;
+    utente.aziendas[0] = this.cercaUtenteForm.controls.azienda.value;
+    this.http.post<Utente[]>(`${environment.apiUrl}auth/getListUtenteByFilter`, utente)
     .subscribe(
       res =>{
         console.log(res);
@@ -200,17 +203,18 @@ export class AddUserComponent implements OnInit {
   
   deleteUtente(idUtente){
     this.loading=true;
-    this.http.get<Utente[]>(`${environment.apiUrl}auth/deleteUtente/${idUtente}`)
+    this.http.get<GenerateResponse>(`${environment.apiUrl}auth/deleteUtente/${idUtente}`)
     .subscribe(
       res =>{
-        console.log(res);
-        if (res.length!==0) {
-          this.listUtente= res;
+        if (res) {
+          this.cercaUtente();
+          this.loading=false;
           this.toastr.success('Utente eliminato con successo!','Lista Utente aggiornata',{progressBar: false});
         } else {
+          this.loading=false;
           this.toastr.error('Nessun Utente trovato!','Utente',{progressBar: false});
         }
-        this.loading=false;
+        
       },
       err =>{
         console.log(err);        
@@ -218,6 +222,8 @@ export class AddUserComponent implements OnInit {
       }
     )
   }
+
+  
 
   openLg(content:any, utente:Utente) {
     this.getListaAziende();

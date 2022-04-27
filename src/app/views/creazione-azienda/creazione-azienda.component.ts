@@ -186,29 +186,34 @@ export class CreazioneAziendaComponent implements OnInit {
        this.modalService.dismissAll();
   }
 
-  
-
 
   deleteAzienda(idAzienda){
     this.loading=true;
-    this.http.get<Azienda[]>(`${environment.apiUrl}deleteAzienda/${idAzienda}`).subscribe(
+    this.http.get<GenerateResponse>(`${environment.apiUrl}deleteAzienda/${idAzienda}`).subscribe(
       res =>{
         console.log(res);
-        if (res.length!==0) {
-          this.listAzienda= res;
+        if (res) {
+          this.loading=false;
           this.toastr.success('Azienda eliminata con successo!','Lista Aziende aggiornata',{progressBar: false});
+          this.cercaAzienda();
         } else {
-          this.toastr.error('Nessun Azienda trovata!','Azienda',{progressBar: false});
+          this.loading=false;
+          this.cercaAzienda();
         }
         this.loading=false;
       },
       err =>{
-        console.log(err);        
+        console.log(err.error);    
+        this.toastr.success(err.error,'Errore',{progressBar: false});    
         this.loading=false;
       }
     )
-    
   }
+
+
+
+
+
 
   openLg(content, azienda) {
     if (azienda == null) {

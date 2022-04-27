@@ -208,30 +208,38 @@ export class CreazioneGaraComponent implements OnInit {
        this.modalService.dismissAll();
   }
 
-  
 
 
   deleteGara(idGara){
     this.loading=true;
-    this.http.get<Gara[]>(`${environment.apiUrl}deleteGara/${idGara}`)
+    this.http.get<GenerateResponse>(`${environment.apiUrl}deleteGara/${idGara}`)
     .subscribe(
       res =>{
         console.log(res);
-        if (res.length!==0) {
-          this.listGara= res;
+        if (res) {
+          this.loading=false;
           this.toastr.success('Gara eliminata con successo!','Lista Gare aggiornata',{progressBar: false});
+          this.cercaGara();
         } else {
-          this.toastr.error('Nessun Gara trovata!','Gara',{progressBar: false});
+          this.loading=false;
+          this.cercaGara();
         }
         this.loading=false;
       },
       err =>{
-        console.log(err);        
+        console.log(err.error);    
+        this.toastr.success(err.error,'Errore',{progressBar: false});    
         this.loading=false;
       }
     )
-    
   }
+
+
+
+
+
+
+
 
   compareFn(a: Dizionario, b: Dizionario) {
     return a && b && a.id === b.id;
