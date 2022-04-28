@@ -57,6 +57,7 @@
     <thead class="thead-light">
       <tr>
         <th scope="col">Matricola</th>
+        <th scope="col">Matricola Az.</th>
         <th scope="col">Telaio</th>
         <th scope="col">Gara</th>
         <th scope="col">Assegnatario</th>
@@ -74,6 +75,7 @@
     <tbody>
       <tr *ngFor="let l of listVeicolo">
         <th scope="row">{{l.matricola}}</th>
+        <th>{{l.matricolaAz}}</th>
         <td>{{l.telaio}}</td>
         <td>{{l.gara?.codGara}}</td>
         <td>{{l.assegnatario?.nome}}</td>
@@ -90,7 +92,7 @@
             <i class="icon-regular i-Pen-2"></i>
           </button>
           &nbsp;&nbsp;
-          <button class="btn btn-info btn-lg" (click)="deleteVeicolo(l.id)" type="button">
+          <button class="btn btn-info btn-lg" *ngIf="isAdmin" (click)="deleteVeicolo(l.id)" type="button">
             <i class="icon-regular i-Close"></i>
           </button>
         </td>
@@ -554,6 +556,15 @@
                 <a ngbNavLink>Azienda TPL</a>
                 <ng-template ngbNavContent>
                       <div class="row text-center">
+
+                                <div class="col-md-4 form-group mb-3 text-center">
+                                  <label for="matricola">Matricola Aziendale</label>
+                                  <input   class="form-control" id="matricolaAz" formControlName="matricolaAz" placeholder="Matricola Az." type="matricolaAz" [ngClass]="{'is-invalid': submitted && f.matricolaAz.errors }" />
+                                  <div *ngIf="submitted && f.matricolaAz.errors" class="invalid-feedback">
+                                    <div *ngIf="f.matricolaAz.errors.maxlength">Massimo 6 Caratteri</div>
+                                  </div>
+                                </div>
+
 
                                 <div class="col-md-4 form-group mb-3 text-center">
                                   <label for="contrattoServizio">Contratto Servizio</label>

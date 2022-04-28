@@ -12,7 +12,7 @@
         <form [formGroup]="cercaAziendaForm" (ngSubmit)="cercaAzienda()">
           <div class="row">
                 <div class="col-md-6 form-group mb-3">
-                  <label for="matricola">Matricola Azienda</label>
+                  <label for="matricola">Codice Azienda</label>
                   <input class="form-control" id="matricola" formControlName="matricola" placeholder="Matricola" type="matricola"  />
                 </div>
                 <div class="col-md-6 form-group mb-3">
@@ -52,10 +52,10 @@
   <table class="table table-bordered" style="margin-top: 5px;">
     <thead class="thead-light">
       <tr>
-        <th scope="col">Matricola</th>
-        <th scope="col">nome</th>
+        <th scope="col">Codice Azienda</th>
+        <th scope="col">Nome</th>
         <th scope="col">Nominativo Referente</th>
-        <th scope="col">E-Mail Referente</th>
+        <th scope="col">E-mail Referente</th>
         <th scope="col">Telefono Referente</th>
         <th scope="col"  style="text-align: center;">Azioni</th>
       </tr>

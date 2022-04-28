@@ -136,6 +136,7 @@ export class CreazioneVeicoloComponent implements OnInit {
       val11Canone : [''],  
 
       //Azienda
+      matricolaAz : ['',[Validators.required, Validators.maxLength(6)]],
       dispCopiaCartaCirc : new FormControl(null),
       contrattoServizio: [''],
       dataCessMarcia: new Date(null),
@@ -159,8 +160,11 @@ export class CreazioneVeicoloComponent implements OnInit {
 
     //
     let utente = JSON.parse(localStorage.getItem('currentUser'));
-   
-    this.cercaVeicoloForm.controls['assegnatario'].setValue(utente.aziendas[0]);
+    //Se non sono amminitratore setto nella combo delle aziende assegnatarie 
+    if (!this.isAdmin) {
+      this.cercaVeicoloForm.controls['assegnatario'].setValue(utente.aziendas[0]);
+    }
+    //
     this.cercaVeicolo();
 
   }
@@ -404,6 +408,7 @@ export class CreazioneVeicoloComponent implements OnInit {
       veicolo.val11Canone = this.veicoloForm.controls.val11Canone.value;
 
       //Azienda
+      veicolo.matricolaAz = this.veicoloForm.controls.matricolaAz.value;
       veicolo.contrattoServizio = this.veicoloForm.controls.contrattoServizio.value;
       veicolo.dataCessMarcia = this.fromNgbDatePickerToDate(this.veicoloForm.controls.dataCessMarcia.value);
       veicolo.motivoFermo = this.veicoloForm.controls.motivoFermo.value;
@@ -454,11 +459,11 @@ export class CreazioneVeicoloComponent implements OnInit {
         if(res){
             //this.garaGenerata = res.id;
             this.loading2=false;
-            this.getListaVeicolo();
+            this.cercaVeicolo();
             this.toastr.success('Veicolo generato con successo!','Info',{progressBar: false});          
           } else {
             this.loading2=false;
-            this.getListaVeicolo();
+            this.cercaVeicolo();
             this.toastr.error('Errore nella generazione del Veicolo!','Errore',{progressBar: false});
           }
       }, err => {
@@ -612,6 +617,7 @@ export class CreazioneVeicoloComponent implements OnInit {
         this.veicoloForm.controls['val11Canone'].setValue('');
 
         //Azienda
+        this.veicoloForm.controls['matricolaAz'].setValue('');
         this.veicoloForm.controls['indirizzoDepositoRicovero'].setValue('');
         this.veicoloForm.controls['contrattoServizio'].setValue('');
         this.veicoloForm.controls['dataCessMarcia'].setValue('');
@@ -695,6 +701,7 @@ export class CreazioneVeicoloComponent implements OnInit {
 
       
       //Azienda
+      this.veicoloForm.controls['matricolaAz'].setValue(veicolo.matricolaAz);
       this.veicoloForm.controls['dispCopiaCartaCirc'].setValue(veicolo.dispCopiaCartaCirc);
       this.veicoloForm.controls['dataCessMarcia'].setValue(this.fromStringToDate(veicolo.dataCessMarcia));
       this.veicoloForm.controls['indirizzoDepositoRicovero'].setValue(veicolo.indirizzoDepositoRicovero);

@@ -69,6 +69,7 @@ export class Veicolo {
     dataScadGaranziaEstesa : Date;
 
     //Dati inseriti dall' Azienda
+    matricolaAz: string;
     dispCopiaCartaCirc : Dizionario;
     contrattoServizio: string;
     dataCessMarcia: Date;
